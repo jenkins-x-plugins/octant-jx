@@ -1,13 +1,23 @@
-buildPack: go-cli
+buildPack: none
 dockerRegistryOwner: jenkinsxio-labs
 pipelineConfig:
   pipelines:
+    pullRequest:
+      pipeline:
+        stages:
+          - agent:
+              image: golang:1.13
+            name: cli
+            steps:
+              - name: test
+                command: make test
+
     release:
       pipeline:
         stages:
           - agent:
               image: gcr.io/jenkinsxio/builder-go
-            name: chart
+            name: cli
             steps:
               - name: release-binary
                 command: make release
