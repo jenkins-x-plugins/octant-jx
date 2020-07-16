@@ -4,24 +4,29 @@ This repository contains plugins for [Octant](https://octant.dev/) for working w
 
 ## Install
 
-Octant should first be installed and added to your `$PATH`
- 
-To build the plugins use:
+### Prerequisites
 
+Octant should first be installed and added to your `$PATH`, get the latest release [here](https://github.com/vmware-tanzu/octant/releases)
+
+### Install the plugin
+
+Octant checks for extra plugins that live in `~/.config/octant/plugins`.  You can download the released plugin binary [here](https://github.com/jenkins-x/octant-jx/releases/) or build it locally in the next section. 
+
+### Development of the plugin
+
+To build the plugin use:
 
 ```
 make octant
 ```
 
-
-which will build the plugins, install then into `~/.config/octant/plugins` and then startup octant against the current k8s cluster.
+which will build the plugin, install it into `~/.config/octant/plugins` and then startup octant against the current k8s cluster.
 
 You can run `make tail` in another terminal to watch the console log of `octant-jx` if you are developing a plugin.
- 
 
 ### Using the Developer + Operator plugins
 
-You should see on the left nav bar the Jenkins X Developer + Operator plugins appear near the bottom (2nd to last icons).
+You should see on the left nav bar the Jenkins X Developer plugin appears near the bottom (2nd to last icons).
  
 ## Running multiple Octants
 
