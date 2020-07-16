@@ -1,0 +1,137 @@
+apiVersion: jenkins.io/v1
+kind: PipelineActivity
+metadata:
+  annotations:
+    jenkins.io/git-report-running-stages: ""
+    jenkins.io/git-report-state: Succeeded
+  creationTimestamp: "2020-04-29T06:04:05Z"
+  generation: 25
+  labels:
+    branch: PR-1
+    build: "1"
+    context: pr-build
+    lastCommitSha: 680b642a4429631165122a8a65df52fb647697ab
+    owner: cb-kubecd
+    provider: github
+    repository: node-demo-js-15
+  name: cb-kubecd-node-demo-js-15-pr-1-1
+  namespace: jx
+  resourceVersion: "2782904"
+  selfLink: /apis/jenkins.io/v1/namespaces/jx/pipelineactivities/cb-kubecd-node-demo-js-15-pr-1-1
+  uid: 3b7c4278-89df-11ea-ac26-42010a840fd3
+spec:
+  author: jstrachan
+  baseSHA: c761280dec180afb7c37529c5759121391667023
+  batchPipelineActivity: {}
+  build: "1"
+  buildLogsUrl: https://raw.githubusercontent.com/cb-kubecd/node-demo-js-15/gh-pages/jenkins-x/logs/cb-kubecd/node-demo-js-15/PR-1/1.log
+  completedTimestamp: "2020-04-29T06:06:06Z"
+  context: pr-build
+  gitBranch: PR-1
+  gitOwner: cb-kubecd
+  gitRepository: node-demo-js-15
+  gitUrl: https://github.com/cb-kubecd/node-demo-js-15.git
+  lastCommitSHA: 680b642a4429631165122a8a65df52fb647697ab
+  pipeline: cb-kubecd/node-demo-js-15/PR-1
+  pullTitle: 'fix: my PR'
+  startedTimestamp: "2020-04-29T06:04:07Z"
+  status: Succeeded
+  steps:
+  - kind: Stage
+    stage:
+      completedTimestamp: "2020-04-29T06:04:32Z"
+      name: meta pipeline
+      startedTimestamp: "2020-04-29T06:04:07Z"
+      status: Succeeded
+      steps:
+      - completedTimestamp: "2020-04-29T06:04:07Z"
+        name: Credential Initializer Hmvzj
+        startedTimestamp: "2020-04-29T06:04:07Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-29T06:04:08Z"
+        name: Working Dir Initializer M84qw
+        startedTimestamp: "2020-04-29T06:04:07Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-29T06:04:09Z"
+        name: Place Tools
+        startedTimestamp: "2020-04-29T06:04:08Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-29T06:04:14Z"
+        description: https://github.com/cb-kubecd/node-demo-js-15.git
+        name: Git Source Meta Cb Kubecd Node Demo Js 15 R5wf2 Qhkf4
+        startedTimestamp: "2020-04-29T06:04:09Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-29T06:04:16Z"
+        name: Git Merge
+        startedTimestamp: "2020-04-29T06:04:14Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-29T06:04:17Z"
+        name: Merge Pull Refs
+        startedTimestamp: "2020-04-29T06:04:16Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-29T06:04:26Z"
+        name: Create Effective Pipeline
+        startedTimestamp: "2020-04-29T06:04:17Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-29T06:04:32Z"
+        name: Create Tekton Crds
+        startedTimestamp: "2020-04-29T06:04:26Z"
+        status: Succeeded
+  - kind: Stage
+    stage:
+      completedTimestamp: "2020-04-29T06:06:06Z"
+      name: from build pack
+      startedTimestamp: "2020-04-29T06:04:33Z"
+      status: Succeeded
+      steps:
+      - completedTimestamp: "2020-04-29T06:04:33Z"
+        name: Credential Initializer Pgxp4
+        startedTimestamp: "2020-04-29T06:04:33Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-29T06:04:33Z"
+        name: Working Dir Initializer Xjb2g
+        startedTimestamp: "2020-04-29T06:04:33Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-29T06:04:34Z"
+        name: Place Tools
+        startedTimestamp: "2020-04-29T06:04:33Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-29T06:05:07Z"
+        description: https://github.com/cb-kubecd/node-demo-js-15.git
+        name: Git Source Cb Kubecd Node Demo Js 15 Pr 1 Gjj2l Nwppv
+        startedTimestamp: "2020-04-29T06:04:34Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-29T06:05:08Z"
+        name: Git Merge
+        startedTimestamp: "2020-04-29T06:05:07Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-29T06:05:09Z"
+        name: Build Npmrc
+        startedTimestamp: "2020-04-29T06:05:08Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-29T06:05:11Z"
+        name: Build Npm Install
+        startedTimestamp: "2020-04-29T06:05:09Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-29T06:05:12Z"
+        name: Build Npm Test
+        startedTimestamp: "2020-04-29T06:05:11Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-29T06:05:37Z"
+        name: Build Container Build
+        startedTimestamp: "2020-04-29T06:05:12Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-29T06:05:45Z"
+        name: Promote Make Preview
+        startedTimestamp: "2020-04-29T06:05:37Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-29T06:06:06Z"
+        name: Promote Jx Preview
+        startedTimestamp: "2020-04-29T06:05:45Z"
+        status: Succeeded
+  - kind: Preview
+    preview:
+      applicationURL: http://node-demo-js-15-jx-cb-kubecd-node-demo-js-15-pr-1.146.148.5.128.nip.io
+      pullRequestURL: https://github.com/cb-kubecd/node-demo-js-15/pull/1
+      startedTimestamp: "2020-04-29T06:06:02Z"
+status: {}

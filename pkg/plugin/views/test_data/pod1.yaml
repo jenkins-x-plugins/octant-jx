@@ -1,0 +1,580 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    tekton.dev/ready: READY
+  creationTimestamp: "2020-04-24T14:53:24Z"
+  labels:
+    app.kubernetes.io/managed-by: tekton-pipelines
+    branch: master
+    build: "16"
+    jenkins.io/pipelineType: meta
+    jenkins.io/task-stage-name: meta-pipeline
+    owner: cb-kubecd
+    repository: node-demo-js-3
+    tekton.dev/pipeline: meta-cb-kubecd-node-demo-js-3-m-5sss5-16
+    tekton.dev/pipelineRun: meta-cb-kubecd-node-demo-js-3-m-5sss5-16
+    tekton.dev/pipelineTask: meta-pipeline
+    tekton.dev/task: meta-cb-kubecd-node-demo-js-3-m-5sss5-meta-pipeline-16
+    tekton.dev/taskRun: meta-cb-kubecd-node-demo-js-3-m-5sss5-16-meta-pipeline-9k8d5
+  name: meta-cb-kubecd-node-demo-js-3-m-5sss5-16-meta-pipeline-9k8d5-pod-15b31d
+  namespace: jx
+  ownerReferences:
+  - apiVersion: tekton.dev/v1alpha1
+    blockOwnerDeletion: true
+    controller: true
+    kind: TaskRun
+    name: meta-cb-kubecd-node-demo-js-3-m-5sss5-16-meta-pipeline-9k8d5
+    uid: 594312b7-863b-11ea-ac26-42010a840fd3
+  resourceVersion: "1137996"
+  selfLink: /api/v1/namespaces/jx/pods/meta-cb-kubecd-node-demo-js-3-m-5sss5-16-meta-pipeline-9k8d5-pod-15b31d
+  uid: 594b074a-863b-11ea-ac26-42010a840fd3
+spec:
+  containers:
+  - args:
+    - -wait_file
+    - /builder/downward/ready
+    - -post_file
+    - /builder/tools/0
+    - -wait_file_content
+    - -entrypoint
+    - /ko-app/git-init
+    - --
+    - -url
+    - https://github.com/cb-kubecd/node-demo-js-3.git
+    - -revision
+    - master
+    - -path
+    - /workspace/source
+    command:
+    - /builder/tools/entrypoint
+    env:
+    - name: HOME
+      value: /builder/home
+    - name: TEKTON_RESOURCE_NAME
+      value: meta-cb-kubecd-node-demo-js-3-m-5sss5
+    image: gcr.io/abayer-pipeline-crd/tekton-for-jx/git-init:0.8.0-for-jx
+    imagePullPolicy: IfNotPresent
+    name: step-git-source-meta-cb-kubecd-node-demo-js-3-m-5sss5-czm76
+    resources:
+      requests:
+        cpu: "0"
+        ephemeral-storage: "0"
+        memory: "0"
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /builder/tools
+      name: tools
+    - mountPath: /builder/downward
+      name: downward
+    - mountPath: /workspace
+      name: workspace
+    - mountPath: /builder/home
+      name: home
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: tekton-bot-token-hm6hq
+      readOnly: true
+    workingDir: /workspace
+  - args:
+    - -wait_file
+    - /builder/tools/0
+    - -post_file
+    - /builder/tools/1
+    - -entrypoint
+    - jx
+    - --
+    - step
+    - git
+    - merge
+    - --verbose
+    command:
+    - /builder/tools/entrypoint
+    env:
+    - name: HOME
+      value: /builder/home
+    - name: APP_NAME
+      value: node-demo-js-3
+    - name: BRANCH_NAME
+      value: master
+    - name: BUILD_NUMBER
+      value: "16"
+    - name: JOB_NAME
+      value: cb-kubecd/node-demo-js-3/master
+    - name: PIPELINE_KIND
+      value: release
+    - name: PULL_REFS
+      value: 'master:'
+    - name: REPO_NAME
+      value: node-demo-js-3
+    - name: REPO_OWNER
+      value: cb-kubecd
+    - name: SOURCE_URL
+      value: https://github.com/cb-kubecd/node-demo-js-3.git
+    image: gcr.io/jenkinsxio/builder-jx:2.0.1245-582
+    imagePullPolicy: IfNotPresent
+    name: step-git-merge
+    resources:
+      limits:
+        cpu: 800m
+        memory: 512Mi
+      requests:
+        cpu: 400m
+        ephemeral-storage: "0"
+        memory: 256Mi
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /root/.m2/
+      name: jenkins-maven-settings
+    - mountPath: /builder/tools
+      name: tools
+    - mountPath: /workspace
+      name: workspace
+    - mountPath: /builder/home
+      name: home
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: tekton-bot-token-hm6hq
+      readOnly: true
+    workingDir: /workspace/source
+  - args:
+    - -wait_file
+    - /builder/tools/1
+    - -post_file
+    - /builder/tools/2
+    - -entrypoint
+    - /bin/sh
+    - --
+    - -c
+    - 'echo ''SKIP merge-pull-refs: Nothing to merge'''
+    command:
+    - /builder/tools/entrypoint
+    env:
+    - name: HOME
+      value: /builder/home
+    - name: APP_NAME
+      value: node-demo-js-3
+    - name: BRANCH_NAME
+      value: master
+    - name: BUILD_NUMBER
+      value: "16"
+    - name: JOB_NAME
+      value: cb-kubecd/node-demo-js-3/master
+    - name: PIPELINE_KIND
+      value: release
+    - name: PULL_REFS
+      value: 'master:'
+    - name: REPO_NAME
+      value: node-demo-js-3
+    - name: REPO_OWNER
+      value: cb-kubecd
+    - name: SOURCE_URL
+      value: https://github.com/cb-kubecd/node-demo-js-3.git
+    image: gcr.io/jenkinsxio/builder-maven:2.0.1245-582
+    imagePullPolicy: IfNotPresent
+    name: step-merge-pull-refs
+    resources:
+      limits:
+        cpu: 800m
+        memory: 512Mi
+      requests:
+        cpu: "0"
+        ephemeral-storage: "0"
+        memory: "0"
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /root/.m2/
+      name: jenkins-maven-settings
+    - mountPath: /builder/tools
+      name: tools
+    - mountPath: /workspace
+      name: workspace
+    - mountPath: /builder/home
+      name: home
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: tekton-bot-token-hm6hq
+      readOnly: true
+    workingDir: /workspace/source
+  - args:
+    - -wait_file
+    - /builder/tools/2
+    - -post_file
+    - /builder/tools/3
+    - -entrypoint
+    - /bin/sh
+    - --
+    - -c
+    - 'jx step syntax effective --output-dir . --env BUILD_NUMBER=16 --env PIPELINE_KIND=release
+      --env PULL_REFS=master: --env SOURCE_URL=https://github.com/cb-kubecd/node-demo-js-3.git
+      --env REPO_OWNER=cb-kubecd --env REPO_NAME=node-demo-js-3 --env APP_NAME=node-demo-js-3
+      --env BRANCH_NAME=master --env JOB_NAME=cb-kubecd/node-demo-js-3/master'
+    command:
+    - /builder/tools/entrypoint
+    env:
+    - name: HOME
+      value: /builder/home
+    - name: APP_NAME
+      value: node-demo-js-3
+    - name: BRANCH_NAME
+      value: master
+    - name: BUILD_NUMBER
+      value: "16"
+    - name: JOB_NAME
+      value: cb-kubecd/node-demo-js-3/master
+    - name: PIPELINE_KIND
+      value: release
+    - name: PULL_REFS
+      value: 'master:'
+    - name: REPO_NAME
+      value: node-demo-js-3
+    - name: REPO_OWNER
+      value: cb-kubecd
+    - name: SOURCE_URL
+      value: https://github.com/cb-kubecd/node-demo-js-3.git
+    image: gcr.io/jenkinsxio-labs-private/jxl:0.0.35
+    imagePullPolicy: IfNotPresent
+    name: step-create-effective-pipeline
+    resources:
+      limits:
+        cpu: 800m
+        memory: 512Mi
+      requests:
+        cpu: "0"
+        ephemeral-storage: "0"
+        memory: "0"
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /root/.m2/
+      name: jenkins-maven-settings
+    - mountPath: /builder/tools
+      name: tools
+    - mountPath: /workspace
+      name: workspace
+    - mountPath: /builder/home
+      name: home
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: tekton-bot-token-hm6hq
+      readOnly: true
+    workingDir: /workspace/source
+  - args:
+    - -wait_file
+    - /builder/tools/3
+    - -post_file
+    - /builder/tools/4
+    - -entrypoint
+    - /bin/sh
+    - --
+    - -c
+    - jx step create task --clone-dir /workspace/source --kind release --service-account
+      tekton-bot --source source --branch master --build-number 16
+    command:
+    - /builder/tools/entrypoint
+    env:
+    - name: HOME
+      value: /builder/home
+    - name: APP_NAME
+      value: node-demo-js-3
+    - name: BRANCH_NAME
+      value: master
+    - name: BUILD_NUMBER
+      value: "16"
+    - name: JOB_NAME
+      value: cb-kubecd/node-demo-js-3/master
+    - name: PIPELINE_KIND
+      value: release
+    - name: PULL_REFS
+      value: 'master:'
+    - name: REPO_NAME
+      value: node-demo-js-3
+    - name: REPO_OWNER
+      value: cb-kubecd
+    - name: SOURCE_URL
+      value: https://github.com/cb-kubecd/node-demo-js-3.git
+    image: gcr.io/jenkinsxio-labs-private/jxl:0.0.35
+    imagePullPolicy: IfNotPresent
+    name: step-create-tekton-crds
+    resources:
+      limits:
+        cpu: 800m
+        memory: 512Mi
+      requests:
+        cpu: "0"
+        ephemeral-storage: "0"
+        memory: "0"
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /root/.m2/
+      name: jenkins-maven-settings
+    - mountPath: /builder/tools
+      name: tools
+    - mountPath: /workspace
+      name: workspace
+    - mountPath: /builder/home
+      name: home
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: tekton-bot-token-hm6hq
+      readOnly: true
+    workingDir: /workspace/source
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  initContainers:
+  - args:
+    - -basic-git=knative-git-user-pass=https://github.com
+    command:
+    - /ko-app/creds-init
+    env:
+    - name: HOME
+      value: /builder/home
+    image: gcr.io/abayer-pipeline-crd/tekton-for-jx/creds-init:0.8.0-for-jx
+    imagePullPolicy: IfNotPresent
+    name: step-credential-initializer-9bx4f
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /workspace
+      name: workspace
+    - mountPath: /builder/home
+      name: home
+    - mountPath: /var/build-secrets/knative-git-user-pass
+      name: secret-volume-knative-git-user-pass-n95vq
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: tekton-bot-token-hm6hq
+      readOnly: true
+    workingDir: /workspace
+  - args:
+    - -args
+    - mkdir -p /workspace/source
+    command:
+    - /ko-app/bash
+    env:
+    - name: HOME
+      value: /builder/home
+    image: gcr.io/abayer-pipeline-crd/tekton-for-jx/bash:0.8.0-for-jx
+    imagePullPolicy: IfNotPresent
+    name: step-working-dir-initializer-vdbq4
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /workspace
+      name: workspace
+    - mountPath: /builder/home
+      name: home
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: tekton-bot-token-hm6hq
+      readOnly: true
+    workingDir: /workspace
+  - args:
+    - -c
+    - cp /ko-app/entrypoint /builder/tools/entrypoint
+    command:
+    - /bin/sh
+    env:
+    - name: HOME
+      value: /builder/home
+    image: gcr.io/abayer-pipeline-crd/tekton-for-jx/entrypoint:0.8.0-for-jx
+    imagePullPolicy: IfNotPresent
+    name: step-place-tools
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /builder/tools
+      name: tools
+    - mountPath: /workspace
+      name: workspace
+    - mountPath: /builder/home
+      name: home
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: tekton-bot-token-hm6hq
+      readOnly: true
+    workingDir: /workspace
+  nodeName: gke-bootv3-demo-default-pool-64f69232-cnwv
+  priority: 0
+  restartPolicy: Never
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: tekton-bot
+  serviceAccountName: tekton-bot
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - name: jenkins-maven-settings
+    secret:
+      defaultMode: 420
+      secretName: jenkins-maven-settings
+  - emptyDir: {}
+    name: tools
+  - downwardAPI:
+      defaultMode: 420
+      items:
+      - fieldRef:
+          apiVersion: v1
+          fieldPath: metadata.annotations['tekton.dev/ready']
+        path: ready
+    name: downward
+  - emptyDir: {}
+    name: workspace
+  - emptyDir: {}
+    name: home
+  - name: secret-volume-knative-git-user-pass-n95vq
+    secret:
+      defaultMode: 420
+      secretName: knative-git-user-pass
+  - name: tekton-bot-token-hm6hq
+    secret:
+      defaultMode: 420
+      secretName: tekton-bot-token-hm6hq
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2020-04-24T14:53:29Z"
+    reason: PodCompleted
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2020-04-24T14:53:33Z"
+    reason: PodCompleted
+    status: "False"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2020-04-24T14:53:33Z"
+    reason: PodCompleted
+    status: "False"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2020-04-24T14:53:24Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: docker://93be3306e01e341a237a941a928a374b99380c97ef7d387a8cad424485298f42
+    image: gcr.io/jenkinsxio-labs-private/jxl:0.0.35
+    imageID: docker-pullable://gcr.io/jenkinsxio-labs-private/jxl@sha256:250c58a1bfea32b481c18f7167f9402f11d721466eed4d84af64159789f0374a
+    lastState: {}
+    name: step-create-effective-pipeline
+    ready: false
+    restartCount: 0
+    state:
+      terminated:
+        containerID: docker://93be3306e01e341a237a941a928a374b99380c97ef7d387a8cad424485298f42
+        exitCode: 0
+        finishedAt: "2020-04-24T14:53:42Z"
+        reason: Completed
+        startedAt: "2020-04-24T14:53:30Z"
+  - containerID: docker://c084adb6565491a1f74f4295f1cd217133e582f370d548fa45803dfeafd079ef
+    image: gcr.io/jenkinsxio-labs-private/jxl:0.0.35
+    imageID: docker-pullable://gcr.io/jenkinsxio-labs-private/jxl@sha256:250c58a1bfea32b481c18f7167f9402f11d721466eed4d84af64159789f0374a
+    lastState: {}
+    name: step-create-tekton-crds
+    ready: false
+    restartCount: 0
+    state:
+      terminated:
+        containerID: docker://c084adb6565491a1f74f4295f1cd217133e582f370d548fa45803dfeafd079ef
+        exitCode: 0
+        finishedAt: "2020-04-24T14:53:54Z"
+        reason: Completed
+        startedAt: "2020-04-24T14:53:30Z"
+  - containerID: docker://7045f55d2ae03efc08e8a6ded90a5a366177a71d5b87cb3cba0ba0ae9072e2b3
+    image: gcr.io/jenkinsxio/builder-jx:2.0.1245-582
+    imageID: docker-pullable://gcr.io/jenkinsxio/builder-jx@sha256:b261355a70950485026019088e0d56b20b48dc2f27ad763de488f6052086f1d9
+    lastState: {}
+    name: step-git-merge
+    ready: false
+    restartCount: 0
+    state:
+      terminated:
+        containerID: docker://7045f55d2ae03efc08e8a6ded90a5a366177a71d5b87cb3cba0ba0ae9072e2b3
+        exitCode: 0
+        finishedAt: "2020-04-24T14:53:32Z"
+        reason: Completed
+        startedAt: "2020-04-24T14:53:29Z"
+  - containerID: docker://af8b62a29e33556b99a3f99b64e07b95c614c8eb30811d53a59be14ab5e795f3
+    image: gcr.io/abayer-pipeline-crd/tekton-for-jx/git-init:0.8.0-for-jx
+    imageID: docker-pullable://gcr.io/abayer-pipeline-crd/tekton-for-jx/git-init@sha256:d588162cea7df36c48019b1d37f078cca6e76541672268dde03f1f3934c3f120
+    lastState: {}
+    name: step-git-source-meta-cb-kubecd-node-demo-js-3-m-5sss5-czm76
+    ready: false
+    restartCount: 0
+    state:
+      terminated:
+        containerID: docker://af8b62a29e33556b99a3f99b64e07b95c614c8eb30811d53a59be14ab5e795f3
+        exitCode: 0
+        finishedAt: "2020-04-24T14:53:32Z"
+        message: '[{"name":"","digest":"","key":"commit","value":"c1ddf1847fdf1126705228c25346ce02516e94a5","resourceRef":{}}]'
+        reason: Completed
+        startedAt: "2020-04-24T14:53:29Z"
+  - containerID: docker://6ecc1e3e6cb38f77cbff4e784a1360d51591c5ae7f2051d5308f30406fc88bc3
+    image: gcr.io/jenkinsxio/builder-maven:2.0.1245-582
+    imageID: docker-pullable://gcr.io/jenkinsxio/builder-maven@sha256:af92c8b16677d6b02a39ca1c2d88d49e1aa594bfc8b6c2c53a029a6ae74b1008
+    lastState: {}
+    name: step-merge-pull-refs
+    ready: false
+    restartCount: 0
+    state:
+      terminated:
+        containerID: docker://6ecc1e3e6cb38f77cbff4e784a1360d51591c5ae7f2051d5308f30406fc88bc3
+        exitCode: 0
+        finishedAt: "2020-04-24T14:53:33Z"
+        reason: Completed
+        startedAt: "2020-04-24T14:53:29Z"
+  hostIP: 10.132.0.19
+  initContainerStatuses:
+  - containerID: docker://d06a257c99760d633919ce8066a9e0ae1bb060aefdcf243bae85a505f66eaf39
+    image: gcr.io/abayer-pipeline-crd/tekton-for-jx/creds-init:0.8.0-for-jx
+    imageID: docker-pullable://gcr.io/abayer-pipeline-crd/tekton-for-jx/creds-init@sha256:72a870fe46e38bb3952ca5ae40b07a0e9b6ed4bb4b0fadaf50efe552888707bd
+    lastState: {}
+    name: step-credential-initializer-9bx4f
+    ready: true
+    restartCount: 0
+    state:
+      terminated:
+        containerID: docker://d06a257c99760d633919ce8066a9e0ae1bb060aefdcf243bae85a505f66eaf39
+        exitCode: 0
+        finishedAt: "2020-04-24T14:53:25Z"
+        reason: Completed
+        startedAt: "2020-04-24T14:53:25Z"
+  - containerID: docker://0074e4ae4568db81a60acf655b6c01316c4aca5c83547ec1cdb3bcee971154ea
+    image: gcr.io/abayer-pipeline-crd/tekton-for-jx/bash:0.8.0-for-jx
+    imageID: docker-pullable://gcr.io/abayer-pipeline-crd/tekton-for-jx/bash@sha256:9686ad64133b10b357d8bbddec71208beafa012d68d9088b2b6a9a4b810f4096
+    lastState: {}
+    name: step-working-dir-initializer-vdbq4
+    ready: true
+    restartCount: 0
+    state:
+      terminated:
+        containerID: docker://0074e4ae4568db81a60acf655b6c01316c4aca5c83547ec1cdb3bcee971154ea
+        exitCode: 0
+        finishedAt: "2020-04-24T14:53:27Z"
+        reason: Completed
+        startedAt: "2020-04-24T14:53:27Z"
+  - containerID: docker://059f4f33c843252f5c1c1c86d11ac8a608bc42bf92604b8417f936dfad64e26c
+    image: gcr.io/abayer-pipeline-crd/tekton-for-jx/entrypoint:0.8.0-for-jx
+    imageID: docker-pullable://gcr.io/abayer-pipeline-crd/tekton-for-jx/entrypoint@sha256:5fe38cac29c4444eb808082233156c81ebc51dc86c1f64478f76a884e5bb1da1
+    lastState: {}
+    name: step-place-tools
+    ready: true
+    restartCount: 0
+    state:
+      terminated:
+        containerID: docker://059f4f33c843252f5c1c1c86d11ac8a608bc42bf92604b8417f936dfad64e26c
+        exitCode: 0
+        finishedAt: "2020-04-24T14:53:28Z"
+        reason: Completed
+        startedAt: "2020-04-24T14:53:28Z"
+  phase: Succeeded
+  podIP: 10.8.0.222
+  qosClass: Burstable
+  startTime: "2020-04-24T14:53:24Z"

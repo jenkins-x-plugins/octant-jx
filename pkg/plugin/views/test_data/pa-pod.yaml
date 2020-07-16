@@ -1,0 +1,122 @@
+apiVersion: jenkins.io/v1
+kind: PipelineActivity
+metadata:
+  creationTimestamp: "2020-04-24T14:53:24Z"
+  generation: 19
+  labels:
+    branch: master
+    build: "16"
+    owner: cb-kubecd
+    provider: github
+    repository: node-demo-js-3
+  name: cb-kubecd-node-demo-js-3-master-16
+  namespace: jx
+  resourceVersion: "1138117"
+  selfLink: /apis/jenkins.io/v1/namespaces/jx/pipelineactivities/cb-kubecd-node-demo-js-3-master-16
+  uid: 59187b38-863b-11ea-ac26-42010a840fd3
+spec:
+  author: jstrachan
+  batchPipelineActivity: {}
+  build: "16"
+  gitBranch: master
+  gitOwner: cb-kubecd
+  gitRepository: node-demo-js-3
+  gitUrl: https://github.com/cb-kubecd/node-demo-js-3.git
+  lastCommitMessage: Update index.html
+  pipeline: cb-kubecd/node-demo-js-3/master
+  startedTimestamp: "2020-04-24T14:53:25Z"
+  status: Running
+  steps:
+  - kind: Stage
+    stage:
+      completedTimestamp: "2020-04-24T14:53:54Z"
+      name: meta pipeline
+      startedTimestamp: "2020-04-24T14:53:25Z"
+      status: Succeeded
+      steps:
+      - completedTimestamp: "2020-04-24T14:53:25Z"
+        name: Credential Initializer 9bx4f
+        startedTimestamp: "2020-04-24T14:53:25Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-24T14:53:27Z"
+        name: Working Dir Initializer Vdbq4
+        startedTimestamp: "2020-04-24T14:53:25Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-24T14:53:28Z"
+        name: Place Tools
+        startedTimestamp: "2020-04-24T14:53:27Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-24T14:53:32Z"
+        description: https://github.com/cb-kubecd/node-demo-js-3.git
+        name: Git Source Meta Cb Kubecd Node Demo Js 3 M 5sss5 Czm76
+        startedTimestamp: "2020-04-24T14:53:28Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-24T14:53:32Z"
+        name: Git Merge
+        startedTimestamp: "2020-04-24T14:53:32Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-24T14:53:33Z"
+        name: Merge Pull Refs
+        startedTimestamp: "2020-04-24T14:53:32Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-24T14:53:42Z"
+        name: Create Effective Pipeline
+        startedTimestamp: "2020-04-24T14:53:33Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-24T14:53:54Z"
+        name: Create Tekton Crds
+        startedTimestamp: "2020-04-24T14:53:42Z"
+        status: Succeeded
+  - kind: Stage
+    stage:
+      name: from build pack
+      startedTimestamp: "2020-04-24T14:53:55Z"
+      status: Running
+      steps:
+      - completedTimestamp: "2020-04-24T14:53:55Z"
+        name: Credential Initializer Pmfbm
+        startedTimestamp: "2020-04-24T14:53:55Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-24T14:53:56Z"
+        name: Working Dir Initializer Sstv6
+        startedTimestamp: "2020-04-24T14:53:55Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-24T14:53:57Z"
+        name: Place Tools
+        startedTimestamp: "2020-04-24T14:53:56Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-24T14:54:04Z"
+        description: https://github.com/cb-kubecd/node-demo-js-3.git
+        name: Git Source Cb Kubecd Node Demo Js 3 Master 76jvj 4jvkf
+        startedTimestamp: "2020-04-24T14:53:57Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-24T14:54:04Z"
+        name: Git Merge
+        startedTimestamp: "2020-04-24T14:54:04Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-24T14:54:10Z"
+        name: Setup Jx Git Credentials
+        startedTimestamp: "2020-04-24T14:54:04Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-24T14:54:10Z"
+        name: Build Npmrc
+        startedTimestamp: "2020-04-24T14:54:10Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-24T14:54:12Z"
+        name: Build Npm Install
+        startedTimestamp: "2020-04-24T14:54:10Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-24T14:54:12Z"
+        name: Build Npm Test
+        startedTimestamp: "2020-04-24T14:54:12Z"
+        status: Succeeded
+      - name: Build Container Build
+        startedTimestamp: "2020-04-24T14:54:12Z"
+        status: Running
+      - name: Promote Changelog
+        status: Pending
+      - name: Promote Helm Release
+        status: Pending
+      - name: Promote Jx Promote
+        status: Pending
+status: {}

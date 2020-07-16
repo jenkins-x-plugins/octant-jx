@@ -1,0 +1,13 @@
+apiVersion: comcast.github.io/v1
+kind: KuberhealthyState
+metadata:
+  name: dns-status-internal
+  namespace: kuberhealthy
+spec:
+  AuthoritativePod: kuberhealthy-f98fc888b-8f44g
+  Errors: []
+  LastRun: "2020-05-04T11:58:29.148745355Z"
+  Namespace: kuberhealthy
+  OK: true
+  RunDuration: 1.8375993s
+  uuid: 88d99b96-2334-4551-a53e-3a77bb6cddca

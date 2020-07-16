@@ -1,0 +1,68 @@
+apiVersion: jenkins.io/v1
+kind: PipelineActivity
+metadata:
+  creationTimestamp: "2020-04-24T09:33:45Z"
+  generation: 8
+  labels:
+    branch: master
+    build: "7"
+    owner: cb-kubecd
+    provider: github
+    repository: node-demo-js-3
+  name: cb-kubecd-node-demo-js-3-master-7
+  namespace: jx
+  resourceVersion: "1054549"
+  selfLink: /apis/jenkins.io/v1/namespaces/jx/pipelineactivities/cb-kubecd-node-demo-js-3-master-7
+  uid: b17c2929-860e-11ea-ac26-42010a840fd3
+spec:
+  author: jstrachan
+  batchPipelineActivity: {}
+  build: "7"
+  gitBranch: master
+  gitOwner: cb-kubecd
+  gitRepository: node-demo-js-3
+  gitUrl: https://github.com/cb-kubecd/node-demo-js-3.git
+  lastCommitMessage: Update index.html
+  pipeline: cb-kubecd/node-demo-js-3/master
+  startedTimestamp: "2020-04-24T09:33:47Z"
+  status: Running
+  steps:
+  - kind: Stage
+    stage:
+      name: meta pipeline
+      startedTimestamp: "2020-04-24T09:33:47Z"
+      status: Running
+      steps:
+      - completedTimestamp: "2020-04-24T09:33:47Z"
+        name: Credential Initializer Hlkzt
+        startedTimestamp: "2020-04-24T09:33:47Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-24T09:33:48Z"
+        name: Working Dir Initializer Shdsv
+        startedTimestamp: "2020-04-24T09:33:47Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-24T09:33:49Z"
+        name: Place Tools
+        startedTimestamp: "2020-04-24T09:33:48Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-24T09:33:55Z"
+        description: https://github.com/cb-kubecd/node-demo-js-3.git
+        name: Git Source Meta Cb Kubecd Node Demo Js 3 M Bp9p9 Gk575
+        startedTimestamp: "2020-04-24T09:33:49Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-24T09:33:55Z"
+        name: Git Merge
+        startedTimestamp: "2020-04-24T09:33:55Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-24T09:33:55Z"
+        name: Merge Pull Refs
+        startedTimestamp: "2020-04-24T09:33:55Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-24T09:34:05Z"
+        name: Create Effective Pipeline
+        startedTimestamp: "2020-04-24T09:33:55Z"
+        status: Succeeded
+      - name: Create Tekton Crds
+        startedTimestamp: "2020-04-24T09:34:05Z"
+        status: Running
+status: {}

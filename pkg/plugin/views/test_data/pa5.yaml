@@ -1,0 +1,144 @@
+apiVersion: jenkins.io/v1
+kind: PipelineActivity
+metadata:
+  annotations:
+    jenkins.io/git-report-running-stages: from build pack
+    jenkins.io/git-report-state: Running
+  creationTimestamp: "2020-04-24T09:33:45Z"
+  generation: 24
+  labels:
+    branch: master
+    build: "7"
+    owner: cb-kubecd
+    provider: github
+    repository: node-demo-js-3
+  name: cb-kubecd-node-demo-js-3-master-7
+  namespace: jx
+  resourceVersion: "1054962"
+  selfLink: /apis/jenkins.io/v1/namespaces/jx/pipelineactivities/cb-kubecd-node-demo-js-3-master-7
+  uid: b17c2929-860e-11ea-ac26-42010a840fd3
+spec:
+  author: jstrachan
+  batchPipelineActivity: {}
+  build: "7"
+  gitBranch: master
+  gitOwner: cb-kubecd
+  gitRepository: node-demo-js-3
+  gitUrl: https://github.com/cb-kubecd/node-demo-js-3.git
+  lastCommitMessage: Update index.html
+  lastCommitSHA: f9ea9d90f3b238038aafd59fb33114398582214c
+  pipeline: cb-kubecd/node-demo-js-3/master
+  releaseNotesURL: https://github.com/cb-kubecd/node-demo-js-3/releases/tag/v1.0.5
+  startedTimestamp: "2020-04-24T09:33:47Z"
+  status: Running
+  steps:
+  - kind: Stage
+    stage:
+      completedTimestamp: "2020-04-24T09:34:16Z"
+      name: meta pipeline
+      startedTimestamp: "2020-04-24T09:33:47Z"
+      status: Succeeded
+      steps:
+      - completedTimestamp: "2020-04-24T09:33:47Z"
+        name: Credential Initializer Hlkzt
+        startedTimestamp: "2020-04-24T09:33:47Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-24T09:33:48Z"
+        name: Working Dir Initializer Shdsv
+        startedTimestamp: "2020-04-24T09:33:47Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-24T09:33:49Z"
+        name: Place Tools
+        startedTimestamp: "2020-04-24T09:33:48Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-24T09:33:55Z"
+        description: https://github.com/cb-kubecd/node-demo-js-3.git
+        name: Git Source Meta Cb Kubecd Node Demo Js 3 M Bp9p9 Gk575
+        startedTimestamp: "2020-04-24T09:33:49Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-24T09:33:55Z"
+        name: Git Merge
+        startedTimestamp: "2020-04-24T09:33:55Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-24T09:33:55Z"
+        name: Merge Pull Refs
+        startedTimestamp: "2020-04-24T09:33:55Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-24T09:34:05Z"
+        name: Create Effective Pipeline
+        startedTimestamp: "2020-04-24T09:33:55Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-24T09:34:16Z"
+        name: Create Tekton Crds
+        startedTimestamp: "2020-04-24T09:34:05Z"
+        status: Succeeded
+  - kind: Stage
+    stage:
+      name: from build pack
+      startedTimestamp: "2020-04-24T09:34:17Z"
+      status: Running
+      steps:
+      - completedTimestamp: "2020-04-24T09:34:17Z"
+        name: Credential Initializer Bwl4v
+        startedTimestamp: "2020-04-24T09:34:17Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-24T09:34:18Z"
+        name: Working Dir Initializer Mfpkp
+        startedTimestamp: "2020-04-24T09:34:17Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-24T09:34:19Z"
+        name: Place Tools
+        startedTimestamp: "2020-04-24T09:34:18Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-24T09:34:25Z"
+        description: https://github.com/cb-kubecd/node-demo-js-3.git
+        name: Git Source Cb Kubecd Node Demo Js 3 Master R4nn5 T4chm
+        startedTimestamp: "2020-04-24T09:34:19Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-24T09:34:26Z"
+        name: Git Merge
+        startedTimestamp: "2020-04-24T09:34:25Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-24T09:34:31Z"
+        name: Setup Jx Git Credentials
+        startedTimestamp: "2020-04-24T09:34:26Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-24T09:34:32Z"
+        name: Build Npmrc
+        startedTimestamp: "2020-04-24T09:34:31Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-24T09:34:33Z"
+        name: Build Npm Install
+        startedTimestamp: "2020-04-24T09:34:32Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-24T09:34:33Z"
+        name: Build Npm Test
+        startedTimestamp: "2020-04-24T09:34:33Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-24T09:34:57Z"
+        name: Build Container Build
+        startedTimestamp: "2020-04-24T09:34:33Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-24T09:35:03Z"
+        name: Promote Changelog
+        startedTimestamp: "2020-04-24T09:34:57Z"
+        status: Succeeded
+      - completedTimestamp: "2020-04-24T09:35:07Z"
+        name: Promote Helm Release
+        startedTimestamp: "2020-04-24T09:35:03Z"
+        status: Succeeded
+      - name: Promote Jx Promote
+        startedTimestamp: "2020-04-24T09:35:07Z"
+        status: Running
+  - kind: Promote
+    promote:
+      environment: staging
+      pullRequest:
+        pullRequestURL: https://github.com/cb-kubecd/environment-bootv3-demo-staging/pull/7
+        startedTimestamp: "2020-04-24T09:35:25Z"
+        status: Running
+      startedTimestamp: "2020-04-24T09:35:25Z"
+      status: Running
+  version: 1.0.5
+  workflowStatus: Running
+status: {}
