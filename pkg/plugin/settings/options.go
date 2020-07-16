@@ -18,7 +18,7 @@ func GetOptions(pluginContext *pluginctx.Context) []service.PluginOption {
 			func(_ *service.NavigationRequest) (navigation.Navigation, error) {
 				return navigation.Navigation{
 					Title:    "Jenkins X",
-					Path:     plugin.PluginName + "/" + plugin.PipelinesPath,
+					Path:     plugin.Name + "/" + plugin.PipelinesPath,
 					IconName: rootNavIcon,
 					Children: plugin.Navigations,
 				}, nil

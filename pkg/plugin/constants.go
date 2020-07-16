@@ -5,7 +5,7 @@ import (
 )
 
 const (
-	PluginName = "jx" // This should stay lowercase for routing purposes
+	Name = "jx" // This should stay lowercase for routing purposes
 
 	// PathPrefix the initial prefix of all paths
 	PathPrefix = "/#"
@@ -31,27 +31,27 @@ var (
 	Navigations = []navigation.Navigation{
 		{
 			Title: "Apps",
-			Path:  PluginName + "/" + AppsPath,
+			Path:  Name + "/" + AppsPath,
 		},
 		{
 			Title: "Environments",
-			Path:  PluginName + "/" + EnvironmentsPath,
+			Path:  Name + "/" + EnvironmentsPath,
 		},
 		{
 			Title: "Helm",
-			Path:  PluginName + "/" + HelmPath,
+			Path:  Name + "/" + HelmPath,
 		},
 		{
 			Title: "Pipelines",
-			Path:  PluginName + "/" + PipelinesPath,
+			Path:  Name + "/" + PipelinesPath,
 		},
 		{
 			Title: "Pipelines: Recent",
-			Path:  PluginName + "/" + PipelinesRecentPath,
+			Path:  Name + "/" + PipelinesRecentPath,
 		},
 		{
 			Title: "Repositories",
-			Path:  PluginName + "/" + RepositoriesPath,
+			Path:  Name + "/" + RepositoriesPath,
 		},
 	}
 )

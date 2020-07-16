@@ -1,7 +1,7 @@
 package plugin
 
 func GetPluginLink() string {
-	return PathPrefix + "/" + PluginName
+	return PathPrefix + "/" + Name
 }
 
 func GetEnviromentsLink() string {

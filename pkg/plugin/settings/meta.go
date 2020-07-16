@@ -7,7 +7,7 @@ const (
 )
 
 func GetName() string {
-	return plugin.PluginName
+	return plugin.Name
 }
 
 func GetDescription() string {
