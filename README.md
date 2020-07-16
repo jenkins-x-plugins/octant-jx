@@ -51,7 +51,7 @@ A good example to copy/paste if you want to add a new view is the `Repositories`
   * add a link to your new view in [pkg/plugin/settings/options.go](https://github.com/jenkins-x/octant-jx/blob/master/pkg/plugin/settings/options.go#L40-L44)
 
 
-### Resources for plugin developers 
+### Resources for plugin developers 
 
 * Check out the [Plugin Documentation](https://octant.dev/docs/master/plugins/)
 * Views can use any of the widgets in the `/pkg/view/components` package of octant - check the [reference docs](https://octant.dev/docs/master/plugins/reference/).
