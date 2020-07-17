@@ -10,6 +10,7 @@ BRANCH     := $(shell git rev-parse --abbrev-ref HEAD 2> /dev/null  || echo 'unk
 BUILD_DATE := $(shell date +%Y%m%d-%H:%M:%S)
 #GO_VERSION := $(shell $(GO) version | sed -e 's/^[^0-9.]*\([0-9.]*\).*/\1/')
 GO_VERSION := 1.12
+PLUGINS_DIR := $(HOME)/.config/octant/plugins
 
 # set dev version unless VERSION is explicitly set via environment
 #VERSION ?= $(shell echo "$$(git for-each-ref refs/tags/ --count=1 --sort=-version:refname --format='%(refname:short)' 2>/dev/null)-dev+$(REV)" | sed 's/^v//')
@@ -23,9 +24,9 @@ build-jxo:
 	go build -o bin/octant-jxo -ldflags " -X main.version=$(VERSION)" cmd/octant-jxo/main.go
 
 release: build build-jxo
-	mkdir -p ~/.config/octant
-	cp bin/octant-jx ~/.config/octant/plugins
-	cp bin/octant-jxo ~/.config/octant/plugins
+	mkdir -p $(PLUGINS_DIR)
+	cp bin/octant-jx $(PLUGINS_DIR)
+	cp bin/octant-jxo $(PLUGINS_DIR)
 
 .PHONY: dev
 dev:
@@ -42,8 +43,8 @@ octant: release
 	octant -v --disable-open-browser > octant.log 2>&1
 
 octant-jx: build
-	mkdir -p ~/.config/octant
-	cp bin/octant-jx ~/.config/octant/plugins
+	mkdir -p $(PLUGINS_DIR)
+	cp bin/octant-jx $(PLUGINS_DIR)
 	octant -v --disable-open-browser > octant.log 2>&1
 
 tail:
@@ -60,4 +61,3 @@ goreleaser:
 .PHONY: clean
 clean: ## Clean the generated artifacts
 	rm -rf bin release dist
-
