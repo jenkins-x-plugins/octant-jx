@@ -5,23 +5,16 @@ This repository contains plugins for [Octant](https://octant.dev/) for working w
 ## Install
 
 Octant should first be installed and added to your `$PATH`
- 
-To build the plugins use:
 
+Then follow the [download instructions to get the octant-jx binaries setup](https://github.com/jenkins-x/octant-jx/releases) so that the `octant-*` binaries such as `octant-jx` are in ` ~/.config/octant/plugins`
 
+Now you can run the UI via:
+
+```bash 
+octant --browser-path="/#/jx/pipelines"
 ```
-make octant
-```
 
-
-which will build the plugins, install then into `~/.config/octant/plugins` and then startup octant against the current k8s cluster.
-
-You can run `make tail` in another terminal to watch the console log of `octant-jx` if you are developing a plugin.
- 
-
-### Using the Developer + Operator plugins
-
-You should see on the left nav bar the Jenkins X Developer + Operator plugins appear near the bottom (2nd to last icons).
+You should see on the left nav bar the Jenkins X Developer + Ops plugins appear near the bottom (2nd to last icons).
  
 ## Running multiple Octants
 
@@ -39,6 +32,23 @@ octant --listener-addr=localhost:0  --browser-path="/#/jx/pipelines-recent"
 
 An octant will start along with a new browser window.
 
+
+## Developing octant-jx 
+
+`octant-jx` is 100% go lang and has a pretty simple small code base so we'd love contributions! It should be easy to add or improve the UI to handle most use cases.
+
+### Building locally
+ 
+To build the plugins use:
+
+```
+make octant
+```
+
+which will build the plugins, install then into `~/.config/octant/plugins` and then startup octant against the current k8s cluster.
+
+You can run `make tail` in another terminal to watch the console log of `octant-jx` if you are developing a plugin.
+ 
 
 ## Adding a new view
 
