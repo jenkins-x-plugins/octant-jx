@@ -6,33 +6,19 @@ This repository contains plugins for [Octant](https://octant.dev/) for working w
 
 ### Prerequisites
 
-Octant should first be installed and added to your `$PATH`, get the latest release [here](https://github.com/vmware-tanzu/octant/releases)
+Octant should first be installed and added to your `$PATH`.
+
+Get the latest release from [vmware-tanzu/octant](https://github.com/vmware-tanzu/octant/releases)
 
 ### Install the plugin
 
-Octant checks for extra plugins that live in `~/.config/octant/plugins`.  You can download the released plugin binary [here](https://github.com/jenkins-x/octant-jx/releases/) or build it locally in the next section. 
+Octant checks for extra plugins that live in `~/.config/octant/plugins`.  
 
-### Development of the plugin
+You can download the released plugin binaries [here](https://github.com/jenkins-x/octant-jx/releases/) and move the `octant-*` binaries to` ~/.config/octant/plugins`
 
-To build the plugin use:
+## Running
 
-```
-make octant
-```
-
-which will build the plugin, install it into `~/.config/octant/plugins` and then startup octant against the current k8s cluster.
-
-You can run `make tail` in another terminal to watch the console log of `octant-jx` if you are developing a plugin.
-
-### Using the Developer + Operator plugins
-
-You should see on the left nav bar the Jenkins X Developer plugin appears near the bottom (2nd to last icons).
-
-Octant should first be installed and added to your `$PATH`
-
-Then follow the [download instructions to get the octant-jx binaries setup](https://github.com/jenkins-x/octant-jx/releases) so that the `octant-*` binaries such as `octant-jx` are in ` ~/.config/octant/plugins`
-
-Now you can run the UI via:
+Run the UI via:
 
 ```bash 
 octant --browser-path="/#/jx/pipelines"
@@ -59,7 +45,9 @@ An octant will start along with a new browser window.
 
 ## Developing octant-jx 
 
-`octant-jx` is 100% go lang and has a pretty simple small code base so we'd love contributions! It should be easy to add or improve the UI to handle most use cases.
+`octant-jx` is 100% go lang and has a pretty simple small code base - so we'd love contributions! 
+
+It should be easy to add or improve the UI to handle most use cases.
 
 ### Building locally
  
