@@ -1,7 +1,7 @@
 package views // import "github.com/jenkins-x/octant-jx/pkg/plugin/views"
 
 import (
-	"log"
+	"github.com/jenkins-x/jx-logging/pkg/log"
 
 	"github.com/jenkins-x/octant-jx/pkg/admin"
 	"github.com/pkg/errors"
@@ -26,11 +26,11 @@ func HealthView(request service.Request, _ pluginctx.Context) (component.Compone
 	})
 
 	if err != nil {
-		log.Printf("failed: %s", err.Error())
+		log.Logger().Infof("failed: %s", err.Error())
 		return nil, err
 	}
 
-	log.Printf("got list of KuberhealthyState %d\n", len(h.Items))
+	log.Logger().Infof("got list of KuberhealthyState %d\n", len(h.Items))
 
 	header := component.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(admin.RootBreadcrumb, "Health"))
 
@@ -39,10 +39,10 @@ func HealthView(request service.Request, _ pluginctx.Context) (component.Compone
 		component.NewTableCols("Name", "Namespace", "Healthy", "Errors"),
 		[]component.TableRow{})
 
-	for _, healthState := range h.Items {
-		tr, err := toHealthTableRow(&healthState)
+	for k := range h.Items {
+		tr, err := toHealthTableRow(&h.Items[k])
 		if err != nil {
-			log.Printf("failed to create Table Row: %s", err.Error())
+			log.Logger().Infof("failed to create Table Row: %s", err.Error())
 			continue
 		}
 		if tr != nil {

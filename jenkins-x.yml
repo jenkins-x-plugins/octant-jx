@@ -9,6 +9,8 @@ pipelineConfig:
               image: golang:1.13
             name: cli
             steps:
+              - name: lint
+                command: make lint
               - name: test
                 command: make test
 

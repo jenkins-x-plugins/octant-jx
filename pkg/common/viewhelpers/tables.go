@@ -10,7 +10,6 @@ import (
 func InitTableFilters(filters []*component.TableFilter) {
 	for _, f := range filters {
 		sort.Strings(f.Values)
-		//f.Selected = f.Values
 	}
 }
 

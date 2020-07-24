@@ -2,7 +2,6 @@ package viewhelpers
 
 import (
 	"context"
-	"log"
 
 	"github.com/vmware-tanzu/octant/pkg/plugin/service"
 	"github.com/vmware-tanzu/octant/pkg/store"
@@ -11,7 +10,7 @@ import (
 )
 
 // GetResourceByName looks up the resource by name
-func GetResourceByName(ctx context.Context, client service.Dashboard, apiVersion string, kind string, name string, ns string) (*unstructured.Unstructured, error) {
+func GetResourceByName(ctx context.Context, client service.Dashboard, apiVersion, kind, name, ns string) (*unstructured.Unstructured, error) {
 	u, err := client.Get(ctx, store.Key{
 		APIVersion: apiVersion,
 		Kind:       kind,
@@ -19,14 +18,13 @@ func GetResourceByName(ctx context.Context, client service.Dashboard, apiVersion
 		Name:       name,
 	})
 	if err != nil {
-		log.Println(err)
 		return nil, err
 	}
 	return u, nil
 }
 
 // ListResourcesBySelector lists resources using a selector
-func ListResourcesBySelector(ctx context.Context, client service.Dashboard, apiVersion string, kind string, ns string, selector labels.Set) (*unstructured.UnstructuredList, error) {
+func ListResourcesBySelector(ctx context.Context, client service.Dashboard, apiVersion, kind, ns string, selector labels.Set) (*unstructured.UnstructuredList, error) {
 	ul, err := client.List(ctx, store.Key{
 		APIVersion: apiVersion,
 		Kind:       kind,
@@ -34,7 +32,6 @@ func ListResourcesBySelector(ctx context.Context, client service.Dashboard, apiV
 		Selector:   &selector,
 	})
 	if err != nil {
-		log.Println(err)
 		return nil, err
 	}
 	answer := &unstructured.UnstructuredList{}
@@ -49,7 +46,7 @@ func ListResourcesBySelector(ctx context.Context, client service.Dashboard, apiV
 	return answer, nil
 }
 
-// MatchesSelector returns true if the given labels match the selecctor
+// MatchesSelector returns true if the given labels match the selector
 func MatchesSelector(labels map[string]string, selector labels.Set) bool {
 	for k, v := range selector {
 		if labels[k] != v {

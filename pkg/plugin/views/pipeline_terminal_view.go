@@ -2,9 +2,10 @@ package views // import "github.com/jenkins-x/octant-jx/pkg/plugin/views"
 
 import (
 	"fmt"
-	"log"
 	"strings"
 	"time"
+
+	"github.com/jenkins-x/jx-logging/pkg/log"
 
 	"github.com/jenkins-x/octant-jx/pkg/common/links"
 	"github.com/jenkins-x/octant-jx/pkg/common/pluginctx"
@@ -29,7 +30,7 @@ func BuildPipelineTerminalView(request service.Request, pluginContext pluginctx.
 	client := request.DashboardClient()
 	ns := pluginContext.Namespace
 
-	log.Printf("BuildPipelineTerminalView querying for Pipeline %s Pod %s in namespace %s\n", pipelineName, name, ns)
+	log.Logger().Infof("BuildPipelineTerminalView querying for Pipeline %s Pod %s in namespace %s\n", pipelineName, name, ns)
 
 	u, err := viewhelpers.GetResourceByName(ctx, client, "v1", "Pod", name, ns)
 	if err != nil {
@@ -42,11 +43,11 @@ func BuildPipelineTerminalView(request service.Request, pluginContext pluginctx.
 	pod := &corev1.Pod{}
 	err = viewhelpers.ToStructured(u, &pod)
 	if err != nil {
-		log.Println(err)
+		log.Logger().Info(err)
 		return component.NewText(fmt.Sprintf("Error: failed to load Pod %s not found in namespace %s", name, ns)), nil
 	}
 	containers := pod.Spec.Containers
-	if len(containers) <= 0 {
+	if len(containers) == 0 {
 		return component.NewText(fmt.Sprintf("Error: no containers for Pod %s found in namespace %s", name, ns)), nil
 	}
 	lastContainer := containers[len(containers)-1]

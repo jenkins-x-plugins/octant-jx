@@ -18,9 +18,10 @@ package views
 
 import (
 	"fmt"
-	"log"
 	"strconv"
 	"strings"
+
+	"github.com/jenkins-x/jx-logging/pkg/log"
 
 	"github.com/jenkins-x/octant-jx/pkg/common/helm"
 	"github.com/jenkins-x/octant-jx/pkg/common/pluginctx"
@@ -48,11 +49,11 @@ func BuildHelmReleasesView(request service.Request, pluginContext pluginctx.Cont
 	})
 
 	if err != nil {
-		log.Printf("failed: %s", err.Error())
+		log.Logger().Infof("failed: %s", err.Error())
 		return nil, err
 	}
 
-	//log.Printf("BuildHelmReleasesView got list of secrets %d\n", len(ul.Items))
+	log.Logger().Debugf("BuildHelmReleasesView got list of secrets %d\n", len(ul.Items))
 
 	helmReleases := helm.UnstructuredListToHelmReleaseList(ul)
 

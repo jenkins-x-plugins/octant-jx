@@ -3,11 +3,12 @@ package viewhelpers
 import (
 	"context"
 	"fmt"
-	"log"
 	"sort"
 	"time"
 
-	"github.com/jenkins-x/jx-api/pkg/apis/jenkins.io/v1"
+	"github.com/jenkins-x/jx-logging/pkg/log"
+
+	v1 "github.com/jenkins-x/jx-api/pkg/apis/jenkins.io/v1"
 	"github.com/pkg/errors"
 	"github.com/vmware-tanzu/octant/pkg/plugin/service"
 	"github.com/vmware-tanzu/octant/pkg/view/component"
@@ -48,7 +49,7 @@ func ToStructured(u *unstructured.Unstructured, structured interface{}) error {
 }
 
 // ResourceTimeLessThan returns whether the first time is less than the second time
-func ResourceTimeLessThan(t1 *metav1.Time, t2 *metav1.Time) bool {
+func ResourceTimeLessThan(t1, t2 *metav1.Time) bool {
 	if t1 == nil {
 		if t2 == nil {
 			return false
@@ -70,7 +71,7 @@ func ToTimestamp(t *metav1.Time) component.Component {
 }
 
 func ToDurationString(u time.Time) string {
-	return time.Now().Sub(u).Truncate(time.Second).String()
+	return time.Since(u).Truncate(time.Second).String()
 }
 
 func ToDurationMarkdown(time time.Time, titlePrefix string) string {
@@ -86,10 +87,10 @@ func ListPodsBySelector(ctx context.Context, client service.Dashboard, namespace
 
 	pods := []*corev1.Pod{}
 
-	for _, u := range ul.Items {
-		pod, err := ToPod(&u)
+	for k, v := range ul.Items {
+		pod, err := ToPod(&ul.Items[k])
 		if err != nil {
-			return pods, errors.Wrapf(err, "failed to convert pod %s", u.GetName())
+			return pods, errors.Wrapf(err, "failed to convert pod %s", v.GetName())
 		}
 		pods = append(pods, pod)
 	}
@@ -102,7 +103,7 @@ func FindLatestPodForSelector(ctx context.Context, client service.Dashboard, nam
 		return nil, err
 	}
 	if len(pods) == 0 {
-		log.Printf("could not find pod in namespace %s with selector %s", namespace, selector.String())
+		log.Logger().Infof("could not find pod in namespace %s with selector %s", namespace, selector.String())
 		return nil, nil
 	}
 

@@ -3,8 +3,9 @@ package views // import "github.com/jenkins-x/octant-jx/pkg/plugin/views"
 import (
 	"fmt"
 	"io"
-	"log"
 	"strings"
+
+	"github.com/jenkins-x/jx-logging/pkg/log"
 
 	"github.com/jenkins-x/octant-jx/pkg/common/links"
 	"github.com/jenkins-x/octant-jx/pkg/common/pluginctx"
@@ -43,7 +44,7 @@ func BuildPipelineContainersView(request service.Request, pluginContext pluginct
 	client := request.DashboardClient()
 	ns := pluginContext.Namespace
 
-	//log.Printf("BuildPipelineContainersView querying for Pod %s in namespace %s\n", name, ns)
+	log.Logger().Debugf("BuildPipelineContainersView querying for Pod %s in namespace %s\n", name, ns)
 
 	u, err := viewhelpers.GetResourceByName(ctx, client, "v1", "Pod", name, ns)
 	if err != nil {
@@ -56,7 +57,7 @@ func BuildPipelineContainersView(request service.Request, pluginContext pluginct
 	pod := &corev1.Pod{}
 	err = viewhelpers.ToStructured(u, &pod)
 	if err != nil {
-		log.Println(err)
+		log.Logger().Info(err)
 		return component.NewText(fmt.Sprintf("Error: failed to load Pod %s not found in namespace %s", name, ns)), nil
 	}
 
@@ -88,19 +89,32 @@ func BuildPipelineContainersView(request service.Request, pluginContext pluginct
 
 func ToPipelinePodContainersView(vc containersViewContext, pod *corev1.Pod) component.Component {
 	b := &strings.Builder{}
-	for i, c := range pod.Spec.Containers {
-		appendPipelineContainer(vc, b, i, pod, &c)
+	containers := pod.Spec.Containers
+	for k := range containers {
+		appendPipelineContainer(vc, b, k, &containers[k])
 	}
 	return component.NewMarkdownText(b.String())
 }
 
-func appendPipelineContainer(vc containersViewContext, w io.StringWriter, index int, pod *corev1.Pod, c *corev1.Container) {
+func appendPipelineContainer(vc containersViewContext, w io.StringWriter, index int, c *corev1.Container) {
 	name := ToStepName(vc, c)
-	w.WriteString(fmt.Sprintf("* %s\n", name))
+	n, err := w.WriteString(fmt.Sprintf("* %s\n", name))
+	if err != nil {
+		log.Logger().Debug(err)
+	}
+	log.Logger().Debugf("wrote %d bytes\n", n)
 	image := ToImage(c)
 	commandLine := ToCommandLine(index, c)
-	w.WriteString(fmt.Sprintf("  * **%s**\n", commandLine))
-	w.WriteString(fmt.Sprintf("  * %s\n", image))
+	n, err = w.WriteString(fmt.Sprintf("  * **%s**\n", commandLine))
+	if err != nil {
+		log.Logger().Debug(err)
+	}
+	log.Logger().Debugf("wrote %d bytes\n", n)
+	n, err = w.WriteString(fmt.Sprintf("  * %s\n", image))
+	if err != nil {
+		log.Logger().Debug(err)
+	}
+	log.Logger().Debugf("wrote %d bytes\n", n)
 }
 
 func ToStepName(vc containersViewContext, c *corev1.Container) string {

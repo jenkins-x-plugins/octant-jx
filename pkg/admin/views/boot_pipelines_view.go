@@ -2,7 +2,8 @@ package views // import "github.com/jenkins-x/octant-jx/pkg/plugin/views"
 
 import (
 	"fmt"
-	"log"
+
+	"github.com/jenkins-x/jx-logging/pkg/log"
 
 	v1 "github.com/jenkins-x/jx-api/pkg/apis/jenkins.io/v1"
 	"github.com/jenkins-x/jx-helpers/pkg/gitclient/giturl"
@@ -21,7 +22,7 @@ func BuildBootPipelinesView(request service.Request, pluginContext pluginctx.Con
 	ns := pluginContext.Namespace
 	u, err := viewhelpers.GetResourceByName(ctx, client, "jenkins.io/v1", "Environment", "dev", ns)
 	if err != nil {
-		log.Printf("failed to find dev Environment in namespace %s", ns)
+		log.Logger().Infof("failed to find dev Environment in namespace %s", ns)
 	}
 	gitURL := ""
 	owner := ""
@@ -30,7 +31,7 @@ func BuildBootPipelinesView(request service.Request, pluginContext pluginctx.Con
 		r := &v1.Environment{}
 		err = viewhelpers.ToStructured(u, r)
 		if err != nil {
-			log.Println(err)
+			log.Logger().Info(err)
 		}
 		gitURL = r.Spec.Source.URL
 		if gitURL != "" {
@@ -45,7 +46,7 @@ func BuildBootPipelinesView(request service.Request, pluginContext pluginctx.Con
 		}
 	}
 	if owner == "" || repository == "" {
-		log.Printf("No _dev_ **Environment** resource is available with a link to the git repository in the %s namespace for git URL %s", ns, gitURL)
+		log.Logger().Infof("No _dev_ **Environment** resource is available with a link to the git repository in the %s namespace for git URL %s", ns, gitURL)
 	}
 
 	header := viewhelpers.ToBreadcrumbMarkdown(admin.RootBreadcrumb, "Boot Pipelines")

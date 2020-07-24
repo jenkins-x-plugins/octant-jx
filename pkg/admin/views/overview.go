@@ -1,7 +1,7 @@
 package views // import "github.com/jenkins-x/octant-jx/pkg/plugin/views"
 
 import (
-	"log"
+	"github.com/jenkins-x/jx-logging/pkg/log"
 
 	"github.com/jenkins-x/octant-jx/pkg/admin"
 	"github.com/jenkins-x/octant-jx/pkg/common/pluginctx"
@@ -71,10 +71,9 @@ func BuildOverview(request service.Request, pluginContext pluginctx.Context) (co
 		}
 		view, err := v.Factory(request, overviewContext)
 		if err != nil {
-			log.Printf("failed to view %s %s", v.Title, err.Error())
+			log.Logger().Infof("failed to view %s %s", v.Title, err.Error())
 			return layout, err
 		}
-		//log.Printf("loaded view %s", v.Title)
 
 		if overviewUseCards {
 			view = createCard(v.Title, v.Path, view)
@@ -92,7 +91,7 @@ func BuildOverview(request service.Request, pluginContext pluginctx.Context) (co
 	return layout, nil
 }
 
-func createCard(title string, path string, view component.Component) component.Component {
+func createCard(title, path string, view component.Component) component.Component {
 	section := component.FlexLayoutSection{
 		{
 			Width: component.WidthFull,

@@ -2,21 +2,28 @@ package actioners
 
 import (
 	"io/ioutil"
-	"log"
 	"os"
 	"os/exec"
 	"strings"
+
+	"github.com/jenkins-x/jx-logging/pkg/log"
 
 	"github.com/pkg/errors"
 	"github.com/vmware-tanzu/octant/pkg/plugin/service"
 )
 
 func HandleTriggerBootJob(request *service.ActionRequest) error {
-	log.Printf("triggering boot job")
+	log.Logger().Infof("triggering boot job")
 
 	ns, err := request.Payload.String("namespace")
-	if err != nil || ns == "" {
-		ns = "jx"
+	if err != nil {
+		// Todo: Not sure what to do with error ...
+		log.Logger().Info(err)
+	}
+
+	if ns == "" {
+		// ToDO: not sure what is being done here, ns is not used at all
+		ns = "jx" //nolint:ineffassign
 	}
 
 	return runCommand("jxl", "boot", "step", "redirect", "-s", "jx-boot-octant", "-c", "jxl boot run -b --no-tail")
@@ -33,12 +40,12 @@ func runCommand(name string, args ...string) error {
 	cmd.Stderr = os.Stderr
 	cmd.Stdin = os.Stdin
 
-	log.Printf("running %s %s", name, strings.Join(args, " "))
+	log.Logger().Infof("running %s %s", name, strings.Join(args, " "))
 	err = cmd.Run()
 	if err != nil {
 		return errors.Wrapf(err, "failed to execute: jxl boot run")
 	}
 
-	log.Printf("boot run completed!")
+	log.Logger().Infof("boot run completed!")
 	return nil
 }

@@ -41,14 +41,15 @@ func ToWorkspaceOctants(workspaces []*Workspace, octants *Octants) []WorkspaceOc
 	}
 
 	for _, o := range octants.Octants {
-		for i, w := range answer {
-			if w.Name == o.Name {
+		for i := range answer {
+			ans := &answer[i]
+			if ans.Name == o.Name {
 				if o.Port > 0 {
-					path := w.BrowserPath
+					path := ans.BrowserPath
 					if path == "" {
 						path = "/#/jx/apps"
 					}
-					answer[i].URL = fmt.Sprintf("http://localhost:%d%s", o.Port, path)
+					ans.URL = fmt.Sprintf("http://localhost:%d%s", o.Port, path)
 				}
 				break
 			}

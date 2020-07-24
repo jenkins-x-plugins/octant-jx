@@ -61,3 +61,8 @@ goreleaser:
 .PHONY: clean
 clean: ## Clean the generated artifacts
 	rm -rf bin release dist
+
+.PHONY: lint
+lint: ## Lint the code
+	./hack/gofmt.sh
+	./hack/linter.sh

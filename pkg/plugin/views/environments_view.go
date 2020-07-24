@@ -1,7 +1,7 @@
 package views // import "github.com/jenkins-x/octant-jx/pkg/plugin/views"
 
 import (
-	"log"
+	"github.com/jenkins-x/jx-logging/pkg/log"
 
 	v1 "github.com/jenkins-x/jx-api/pkg/apis/jenkins.io/v1"
 	"github.com/jenkins-x/octant-jx/pkg/common/pluginctx"
@@ -24,11 +24,11 @@ func BuildEnvironmentsView(request service.Request, pluginContext pluginctx.Cont
 	})
 
 	if err != nil {
-		log.Printf("failed: %s", err.Error())
+		log.Logger().Infof("failed: %s", err.Error())
 		return nil, err
 	}
 
-	log.Printf("got list of Environment %d\n", len(dl.Items))
+	log.Logger().Infof("got list of Environment %d\n", len(dl.Items))
 
 	header := component.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(plugin.RootBreadcrumb, "Environments"))
 
@@ -40,7 +40,7 @@ func BuildEnvironmentsView(request service.Request, pluginContext pluginctx.Cont
 	for _, pa := range dl.Items {
 		tr, err := toEnvironmentTableRow(pa)
 		if err != nil {
-			log.Printf("failed to create Table Row: %s", err.Error())
+			log.Logger().Infof("failed to create Table Row: %s", err.Error())
 			continue
 		}
 		if tr != nil {
@@ -65,10 +65,6 @@ func toEnvironmentTableRow(u unstructured.Unstructured) (*component.TableRow, er
 		return nil, err
 	}
 
-	name := r.Name
-	if name == "" {
-		name = u.GetName()
-	}
 	return &component.TableRow{
 		"Name":      ToEnvironmentNameLink(r),
 		"Source":    ToEnvironmentSource(r),
