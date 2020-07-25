@@ -13,16 +13,6 @@ import (
 )
 
 func TestPipelineStepContainerName(t *testing.T) {
-
-	/*
-		paFile := filepath.Join("test_data", "pa-pod.yaml")
-		data, err := ioutil.ReadFile(paFile)
-		require.NoError(t, err, "failed to load %s", paFile)
-		pa := &v1.PipelineActivity{}
-		err = yaml.Unmarshal(data, pa)
-		require.NoError(t, err, "failed to unmarshal YAML %s", paFile)
-
-	*/
 	podFile := filepath.Join("test_data", "pod2.yaml")
 	data, err := ioutil.ReadFile(podFile)
 	require.NoError(t, err, "failed to load %s", podFile)

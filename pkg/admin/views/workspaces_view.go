@@ -2,8 +2,9 @@ package views // import "github.com/jenkins-x/octant-jx/pkg/plugin/views"
 
 import (
 	"fmt"
-	"log"
 	"strings"
+
+	"github.com/jenkins-x/jx-logging/pkg/log"
 
 	"github.com/jenkins-x/octant-jx/pkg/admin"
 	"github.com/jenkins-x/octant-jx/pkg/admin/workspaces"
@@ -26,7 +27,8 @@ func (f *WorkspacesViewConfig) TableFilters() []*component.TableFilter {
 }
 
 func BuildWorkspacesView(request service.Request, ws []workspaces.WorkspaceOctant) (component.Component, error) {
-	//log.Printf("got list of Workspaces %d\n", len(ws))
+	//Todo: request argument is not being used, but removing it requires a bit more work...
+	log.Logger().Debugf("got list of Workspaces %d\n", len(ws))
 
 	header := component.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(admin.RootBreadcrumb, "Workspaces"))
 
@@ -37,10 +39,11 @@ func BuildWorkspacesView(request service.Request, ws []workspaces.WorkspaceOctan
 		component.NewTableCols("Name", "Source", "Team", "Environment"),
 		[]component.TableRow{})
 
-	for i, r := range ws {
-		tr, err := toWorkspaceTableRow(r, i, config)
+	for k := range ws {
+		v := &ws[k]
+		tr, err := toWorkspaceTableRow(v, k, config)
 		if err != nil {
-			log.Printf("failed to create Table Row: %s", err.Error())
+			log.Logger().Infof("failed to create Table Row: %s", err.Error())
 			continue
 		}
 		if tr != nil {
@@ -64,8 +67,8 @@ func BuildWorkspacesView(request service.Request, ws []workspaces.WorkspaceOctan
 	return flexLayout, nil
 }
 
-func toWorkspaceTableRow(r workspaces.WorkspaceOctant, idx int, config *WorkspacesViewConfig) (*component.TableRow, error) {
-	w := &r.Workspace
+func toWorkspaceTableRow(r *workspaces.WorkspaceOctant, idx int, config *WorkspacesViewConfig) (*component.TableRow, error) {
+	w := r.Workspace
 	team := r.Team
 	env := r.Environment
 	viewhelpers.AddFilterValue(&config.TeamFilter, team)
@@ -74,12 +77,12 @@ func toWorkspaceTableRow(r workspaces.WorkspaceOctant, idx int, config *Workspac
 		"Name":        ToWorkspaceName(r),
 		"Team":        component.NewText(team),
 		"Environment": component.NewText(env),
-		"Source":      ToWorkspaceSource(w),
-		"Sort":        ToWorkspaceSort(w, idx),
+		"Source":      ToWorkspaceSource(&w),
+		"Sort":        ToWorkspaceSort(&w, idx),
 	}, nil
 }
 
-func ToWorkspaceName(r workspaces.WorkspaceOctant) component.Component {
+func ToWorkspaceName(r *workspaces.WorkspaceOctant) component.Component {
 	u := r.URL
 	if u == "" {
 		return component.NewText(r.Name)

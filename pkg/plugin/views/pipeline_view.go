@@ -2,8 +2,9 @@ package views // import "github.com/jenkins-x/octant-jx/pkg/plugin/views"
 
 import (
 	"context"
-	"log"
 	"strings"
+
+	"github.com/jenkins-x/jx-logging/pkg/log"
 
 	v1 "github.com/jenkins-x/jx-api/pkg/apis/jenkins.io/v1"
 	"github.com/jenkins-x/octant-jx/pkg/common/links"
@@ -27,7 +28,7 @@ func BuildPipelineView(request service.Request, pluginContext pluginctx.Context)
 	client := request.DashboardClient()
 	ns := pluginContext.Namespace
 
-	//log.Printf("BuildPipelineView querying for PipelineActivity %s in namespace %s\n", name, ns)
+	log.Logger().Debugf("BuildPipelineView querying for PipelineActivity %s in namespace %s\n", name, ns)
 
 	u, err := viewhelpers.GetResourceByName(ctx, client, "jenkins.io/v1", "PipelineActivity", name, ns)
 	if err != nil {
@@ -39,14 +40,14 @@ func BuildPipelineView(request service.Request, pluginContext pluginctx.Context)
 
 	pa, err := viewhelpers.ToPipelineActivity(u)
 	if err != nil {
-		log.Println(err)
+		log.Logger().Info(err)
 		return nil, err
 	}
 
 	// lets try find the pod for the pipeline
 	pod, err := findPodForPipeline(ctx, client, pluginContext, pa)
 	if err != nil {
-		log.Println(err)
+		log.Logger().Info(err)
 	}
 
 	s := &pa.Spec
@@ -59,6 +60,7 @@ func BuildPipelineView(request service.Request, pluginContext pluginctx.Context)
 	}
 	if pod != nil {
 		podName := pod.GetName()
+		//nolint:gocritic
 		breadcrumbs = append(breadcrumbs, viewhelpers.ToMarkdownLink("Pod", links.GetPodLink(ns, podName)))
 		breadcrumbs = append(breadcrumbs, viewhelpers.ToMarkdownLink("Steps", plugin.GetPipelineContainersLink(ns, pa.Name, podName)))
 		if terminalsWork {
@@ -69,14 +71,14 @@ func BuildPipelineView(request service.Request, pluginContext pluginctx.Context)
 	header := component.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(breadcrumbs...))
 
 	detailSummarySections := []component.SummarySection{
-		{"Status", ToPipelineLastStepStatus(pa, true, true)},
-		{"Source", ToRepository(pa)},
+		{Header: "Status", Content: ToPipelineLastStepStatus(pa, true, true)},
+		{Header: "Source", Content: ToRepository(pa)},
 	}
 	statusSummarySections := []component.SummarySection{
-		{"Started", component.NewMarkdownText(ToPipelineStartCompleteTimeMarkdown(pa))},
+		{Header: "Started", Content: component.NewMarkdownText(ToPipelineStartCompleteTimeMarkdown(pa))},
 	}
 	if pa.Spec.CompletedTimestamp != nil {
-		statusSummarySections = append(statusSummarySections, component.SummarySection{"Duration", ToDuration(pa)})
+		statusSummarySections = append(statusSummarySections, component.SummarySection{Header: "Duration", Content: ToDuration(pa)})
 	}
 	detailsSummary := component.NewSummary("Status", detailSummarySections...)
 	statusSummary := component.NewSummary("Timings", statusSummarySections...)
@@ -115,6 +117,6 @@ func findPodForPipeline(ctx context.Context, client service.Dashboard, pluginCon
 		}
 		return &ul.Items[0], nil
 	}
-	log.Printf("could not find pod for PipelineActivity %s with selector %s", pa.Name, selector.String())
+	log.Logger().Infof("could not find pod for PipelineActivity %s with selector %s", pa.Name, selector.String())
 	return nil, nil
 }

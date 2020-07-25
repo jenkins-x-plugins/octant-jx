@@ -7,7 +7,7 @@ import (
 )
 
 // DurationString returns the duration between start and end time as string
-func DurationString(start *metav1.Time, end *metav1.Time) string {
+func DurationString(start, end *metav1.Time) string {
 	if start == nil || end == nil {
 		return ""
 	}

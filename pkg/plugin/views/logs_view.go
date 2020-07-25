@@ -2,8 +2,9 @@ package views
 
 import (
 	"fmt"
-	"log"
 	"strings"
+
+	"github.com/jenkins-x/jx-logging/pkg/log"
 
 	"github.com/jenkins-x/octant-jx/pkg/common/pluginctx"
 	"github.com/jenkins-x/octant-jx/pkg/common/viewhelpers"
@@ -22,7 +23,7 @@ func BuildPipelineLog(request service.Request, pluginContext pluginctx.Context) 
 	ctx := request.Context()
 	client := request.DashboardClient()
 
-	log.Printf("BuildPipelineLog querying for PipelineActivity %s\n", name)
+	log.Logger().Infof("BuildPipelineLog querying for PipelineActivity %s\n", name)
 
 	u, err := viewhelpers.GetResourceByName(ctx, client, "jenkins.io/v1", "PipelineActivity", name, pluginContext.Namespace)
 	if err != nil {
@@ -34,7 +35,7 @@ func BuildPipelineLog(request service.Request, pluginContext pluginctx.Context) 
 
 	pa, err := viewhelpers.ToPipelineActivity(u)
 	if err != nil {
-		log.Println(err)
+		log.Logger().Info(err)
 		return nil, err
 	}
 	s := &pa.Spec
@@ -50,7 +51,7 @@ func BuildPipelineLog(request service.Request, pluginContext pluginctx.Context) 
 	var logsView component.Component
 	pod, err := findPodForPipeline(ctx, client, pluginContext, pa)
 	if err != nil {
-		log.Println(err)
+		log.Logger().Info(err)
 	}
 	if pod != nil {
 		ns := pa.Namespace
@@ -61,7 +62,7 @@ func BuildPipelineLog(request service.Request, pluginContext pluginctx.Context) 
 			logsView, err = viewhelpers.ViewPipelineLogs(ns, podName)
 		}
 		if err != nil {
-			log.Println(err)
+			log.Logger().Info(err)
 			logsView = component.NewText(fmt.Sprintf("could not find pod: %s", err.Error()))
 		}
 	} else {

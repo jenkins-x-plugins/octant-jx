@@ -28,18 +28,18 @@ func GetPipelineLogLink(paName string) string {
 	return GetPluginLink() + "/" + LogsPath + "/" + paName
 }
 
-func GetPipelineContainersLink(ns string, pipelineName string, podName string) string {
+func GetPipelineContainersLink(ns, pipelineName, podName string) string {
 	return GetPluginLink() + "/" + PipelineContainersPath + "/" + pipelineName + "/" + podName
 }
 
-func GetPipelineTerminalLink(ns string, pipelineName string, podName string) string {
+func GetPipelineTerminalLink(ns, pipelineName, podName string) string {
 	return GetPluginLink() + "/" + PipelineTerminalPath + "/" + pipelineName + "/" + podName
 }
 
-func GetPipelineContainerLink(ns string, pipelineName string, podName string, step string) string {
+func GetPipelineContainerLink(ns, pipelineName, podName, step string) string {
 	return GetPluginLink() + "/" + PipelineContainerPath + "/" + pipelineName + "/" + podName + "/" + step
 }
 
-func GetPipelineContainerLogLink(paName string, containerName string) string {
+func GetPipelineContainerLogLink(paName, containerName string) string {
 	return GetPipelineLogLink(paName) + "/" + containerName
 }

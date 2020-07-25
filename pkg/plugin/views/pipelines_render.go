@@ -22,15 +22,6 @@ func ToPipelineOwner(pa *v1.PipelineActivity) component.Component {
 }
 
 func ToPipelineRepository(pa *v1.PipelineActivity) component.Component {
-	/*
-			owner := s.GitOwner
-		repository := s.GitRepository
-
-		if s.GitURL != "" {
-			repository = fmt.Sprintf("[%s](%s)", repository, s.GitURL)
-		}
-
-	*/
 	return component.NewText(pa.Spec.GitRepository)
 }
 
@@ -79,7 +70,7 @@ func ToNameMarkdown(pa *v1.PipelineActivity) string {
 	return buildLabel
 }
 
-func ToPipelineLastStepStatus(pa *v1.PipelineActivity, addContext bool, addTimestamp bool) component.Component {
+func ToPipelineLastStepStatus(pa *v1.PipelineActivity, addContext, addTimestamp bool) component.Component {
 	status := ""
 	if pa != nil && pa.Spec.Status != v1.ActivityStatusTypeNone {
 		status = ToPipelineStatusMarkup(pa.Spec.Status)
@@ -149,14 +140,21 @@ func ToLastStepMarkdown(pa *v1.PipelineActivity) string {
 		promote := step.Promote
 		if promote != nil {
 			pr := promote.PullRequest
-			prURL := pr.PullRequestURL
-			if pr != nil && prURL != "" {
+			prURL := ""
+			if pr != nil {
+				prURL = pr.PullRequestURL
+			}
+			if prURL != "" {
 				prName := "PR"
 				i := strings.LastIndex(prURL, "/")
 				if i > 0 && i < len(prURL) {
 					prName = prURL[i+1:]
 				}
-				title := pr.Name
+				title := ""
+				//Todo: Can be simplified
+				if pr != nil {
+					title = pr.Name
+				}
 				if promote.Environment != "" {
 					title = fmt.Sprintf("Promote to %s", strings.Title(promote.Environment))
 				}

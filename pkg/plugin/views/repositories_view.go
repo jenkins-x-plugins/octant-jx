@@ -1,7 +1,7 @@
 package views // import "github.com/jenkins-x/octant-jx/pkg/plugin/views"
 
 import (
-	"log"
+	"github.com/jenkins-x/jx-logging/pkg/log"
 
 	v1 "github.com/jenkins-x/jx-api/pkg/apis/jenkins.io/v1"
 	"github.com/jenkins-x/octant-jx/pkg/common/pluginctx"
@@ -32,11 +32,11 @@ func BuildRepositoriesView(request service.Request, pluginContext pluginctx.Cont
 	})
 
 	if err != nil {
-		log.Printf("failed: %s", err.Error())
+		log.Logger().Infof("failed: %s", err.Error())
 		return nil, err
 	}
 
-	log.Printf("got list of SourceRepository %d\n", len(dl.Items))
+	log.Logger().Infof("got list of SourceRepository %d\n", len(dl.Items))
 
 	header := component.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(plugin.RootBreadcrumb, "Repositories"))
 
@@ -50,7 +50,7 @@ func BuildRepositoriesView(request service.Request, pluginContext pluginctx.Cont
 	for _, pa := range dl.Items {
 		tr, err := toRepositoryTableRow(pa, config)
 		if err != nil {
-			log.Printf("failed to create Table Row: %s", err.Error())
+			log.Logger().Infof("failed to create Table Row: %s", err.Error())
 			continue
 		}
 		if tr != nil {
@@ -78,11 +78,6 @@ func toRepositoryTableRow(u unstructured.Unstructured, config *RepositoriesViewC
 	err := viewhelpers.ToStructured(&u, r)
 	if err != nil {
 		return nil, err
-	}
-
-	name := r.Name
-	if name == "" {
-		name = u.GetName()
 	}
 
 	owner := r.Spec.Org

@@ -13,11 +13,11 @@ func ToMarkdownLinkFromURL(link string) string {
 	return ToMarkdownLink(title, link)
 }
 
-func ToMarkdownLink(title string, link string) string {
+func ToMarkdownLink(title, link string) string {
 	return fmt.Sprintf("[%s](%s)", title, link)
 }
 
-func ToMarkdownExternalLink(title string, target string, link string) string {
+func ToMarkdownExternalLink(title, target, link string) string {
 	return fmt.Sprintf(`<a href="%s" target="%s">%s</a>`, link, target, title)
 }
 
@@ -50,7 +50,7 @@ func ToGitLinkMarkdown(repoLink string) string {
 }
 
 // ToOwnerRepositoryLinkMarkdown converts the given owner/repository and link to markdown
-func ToOwnerRepositoryLinkMarkdown(owner string, repository string, repoLink string) string {
+func ToOwnerRepositoryLinkMarkdown(owner, repository, repoLink string) string {
 	if repoLink == "" {
 		return fmt.Sprintf("%s / %s", owner, repository)
 	}

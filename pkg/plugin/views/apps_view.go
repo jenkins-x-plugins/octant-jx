@@ -2,8 +2,9 @@ package views // import "github.com/jenkins-x/octant-jx/pkg/plugin/views"
 
 import (
 	"fmt"
-	"log"
 	"strings"
+
+	"github.com/jenkins-x/jx-logging/pkg/log"
 
 	"github.com/jenkins-x/octant-jx/pkg/common/links"
 	"github.com/jenkins-x/octant-jx/pkg/common/pluginctx"
@@ -29,7 +30,7 @@ func BuildAppsView(request service.Request, pluginContext pluginctx.Context) (co
 	})
 
 	if err != nil {
-		log.Printf("failed to load Deployments: %s", err.Error())
+		log.Logger().Infof("failed to load Deployments: %s", err.Error())
 		return nil, err
 	}
 
@@ -41,20 +42,20 @@ func BuildAppsView(request service.Request, pluginContext pluginctx.Context) (co
 
 	ingresses := []*v1beta1.Ingress{}
 	if err != nil {
-		log.Printf("failed to load Ingress: %s", err.Error())
+		log.Logger().Infof("failed to load Ingress: %s", err.Error())
 	} else {
-		for _, u := range ingList.Items {
+		for k := range ingList.Items {
 			ing := &v1beta1.Ingress{}
-			err = viewhelpers.ToStructured(&u, ing)
+			err = viewhelpers.ToStructured(&ingList.Items[k], ing)
 			if err != nil {
-				log.Printf("failed to convert to Ingress: %s", err.Error())
+				log.Logger().Infof("failed to convert to Ingress: %s", err.Error())
 			} else {
 				ingresses = append(ingresses, ing)
 			}
 		}
 	}
 
-	//log.Printf("got list of Deployment %d\n", len(dl.Items))
+	log.Logger().Debugf("got list of Deployment %d\n", len(dl.Items))
 
 	header := component.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(plugin.RootBreadcrumb, "Apps"))
 
@@ -65,9 +66,9 @@ func BuildAppsView(request service.Request, pluginContext pluginctx.Context) (co
 
 	icons := map[string]string{}
 	deployments := []*appsv1.Deployment{}
-	for _, u := range dl.Items {
+	for k := range dl.Items {
 		r := &appsv1.Deployment{}
-		err := viewhelpers.ToStructured(&u, r)
+		err := viewhelpers.ToStructured(&dl.Items[k], r)
 		if err != nil {
 			return nil, err
 		}
@@ -85,7 +86,7 @@ func BuildAppsView(request service.Request, pluginContext pluginctx.Context) (co
 		}
 		tr, err := toAppTableRow(r, icon, ingresses)
 		if err != nil {
-			log.Printf("failed to create Table Row: %s", err.Error())
+			log.Logger().Infof("failed to create Table Row: %s", err.Error())
 			continue
 		}
 		if tr != nil {
@@ -127,7 +128,7 @@ func ToDeploymentVersion(r *appsv1.Deployment, version string) component.Compone
 	return component.NewText(version)
 }
 
-func ToDeploymentLink(r *appsv1.Deployment, name string, icon string) component.Component {
+func ToDeploymentLink(r *appsv1.Deployment, name, icon string) component.Component {
 	ref := links.GetDeploymentLink(r.Namespace, r.Name)
 	iconPrefix := ""
 	if icon != "" {

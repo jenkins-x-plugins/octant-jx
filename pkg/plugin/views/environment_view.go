@@ -2,8 +2,9 @@ package views // import "github.com/jenkins-x/octant-jx/pkg/plugin/views"
 
 import (
 	"fmt"
-	"log"
 	"strings"
+
+	"github.com/jenkins-x/jx-logging/pkg/log"
 
 	v1 "github.com/jenkins-x/jx-api/pkg/apis/jenkins.io/v1"
 	"github.com/jenkins-x/octant-jx/pkg/common/pluginctx"
@@ -30,17 +31,17 @@ func BuildEnvironmentView(request service.Request, pluginContext pluginctx.Conte
 	r := &v1.Environment{}
 	err = viewhelpers.ToStructured(u, r)
 	if err != nil {
-		log.Println(err)
+		log.Logger().Info(err)
 		return nil, err
 	}
 
 	header := component.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(plugin.RootBreadcrumb, viewhelpers.ToMarkdownLink("Environments", plugin.GetEnviromentsLink()), ToEnvironmentName(r)))
 
 	summary := component.NewSummary("Summary",
-		component.SummarySection{"Name", ToEnvironmentNameComponent(r)},
-		component.SummarySection{"Source", ToEnvironmentSource(r)},
-		component.SummarySection{"Namespace", ToEnvironmentNamespace(r)},
-		component.SummarySection{"Promote", ToEnvironmentPromote(r)},
+		component.SummarySection{Header: "Name", Content: ToEnvironmentNameComponent(r)},
+		component.SummarySection{Header: "Source", Content: ToEnvironmentSource(r)},
+		component.SummarySection{Header: "Namespace", Content: ToEnvironmentNamespace(r)},
+		component.SummarySection{Header: "Promote", Content: ToEnvironmentPromote(r)},
 	)
 
 	flexLayout := component.NewFlexLayout("")
@@ -68,17 +69,17 @@ func BuildEnvironmentAppsView(request service.Request, pluginContext pluginctx.C
 	pa := &v1.Environment{}
 	err = viewhelpers.ToStructured(u, pa)
 	if err != nil {
-		log.Println(err)
+		log.Logger().Info(err)
 		return nil, err
 	}
 
 	header := component.NewMarkdownText(fmt.Sprintf("## [Environments](%s) / %s", plugin.GetEnviromentsLink(), ToEnvironmentName(pa)))
 
 	summary := component.NewSummary("Apps",
-		component.SummarySection{"Name", ToEnvironmentNameComponent(pa)},
-		component.SummarySection{"Source", ToEnvironmentSource(pa)},
-		component.SummarySection{"Namespace", ToEnvironmentNamespace(pa)},
-		component.SummarySection{"Promote", ToEnvironmentPromote(pa)},
+		component.SummarySection{Header: "Name", Content: ToEnvironmentNameComponent(pa)},
+		component.SummarySection{Header: "Source", Content: ToEnvironmentSource(pa)},
+		component.SummarySection{Header: "Namespace", Content: ToEnvironmentNamespace(pa)},
+		component.SummarySection{Header: "Promote", Content: ToEnvironmentPromote(pa)},
 	)
 
 	flexLayout := component.NewFlexLayout("")

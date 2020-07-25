@@ -33,7 +33,7 @@ func JobsViewLink(path string) string {
 	return plugin.PathPrefix + "/" + PluginName + "/" + path
 }
 
-func JobsLogsViewLink(path string, jobName string) string {
+func JobsLogsViewLink(path, jobName string) string {
 	link := JobsViewLink(path) + "/logs"
 	if jobName != "" {
 		return link + "/" + jobName

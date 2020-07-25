@@ -2,8 +2,9 @@ package views
 
 import (
 	"fmt"
-	"log"
 	"strings"
+
+	"github.com/jenkins-x/jx-logging/pkg/log"
 
 	"github.com/jenkins-x/octant-jx/pkg/common/pluginctx"
 	"github.com/jenkins-x/octant-jx/pkg/common/viewhelpers"
@@ -30,7 +31,7 @@ func BootJobExtraView(request service.Request, pluginContext pluginctx.Context, 
 	secret := &corev1.Secret{}
 	err = viewhelpers.ToStructured(u, secret)
 	if err != nil {
-		log.Println(err)
+		log.Logger().Info(err)
 		return nil
 	}
 	data := secret.Data
@@ -42,7 +43,7 @@ func BootJobExtraView(request service.Request, pluginContext pluginctx.Context, 
 		k := fmt.Sprintf("l%d", i)
 		line := data[k]
 		if line == nil {
-			log.Printf("Secret %s in namespace %s does not have key %s", name, ns, k)
+			log.Logger().Infof("Secret %s in namespace %s does not have key %s", name, ns, k)
 			return nil
 		}
 		b.WriteString(string(line))
@@ -51,7 +52,7 @@ func BootJobExtraView(request service.Request, pluginContext pluginctx.Context, 
 
 	flexLayout, ok := view.(*component.FlexLayout)
 	if !ok {
-		log.Printf("view is not a FlexLayout - was %#v", view)
+		log.Logger().Infof("view is not a FlexLayout - was %#v", view)
 		return nil
 	}
 	title := RunCommandTitleMarkdown(secret)

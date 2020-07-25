@@ -2,7 +2,8 @@ package views // import "github.com/jenkins-x/octant-jx/pkg/plugin/views"
 
 import (
 	"fmt"
-	"log"
+
+	"github.com/jenkins-x/jx-logging/pkg/log"
 
 	"github.com/jenkins-x/octant-jx/pkg/admin"
 	"github.com/jenkins-x/octant-jx/pkg/common/links"
@@ -13,13 +14,13 @@ import (
 	"k8s.io/apimachinery/pkg/labels"
 )
 
-func BuildJobsLogViewForPath(request service.Request, pluginContext pluginctx.Context, path string, jobName string) (component.Component, error) {
+func BuildJobsLogViewForPath(request service.Request, pluginContext pluginctx.Context, path, jobName string) (component.Component, error) {
 	config := JobsViewConfigs[path]
 	selector := config.Selector
 	return BuildJobsViewLogsForPathAndSelector(request, pluginContext, path, jobName, config, selector)
 }
 
-func BuildJobsViewLogsForPathAndSelector(request service.Request, pluginContext pluginctx.Context, path string, jobName string, config *JobViewConfig, selector labels.Set) (component.Component, error) {
+func BuildJobsViewLogsForPathAndSelector(request service.Request, pluginContext pluginctx.Context, path, jobName string, config *JobViewConfig, selector labels.Set) (component.Component, error) {
 	if config == nil {
 		return component.NewText(fmt.Sprintf("No view configuration found for path %s", path)), nil
 	}
@@ -45,7 +46,7 @@ func BuildJobsViewLogsForPathAndSelector(request service.Request, pluginContext 
 	var logsView component.Component
 	pod, err := viewhelpers.FindLatestPodForSelector(ctx, client, pluginContext.Namespace, selector)
 	if err != nil {
-		log.Println(err)
+		log.Logger().Info(err)
 	}
 	if pod != nil {
 		podName := pod.GetName()
@@ -54,7 +55,7 @@ func BuildJobsViewLogsForPathAndSelector(request service.Request, pluginContext 
 		}
 		logsView, err = viewhelpers.ViewPipelineLogs(ns, podName)
 		if err != nil {
-			log.Println(err)
+			log.Logger().Info(err)
 			logsView = component.NewText(fmt.Sprintf("could not find pod: %s", err.Error()))
 		}
 

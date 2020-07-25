@@ -11,7 +11,7 @@ func GetDeploymentsLink(namespace string) string {
 	return plugin.PathPrefix + "/overview/namespace/" + namespace + "/workloads/deployments"
 }
 
-func GetDeploymentLink(namespace string, name string) string {
+func GetDeploymentLink(namespace, name string) string {
 	return GetDeploymentsLink(namespace) + "/" + name
 }
 
@@ -19,7 +19,7 @@ func GetJobsLink(namespace string) string {
 	return plugin.PathPrefix + "/overview/namespace/" + namespace + "/workloads/jobs"
 }
 
-func GetJobLink(namespace string, name string) string {
+func GetJobLink(namespace, name string) string {
 	return GetJobsLink(namespace) + "/" + name
 }
 
@@ -27,11 +27,11 @@ func GetPodsLink(namespace string) string {
 	return plugin.PathPrefix + "/overview/namespace/" + namespace + "/workloads/pods"
 }
 
-func GetPodLink(namespace string, name string) string {
+func GetPodLink(namespace, name string) string {
 	return GetPodsLink(namespace) + "/" + name
 }
 
-func GetPodTerminalLink(namespace string, name string) string {
+func GetPodTerminalLink(namespace, name string) string {
 	return GetPodLink(namespace, name) + "#terminal"
 }
 

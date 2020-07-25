@@ -2,6 +2,7 @@ package views // import "github.com/jenkins-x/octant-jx/pkg/plugin/views"
 
 import (
 	v1 "github.com/jenkins-x/jx-api/pkg/apis/jenkins.io/v1"
+	"github.com/jenkins-x/jx-logging/pkg/log"
 	"github.com/jenkins-x/octant-jx/pkg/admin"
 	"github.com/jenkins-x/octant-jx/pkg/common/pluginctx"
 	"github.com/jenkins-x/octant-jx/pkg/common/viewhelpers"
@@ -30,7 +31,7 @@ func BuildFailedReleasePipelinesView(request service.Request, pluginContext plug
 
 							// lets see if this build is newer
 							if viewhelpers.PipelineBuildNumber(r) > viewhelpers.PipelineBuildNumber(pa) {
-								//log.Printf("failed pipeline %s excluded as build %s Succeeded and is newer", pa.Name, r.Spec.Build)
+								log.Logger().Debugf("failed pipeline %s excluded as build %s Succeeded and is newer", pa.Name, r.Spec.Build)
 								return false
 							}
 						}

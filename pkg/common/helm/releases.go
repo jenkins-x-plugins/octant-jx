@@ -23,13 +23,14 @@ import (
 	"encoding/json"
 	"errors"
 	"io/ioutil"
-	"log"
 	"strconv"
 	"strings"
 
+	"github.com/jenkins-x/jx-logging/pkg/log"
+
 	"github.com/jenkins-x/octant-jx/pkg/common/viewhelpers"
 	rspb "helm.sh/helm/v3/pkg/release"
-	"k8s.io/api/core/v1"
+	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 )
 
@@ -50,13 +51,13 @@ func UnstructuredListToHelmReleaseList(ul *unstructured.UnstructuredList) []*rsp
 	for _, summary := range latestHelmReleases {
 		secret, err := viewhelpers.ToSecret(summary.Object)
 		if err != nil {
-			log.Println(err)
+			log.Logger().Info(err)
 			continue
 		}
 
 		release, err := convertSecretToHelmRelease(secret)
 		if err != nil {
-			log.Println(err)
+			log.Logger().Info(err)
 			continue
 		}
 
@@ -68,16 +69,16 @@ func UnstructuredListToHelmReleaseList(ul *unstructured.UnstructuredList) []*rsp
 
 func UnstructuredListToAnyHelmReleaseList(ul *unstructured.UnstructuredList) []*rspb.Release {
 	var releases []*rspb.Release
-	for _, u := range ul.Items {
-		secret, err := viewhelpers.ToSecret(&u)
+	for k := range ul.Items {
+		secret, err := viewhelpers.ToSecret(&ul.Items[k])
 		if err != nil {
-			log.Println(err)
+			log.Logger().Info(err)
 			continue
 		}
 
 		release, err := convertSecretToHelmRelease(secret)
 		if err != nil {
-			log.Println(err)
+			log.Logger().Info(err)
 			continue
 		}
 		releases = append(releases, release)
@@ -102,7 +103,7 @@ func getLatestHelmReleases(ul *unstructured.UnstructuredList) tempReleaseSummary
 		releaseName := tmp[4]
 		revisionNumber, err := strconv.Atoi(strings.TrimPrefix(tmp[5], "v"))
 		if err != nil {
-			log.Println(err)
+			log.Logger().Info(err)
 			continue
 		}
 

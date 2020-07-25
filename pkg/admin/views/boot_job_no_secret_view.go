@@ -16,6 +16,7 @@ Are you sure this namespace is a Jenkins X boot namespace?
 `
 	exampleGitURL = "https://github.com/myorg/envronment-mycluster.git"
 
+	//nolint:gosec
 	settingUpSecretsDoc = `
 
 ## Setting up the Secrets

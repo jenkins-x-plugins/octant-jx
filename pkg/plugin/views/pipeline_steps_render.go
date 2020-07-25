@@ -2,14 +2,13 @@ package views
 
 import (
 	"fmt"
-	"log"
 	"strings"
-	"time"
+
+	"github.com/jenkins-x/jx-logging/pkg/log"
 
 	v1 "github.com/jenkins-x/jx-api/pkg/apis/jenkins.io/v1"
 	"github.com/jenkins-x/octant-jx/pkg/common/viewhelpers"
 	"github.com/jenkins-x/octant-jx/pkg/plugin"
-	"github.com/jenkins-x/octant-jx/pkg/plugin/util"
 	"github.com/vmware-tanzu/octant/pkg/view/component"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -34,8 +33,9 @@ func ToStepsView(pa *v1.PipelineActivity, pod *unstructured.Unstructured) *compo
 	}
 	w := &r.Writer
 	if pa != nil {
-		for _, step := range pa.Spec.Steps {
-			if addStepRow(r, &step, "") {
+		steps := pa.Spec.Steps
+		for k := range steps {
+			if addStepRow(r, &steps[k], "") {
 				break
 			}
 		}
@@ -62,7 +62,7 @@ func addStepRow(w *PipelineStepRenderer, parent *v1.PipelineActivityStep, indent
 			pending = true
 		}
 	} else {
-		log.Printf("Unknown step kind %#v", parent)
+		log.Logger().Infof("Unknown step kind %#v", parent)
 	}
 	return pending
 }
@@ -75,8 +75,9 @@ func addStageRow(w *PipelineStepRenderer, stage *v1.StageActivityStep, indent st
 	pending := addStepRowItem(w, stage, &stage.CoreActivityStep, indent, name, "")
 
 	indent += indentation
-	for _, step := range stage.Steps {
-		if addStepRowItem(w, stage, &step, indent, "", "") {
+	steps := stage.Steps
+	for k := range steps {
+		if addStepRowItem(w, stage, &steps[k], indent, "", "") {
 			pending = true
 			break
 		}
@@ -126,22 +127,12 @@ func addPromoteRow(w *PipelineStepRenderer, stage *v1.StageActivityStep, parent 
 	return pending
 }
 
-func addStepRowItem(w *PipelineStepRenderer, stage *v1.StageActivityStep, step *v1.CoreActivityStep, indent string, name string, description string) bool {
-	text := step.Description
-	if description != "" {
-		if text == "" {
-			text = description
-		} else {
-			text += " " + description
-		}
-	}
+func addStepRowItem(w *PipelineStepRenderer, stage *v1.StageActivityStep, step *v1.CoreActivityStep, indent, name, description string) bool {
 	textName := step.Name
 	if textName == "" {
 		textName = name
-	} else {
-		if name != "" {
-			textName = name + ":" + textName
-		}
+	} else if name != "" {
+		textName = name + ":" + textName
 	}
 
 	icon := ToPipelineStatusMarkup(step.Status)
@@ -149,11 +140,7 @@ func addStepRowItem(w *PipelineStepRenderer, stage *v1.StageActivityStep, step *
 	status := ""
 	durationText := durationMarkup(step.StartedTimestamp, step.CompletedTimestamp)
 	if durationText != "" {
-		if status == "" {
-			status = " : " + durationText
-		} else {
-			status += "&nbsp; : " + durationText
-		}
+		status = " : " + durationText
 	}
 
 	podName := ""
@@ -170,13 +157,13 @@ func addStepRowItem(w *PipelineStepRenderer, stage *v1.StageActivityStep, step *
 		}
 		w.Writer.WriteString(fmt.Sprintf("%s* %s [%s](%s) %s\n", indent, icon, textName, plugin.GetPipelineContainerLogLink(paName, containerName), status))
 	} else {
-		log.Printf("failed to find container name for step %s and pod %s", step.Name, podName)
+		log.Logger().Infof("failed to find container name for step %s and pod %s", step.Name, podName)
 		w.Writer.WriteString(fmt.Sprintf("%s* %s %s %s\n", indent, icon, textName, status))
 	}
 	return step.Status == v1.ActivityStatusTypePending
 }
 
-func durationMarkup(start *metav1.Time, end *metav1.Time) string {
+func durationMarkup(start, end *metav1.Time) string {
 	if start == nil || end == nil {
 		return ""
 	}
@@ -187,7 +174,7 @@ func FindContainerName(step *v1.CoreActivityStep, u *unstructured.Unstructured) 
 	if u != nil && step != nil {
 		pod, err := viewhelpers.ToPod(u)
 		if err != nil {
-			log.Printf(fmt.Sprintf("failed to convert to Pod: %s", err.Error()))
+			log.Logger().Info(fmt.Sprintf("failed to convert to Pod: %s", err.Error()))
 			return ""
 		}
 		names := []string{step.Name}
@@ -200,7 +187,9 @@ func FindContainerNameForStepName(pod *corev1.Pod, pipelineActivityStepNames []s
 	name := "step-" + strings.ToLower(strings.Join(pipelineActivityStepNames, "-"))
 	name = strings.ReplaceAll(name, " ", "-")
 	name2 := "step-" + name
-	for _, c := range pod.Spec.Containers {
+	containers := pod.Spec.Containers
+	for k := range containers {
+		c := containers[k]
 		if c.Name == name || c.Name == name2 {
 			return c.Name
 		}
@@ -272,14 +261,4 @@ func pullRequestStatusString(text string) string {
 	default:
 		return text
 	}
-}
-
-func timeToString(t *metav1.Time) string {
-	if t == nil {
-		return ""
-	}
-	now := &metav1.Time{
-		Time: time.Now(),
-	}
-	return util.DurationString(t, now)
 }

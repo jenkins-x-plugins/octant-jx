@@ -2,11 +2,12 @@ package views // import "github.com/jenkins-x/octant-jx/pkg/plugin/views"
 
 import (
 	"fmt"
-	"log"
 	"math"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/jenkins-x/jx-logging/pkg/log"
 
 	v1 "github.com/jenkins-x/jx-api/pkg/apis/jenkins.io/v1"
 	"github.com/jenkins-x/octant-jx/pkg/common/pluginctx"
@@ -61,7 +62,7 @@ func BuildPipelinesView(request service.Request, config *PipelinesViewConfig) (c
 	})
 
 	if err != nil {
-		log.Printf("failed: %s", err.Error())
+		log.Logger().Infof("failed: %s", err.Error())
 	}
 
 	title := config.Title
@@ -79,10 +80,10 @@ func BuildPipelinesView(request service.Request, config *PipelinesViewConfig) (c
 
 	paList := []*v1.PipelineActivity{}
 	if dl != nil {
-		for _, u := range dl.Items {
-			pa, err := viewhelpers.ToPipelineActivity(&u)
+		for k, v := range dl.Items {
+			pa, err := viewhelpers.ToPipelineActivity(&dl.Items[k])
 			if err != nil {
-				log.Printf("failed to convert to PipelineActivity for %s: %s", u.GetName(), err.Error())
+				log.Logger().Infof("failed to convert to PipelineActivity for %s: %s", v.GetName(), err.Error())
 				continue
 			}
 			if pa != nil {
@@ -106,7 +107,7 @@ func BuildPipelinesView(request service.Request, config *PipelinesViewConfig) (c
 	for _, pa := range paList {
 		tr, err := toPipelineTableRow(pa, config)
 		if err != nil {
-			log.Printf("failed to create Table Row: %s", err.Error())
+			log.Logger().Infof("failed to create Table Row: %s", err.Error())
 			continue
 		}
 		if tr != nil {

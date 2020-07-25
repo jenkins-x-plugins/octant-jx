@@ -2,8 +2,9 @@ package views // import "github.com/jenkins-x/octant-jx/pkg/plugin/views"
 
 import (
 	"fmt"
-	"log"
 	"strings"
+
+	"github.com/jenkins-x/jx-logging/pkg/log"
 
 	"github.com/jenkins-x/octant-jx/pkg/common/links"
 	"github.com/jenkins-x/octant-jx/pkg/common/pluginctx"
@@ -29,7 +30,7 @@ func BuildPipelineContainerView(request service.Request, pluginContext pluginctx
 	client := request.DashboardClient()
 	ns := pluginContext.Namespace
 
-	//log.Printf("BuildPipelineContainersView querying for Pod %s in namespace %s\n", name, ns)
+	log.Logger().Debugf("BuildPipelineContainersView querying for Pod %s in namespace %s\n", name, ns)
 
 	u, err := viewhelpers.GetResourceByName(ctx, client, "v1", "Pod", name, ns)
 	if err != nil {
@@ -42,7 +43,7 @@ func BuildPipelineContainerView(request service.Request, pluginContext pluginctx
 	pod := &corev1.Pod{}
 	err = viewhelpers.ToStructured(u, &pod)
 	if err != nil {
-		log.Println(err)
+		log.Logger().Info(err)
 		return component.NewText(fmt.Sprintf("Error: failed to load Pod %s not found in namespace %s", name, ns)), nil
 	}
 
@@ -71,9 +72,13 @@ func BuildPipelineContainerView(request service.Request, pluginContext pluginctx
 	}
 
 	found := false
-	for i, container := range pod.Spec.Containers {
-		if container.Name == step {
-			return ToPipelinePodContainerView(header, vc, pod, i, &container), nil
+	containers := pod.Spec.Containers
+	//Todo: Need to evaluate the logic
+	for k := range containers {
+		if containers[k].Name == step {
+			return ToPipelinePodContainerView(header, vc, pod, k, &containers[k]), nil
+			// ToDo: unreachable code ...
+			//nolint
 			found = true
 			break
 		}
@@ -96,17 +101,18 @@ func ToPipelinePodContainerView(header component.Component, vc containersViewCon
 	commandLine := ToCommandLine(index, c)
 
 	statusSummarySections := []component.SummarySection{
-		{"Name", component.NewText(c.Name)},
-		{"Image", component.NewMarkdownText(image)},
-		{"Working Dir", component.NewText(c.WorkingDir)},
-		{"Command", component.NewMarkdownText(fmt.Sprintf("```%s```", commandLine))},
+		{Header: "Name", Content: component.NewText(c.Name)},
+		{Header: "Image", Content: component.NewMarkdownText(image)},
+		{Header: "Working Dir", Content: component.NewText(c.WorkingDir)},
+		{Header: "Command", Content: component.NewMarkdownText(fmt.Sprintf("```%s```", commandLine))},
 	}
 	statusSummary := component.NewSummary("Container", statusSummarySections...)
 
 	volumesSections := []component.SummarySection{}
 	if len(c.VolumeMounts) > 0 {
-		for _, v := range c.VolumeMounts {
-			volumesSections = append(volumesSections, ToVolumeMountSection(pod, c, v))
+		vm := c.VolumeMounts
+		for k := range vm {
+			volumesSections = append(volumesSections, ToVolumeMountSection(pod, c, &vm[k]))
 		}
 	}
 	viewhelpers.SortSummarySection(volumesSections)
@@ -149,7 +155,7 @@ func ToEnvVarSection(e corev1.EnvVar) component.SummarySection {
 	}
 }
 
-func ToVolumeMountSection(pod *corev1.Pod, c *corev1.Container, v corev1.VolumeMount) component.SummarySection {
+func ToVolumeMountSection(pod *corev1.Pod, c *corev1.Container, v *corev1.VolumeMount) component.SummarySection {
 	mountPath := v.MountPath
 	subPath := v.SubPath
 	if subPath != "" {

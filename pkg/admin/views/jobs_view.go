@@ -2,8 +2,9 @@ package views // import "github.com/jenkins-x/octant-jx/pkg/plugin/views"
 
 import (
 	"fmt"
-	"log"
 	"strings"
+
+	"github.com/jenkins-x/jx-logging/pkg/log"
 
 	"github.com/jenkins-x/octant-jx/pkg/admin"
 	"github.com/jenkins-x/octant-jx/pkg/common/actions"
@@ -55,7 +56,7 @@ var (
 				"app": "gcpreviews",
 			},
 		},
-		admin.UpgradeJobsPath: &JobViewConfig{
+		admin.UpgradeJobsPath: {
 			Title: "Upgrade Jobs",
 			Selector: labels.Set{
 				"app": "jenkins-x-upgrade-processor",
@@ -83,16 +84,16 @@ func BuildJobsViewForPath(request service.Request, pluginContext pluginctx.Conte
 	jobs := []*batchv1.Job{}
 	jl, err := viewhelpers.ListResourcesBySelector(ctx, client, "batch/v1", "Job", ns, selector)
 	if err != nil {
-		log.Printf("failed to load Jobs: %s", err.Error())
+		log.Logger().Infof("failed to load Jobs: %s", err.Error())
 	} else {
 		if len(jl.Items) == 0 {
-			log.Printf("could not find any Jobs in namespace %s for selector %#v", ns, selector)
+			log.Logger().Infof("could not find any Jobs in namespace %s for selector %#v", ns, selector)
 		}
-		for _, u := range jl.Items {
+		for k := range jl.Items {
 			j := &batchv1.Job{}
-			err = viewhelpers.ToStructured(&u, j)
+			err = viewhelpers.ToStructured(&jl.Items[k], j)
 			if err != nil {
-				log.Printf("failed to convert to Job: %s", err.Error())
+				log.Logger().Infof("failed to convert to Job: %s", err.Error())
 			} else {
 				jobs = append(jobs, j)
 			}
@@ -108,7 +109,7 @@ func BuildJobsViewForPath(request service.Request, pluginContext pluginctx.Conte
 	for _, r := range jobs {
 		tr, err := toJobTableRow(r, path)
 		if err != nil {
-			log.Printf("failed to create Table Row: %s", err.Error())
+			log.Logger().Infof("failed to create Table Row: %s", err.Error())
 			continue
 		}
 		if tr != nil {
@@ -126,7 +127,7 @@ func BuildJobsViewForPath(request service.Request, pluginContext pluginctx.Conte
 		if buttonGroup == nil {
 			cronJobList, err := viewhelpers.ListResourcesBySelector(ctx, client, "batch/v1", "CronJob", ns, selector)
 			if err != nil {
-				log.Printf("failed to load CronJobs: %s", err.Error())
+				log.Logger().Infof("failed to load CronJobs: %s", err.Error())
 			}
 			if cronJobList != nil {
 				buttonGroup = createJobButtons(pluginContext, config, cronJobList, title, selector)
@@ -163,10 +164,10 @@ func createJobButtons(pluginContext pluginctx.Context, config *JobViewConfig, li
 	if name == "" {
 		if len(list.Items) != 1 {
 			for i, u := range list.Items {
-				log.Printf("ignored CronJob %d with name %s", i, u.GetName())
+				log.Logger().Infof("ignored CronJob %d with name %s", i, u.GetName())
 			}
 			if len(list.Items) == 0 {
-				log.Printf("no CronJobs found for selector %#v", selector)
+				log.Logger().Infof("no CronJobs found for selector %#v", selector)
 			}
 			// TODO try find the CronJob using labels/annotations?
 			return nil

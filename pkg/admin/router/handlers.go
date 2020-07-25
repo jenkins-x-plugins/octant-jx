@@ -1,8 +1,9 @@
 package router // import "github.com/jenkins-x/octant-jx/pkg/plugin/router"
 
 import (
-	"log"
 	"strings"
+
+	"github.com/jenkins-x/jx-logging/pkg/log"
 
 	"github.com/jenkins-x/jx-helpers/pkg/gitclient/giturl"
 	"github.com/jenkins-x/octant-jx/pkg/admin"
@@ -81,7 +82,10 @@ func (h *Handlers) handleJobsPathEnrich(router *service.Router, path string, enr
 		response := component.NewContentResponse(nil)
 		response.Add(view)
 		if enrichFn != nil {
-			enrichFn(request, *h.Context, response, view)
+			err := enrichFn(request, *h.Context, response, view)
+			if err != nil {
+				log.Logger().Debug(err)
+			}
 		}
 		return *response, nil
 	})
@@ -142,11 +146,11 @@ func (h *Handlers) handleBootJobsView(request service.Request) (component.Conten
 	u, err := viewhelpers.GetResourceByName(ctx, client, "v1", "Secret", name, ns)
 	if err != nil || u == nil {
 		if err != nil {
-			log.Printf("failed to load Secret %s in namespace %s: %s", name, ns, err.Error())
+			log.Logger().Infof("failed to load Secret %s in namespace %s: %s", name, ns, err.Error())
 		}
 		err = views.BuildNoBootSecretView(request, pluginContext, response)
 		if err != nil {
-			log.Println(err)
+			log.Logger().Info(err)
 			return component.EmptyContentResponse, err
 		}
 		return *response, nil
@@ -158,34 +162,31 @@ func (h *Handlers) handleBootJobsView(request service.Request) (component.Conten
 	secret := &corev1.Secret{}
 	err = viewhelpers.ToStructured(u, secret)
 	if err != nil {
-		log.Println(err)
-	} else {
-		if secret.Data != nil {
-			d := secret.Data["secrets-verify"]
-			if d != nil {
-				text := strings.ToLower(string(d))
-				if text == "true" || text == "valid" {
-					validSecrets = true
+		log.Logger().Info(err)
+	} else if secret.Data != nil {
+		d := secret.Data["secrets-verify"]
+		if d != nil {
+			text := strings.ToLower(string(d))
+			if text == "true" || text == "valid" {
+				validSecrets = true
+			}
+		}
+
+		d = secret.Data["git-url"]
+		if d != nil {
+			text := string(d)
+			if text != "" {
+				repo, _ := giturl.ParseGitURL(text)
+				if repo != nil && repo.Name != "" {
+					gitURL = repo.URLWithoutUser()
 				}
 			}
-
-			d = secret.Data["git-url"]
-			if d != nil {
-				text := string(d)
-				if text != "" {
-					repo, _ := giturl.ParseGitURL(text)
-					if repo != nil && repo.Name != "" {
-						gitURL = repo.URLWithoutUser()
-					}
-				}
-			}
-
 		}
 	}
 	if !validSecrets {
 		err = views.BuildBootInvalidSecretView(request, pluginContext, response, gitURL)
 		if err != nil {
-			log.Println(err)
+			log.Logger().Info(err)
 			return component.EmptyContentResponse, err
 		}
 		return *response, nil

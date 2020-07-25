@@ -18,9 +18,10 @@ package views
 
 import (
 	"fmt"
-	"log"
 	"strings"
 	"time"
+
+	"github.com/jenkins-x/jx-logging/pkg/log"
 
 	"github.com/jenkins-x/octant-jx/pkg/common/helm"
 	"github.com/jenkins-x/octant-jx/pkg/common/pluginctx"
@@ -44,7 +45,7 @@ func BuildHelmReleaseView(request service.Request, pluginContext pluginctx.Conte
 	client := request.DashboardClient()
 	ns := pluginContext.Namespace
 
-	//log.Printf("BuildHelmReleasesView querying for secrets owned by helm with release %s\n", releaseName)
+	log.Logger().Debugf("BuildHelmReleasesView querying for secrets owned by helm with release %s\n", releaseName)
 
 	ul, err := client.List(ctx, store.Key{
 		APIVersion: "v1",
@@ -57,11 +58,11 @@ func BuildHelmReleaseView(request service.Request, pluginContext pluginctx.Conte
 		},
 	})
 	if err != nil {
-		log.Println(err)
+		log.Logger().Info(err)
 		return nil, err
 	}
 
-	log.Printf("BuildHelmReleaseView looking for release %s in namespace %s got list of secrets %d\n", releaseName, ns, len(ul.Items))
+	log.Logger().Infof("BuildHelmReleaseView looking for release %s in namespace %s got list of secrets %d\n", releaseName, ns, len(ul.Items))
 
 	helmReleases := helm.UnstructuredListToAnyHelmReleaseList(ul)
 	if len(helmReleases) == 0 {
@@ -75,10 +76,10 @@ func BuildHelmReleaseView(request service.Request, pluginContext pluginctx.Conte
 		releaseName))
 
 	statusSummarySections := []component.SummarySection{
-		{"Name", ToHelmName(r)},
-		{"Status", ToHelmStatus(r)},
-		{"Last Deployed", component.NewText(r.Info.LastDeployed.Format(time.ANSIC))},
-		{"Revision", component.NewText(fmt.Sprintf("%d", r.Version))},
+		{Header: "Name", Content: ToHelmName(r)},
+		{Header: "Status", Content: ToHelmStatus(r)},
+		{Header: "Last Deployed", Content: component.NewText(r.Info.LastDeployed.Format(time.ANSIC))},
+		{Header: "Revision", Content: component.NewText(fmt.Sprintf("%d", r.Version))},
 	}
 
 	statusSummary := component.NewSummary("Status", statusSummarySections...)
@@ -96,7 +97,7 @@ func BuildHelmReleaseView(request service.Request, pluginContext pluginctx.Conte
 		if len(values) > 0 {
 			data, err := yaml.Marshal(values)
 			if err != nil {
-				log.Printf("failed to marshal helm values to YAML: %s with values %#v", err.Error(), values)
+				log.Logger().Infof("failed to marshal helm values to YAML: %s with values %#v", err.Error(), values)
 			} else {
 				var yamlView component.Component
 

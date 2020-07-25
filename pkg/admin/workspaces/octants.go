@@ -8,9 +8,8 @@ import (
 )
 
 type Octants struct {
-	Octants        []Octant
-	fileName       string
-	adminWorkspace string
+	Octants  []Octant
+	fileName string
 }
 
 type Octant struct {

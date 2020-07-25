@@ -1,7 +1,7 @@
 package actioners
 
 import (
-	"log"
+	"github.com/jenkins-x/jx-logging/pkg/log"
 
 	"github.com/jenkins-x/octant-jx/pkg/common/actions"
 	"github.com/jenkins-x/octant-jx/pkg/common/pluginctx"
@@ -22,11 +22,11 @@ func HandleAction(request *service.ActionRequest, c *pluginctx.Context) error {
 	case action.RequestSetNamespace:
 		namespace, err := request.Payload.String("namespace")
 		if err != nil {
-			log.Printf("failed to handle %s for payload %#v with error: %s", action.RequestSetNamespace, request.Payload, err.Error())
+			log.Logger().Infof("failed to handle %s for payload %#v with error: %s", action.RequestSetNamespace, request.Payload, err.Error())
 		} else {
 			c.Namespace = namespace
-			log.Printf("set the namespace to %s", namespace)
-			log.Printf("payload is %#v", request.Payload)
+			log.Logger().Infof("set the namespace to %s", namespace)
+			log.Logger().Infof("payload is %#v", request.Payload)
 		}
 
 	case actions.PerformAction:
@@ -35,29 +35,29 @@ func HandleAction(request *service.ActionRequest, c *pluginctx.Context) error {
 			namespace, err2 := request.Payload.String("namespace")
 			if err2 == nil && namespace != "" {
 				c.Namespace = namespace
-				log.Printf("set the namespace to %s", namespace)
+				log.Logger().Infof("set the namespace to %s", namespace)
 			} else {
-				log.Printf("failed to handle %s for payload %#v with error: %s", actions.PerformAction, request.Payload, err.Error())
+				log.Logger().Infof("failed to handle %s for payload %#v with error: %s", actions.PerformAction, request.Payload, err.Error())
 			}
 		} else {
 			switch action {
 			case actions.TriggerBootJob:
-				log.Printf("Trigger BOOT Job with payload %#v", request.Payload)
+				log.Logger().Infof("Trigger BOOT Job with payload %#v", request.Payload)
 				// TODO how to get an alerter?
 				return HandleTriggerBootJob(request)
 
 			case actions.TriggerJob:
-				log.Printf("Trigger Job with payload %#v", request.Payload)
+				log.Logger().Infof("Trigger Job with payload %#v", request.Payload)
 
 				// TODO how to get an alerter?
 
 			default:
-				log.Printf("unknown  PerformAction %#v", request.Payload)
+				log.Logger().Infof("unknown  PerformAction %#v", request.Payload)
 			}
 		}
 
 	default:
-		log.Printf("unknown action %s", request.ActionName)
+		log.Logger().Infof("unknown action %s", request.ActionName)
 	}
 	return nil
 }
