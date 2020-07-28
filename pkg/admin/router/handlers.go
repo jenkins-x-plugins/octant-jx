@@ -96,7 +96,10 @@ func (h *Handlers) addBootJobLogsHandlers(router *service.Router) {
 	path := admin.BootJobsPath
 	router.HandleFunc("/"+path+"/logs/*", func(request service.Request) (component.ContentResponse, error) {
 		config := views.JobsViewConfigs[path]
-		view, err := views.BuildJobsViewLogsForPathAndSelector(request, *h.Context, path, "jx-boot", config, labels.Set{})
+
+		paths := strings.Split(strings.TrimSuffix(request.Path(), "/"), "/")
+		jobName := paths[len(paths)-1]
+		view, err := views.BuildJobsViewLogsForPathAndSelector(request, *h.Context, path, jobName, config, labels.Set{})
 		if err != nil {
 			return component.EmptyContentResponse, err
 		}
@@ -142,7 +145,7 @@ func (h *Handlers) handleBootJobsView(request service.Request) (component.Conten
 	client := request.DashboardClient()
 	ns := pluginContext.Namespace
 
-	name := "jx-boot-git-url"
+	name := "jx-boot"
 	u, err := viewhelpers.GetResourceByName(ctx, client, "v1", "Secret", name, ns)
 	if err != nil || u == nil {
 		if err != nil {
@@ -164,21 +167,14 @@ func (h *Handlers) handleBootJobsView(request service.Request) (component.Conten
 	if err != nil {
 		log.Logger().Info(err)
 	} else if secret.Data != nil {
-		d := secret.Data["secrets-verify"]
-		if d != nil {
-			text := strings.ToLower(string(d))
-			if text == "true" || text == "valid" {
-				validSecrets = true
-			}
-		}
-
-		d = secret.Data["git-url"]
+		d := secret.Data["url"]
 		if d != nil {
 			text := string(d)
 			if text != "" {
 				repo, _ := giturl.ParseGitURL(text)
 				if repo != nil && repo.Name != "" {
 					gitURL = repo.URLWithoutUser()
+					validSecrets = true
 				}
 			}
 		}

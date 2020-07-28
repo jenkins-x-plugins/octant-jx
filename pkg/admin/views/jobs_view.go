@@ -34,8 +34,7 @@ var (
 			ActionResourceName: "jx-boot",
 			Title:              "Boot Jobs",
 			Selector: labels.Set{
-				"app":     "jx-boot",
-				"release": "jenkins-x",
+				"app": "jx-boot",
 			},
 		},
 		admin.GCPipelineJobsPath: {

@@ -1,42 +1,42 @@
 package views
 
 import (
-	"fmt"
-
-	"github.com/jenkins-x/jx-helpers/pkg/gitclient/giturl"
 	"github.com/jenkins-x/octant-jx/pkg/common/pluginctx"
 	"github.com/vmware-tanzu/octant/pkg/plugin/service"
 	"github.com/vmware-tanzu/octant/pkg/view/component"
 )
 
 var (
-	noSecretDocs = `The current namespace does not appear to contain the Jenkins X Boot Secret used to indicate the secrets have been setup for use with helm 3.
+	noSecretDocs = `The current namespace does not appear to contain the Jenkins X Git Operator used to install and upgrade Jenkins X 3.x.
 
-Are you sure this namespace is a Jenkins X boot namespace?
+Are you sure this namespace is a Jenkins X GitOps namespace?
 `
-	exampleGitURL = "https://github.com/myorg/envronment-mycluster.git"
 
 	//nolint:gosec
 	settingUpSecretsDoc = `
 
-## Setting up the Secrets
+## Create a GitOps repository and install the operator
 
-To setup secrets try the following:
+If you do not yet have a git repostory to manage this cluster via GitOps then:
 
-    git clone %s
-	cd %s
-    jxl boot secrets edit 
+*  use the [jx admin create](https://github.com/jenkins-x/jx-admin/blob/master/docs/cmd/jx-admin_create.md) command
+* see how to [Create a DevOps git repository and install the git operator](https://jenkins-x.io/docs/v3/install-setup/getting-started/repository/)
 
-That should setup the boot secret properly.
+## Setting up the Jenkins X Git Operator
+
+If you already have a git repository to manage this cluster via gitOps then:
+
+* install the Git Operator via the [jx admin operator](https://github.com/jenkins-x/jx-admin/blob/master/docs/cmd/jx-admin_operator.md) command
+* see how to [Install the Jenkins X Git Operator](https://jenkins-x.io/docs/v3/install-setup/getting-started/operator/)
 `
 )
 
 // BuildNoBootSecretView view that there is no boot secret
 func BuildNoBootSecretView(request service.Request, pluginContext pluginctx.Context, cr *component.ContentResponse) error {
-	card := component.NewCard(component.Title(component.NewMarkdownText("## No Boot Secret found")))
-	layout := component.NewFlexLayout("starting boot")
+	card := component.NewCard(component.Title(component.NewMarkdownText("## No Jenkins X Git Operator found")))
+	layout := component.NewFlexLayout("jenkins x git operator")
 
-	text := noSecretDocs + GetBootEditSecretsMarkdown(exampleGitURL)
+	text := noSecretDocs + settingUpSecretsDoc
 
 	section := component.FlexLayoutSection{
 		{
@@ -49,18 +49,4 @@ func BuildNoBootSecretView(request service.Request, pluginContext pluginctx.Cont
 
 	cr.Add(card)
 	return nil
-}
-
-func GetBootEditSecretsMarkdown(gitURL string) string {
-	if gitURL == "" {
-		gitURL = exampleGitURL
-	}
-
-	// lets find the folder
-	repo, _ := giturl.ParseGitURL(gitURL)
-	dir := "myrepo"
-	if repo != nil && repo.Name != "" {
-		dir = repo.Name
-	}
-	return fmt.Sprintf(settingUpSecretsDoc, gitURL, dir)
 }

@@ -14,9 +14,9 @@ var (
 
 // BuildBootInvalidSecretView view that the secrets are not yet valid
 func BuildBootInvalidSecretView(request service.Request, pluginContext pluginctx.Context, cr *component.ContentResponse, gitURL string) error {
-	card := component.NewCard(component.Title(component.NewMarkdownText("## Invalid Boot Secrets")))
+	card := component.NewCard(component.Title(component.NewMarkdownText("## Invalid Jenkins X GitOps Secrets")))
 
-	text := invalidBootSecretsDocs + GetBootEditSecretsMarkdown(gitURL)
+	text := invalidBootSecretsDocs + settingUpSecretsDoc
 
 	layout := component.NewFlexLayout("starting boot")
 	section := component.FlexLayoutSection{
