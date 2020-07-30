@@ -362,6 +362,8 @@ github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99/go.mod h1:1lJo3i
 github.com/jenkins-x/jx-api v0.0.11/go.mod h1:+UBXFtmDMcmQg/1aDi/HhMV9Ww0m9+p0L/ZiGAh3fgY=
 github.com/jenkins-x/jx-api v0.0.16 h1:3qM9WwFZhymV2SKUOtZyhjChqGTjlQmhSZuNJmc2f8c=
 github.com/jenkins-x/jx-api v0.0.16/go.mod h1:QKLHk4VzI+sDBPSzN4K+QdEjNIBnCHS3DKY5YbGeCdY=
+github.com/jenkins-x/jx-api v0.0.17 h1:DXfR76lH3s7K2CaSJBzq/S7zRtKFfbKpnNyY4n8plUQ=
+github.com/jenkins-x/jx-api v0.0.17/go.mod h1:QKLHk4VzI+sDBPSzN4K+QdEjNIBnCHS3DKY5YbGeCdY=
 github.com/jenkins-x/jx-helpers v1.0.29 h1:0wvL3sotwAP6usoU9bnfFxaopXmq/80dwcV881jE6v0=
 github.com/jenkins-x/jx-helpers v1.0.29/go.mod h1:nF8mZ7Jna4HPCfP1K+YHA7UiBkz1EXtm+DCUHvhxnIc=
 github.com/jenkins-x/jx-helpers v1.0.33 h1:Gm0EB/meAz0REk9kkoL7ZqyuLBAmWMbHD4uirWj0o2Q=
