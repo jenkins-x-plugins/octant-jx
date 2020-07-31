@@ -14,8 +14,8 @@ require (
 	github.com/hashicorp/go-hclog v0.9.2 // indirect
 	github.com/hashicorp/go-plugin v1.0.1 // indirect
 	github.com/hashicorp/golang-lru v0.5.3 // indirect
-	github.com/jenkins-x/jx-api v0.0.16
-	github.com/jenkins-x/jx-helpers v1.0.33
+	github.com/jenkins-x/jx-api v0.0.17
+	github.com/jenkins-x/jx-helpers v1.0.34
 	github.com/jenkins-x/jx-logging v0.0.11
 	github.com/json-iterator/go v1.1.9 // indirect
 	github.com/mitchellh/mapstructure v1.2.2 // indirect
