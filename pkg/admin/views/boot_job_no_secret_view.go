@@ -20,14 +20,14 @@ Are you sure this namespace is a Jenkins X GitOps namespace?
 If you do not yet have a git repostory to manage this cluster via GitOps then:
 
 *  use the [jx admin create](https://github.com/jenkins-x/jx-admin/blob/master/docs/cmd/jx-admin_create.md) command
-* see how to [Create a DevOps git repository and install the git operator](https://jenkins-x.io/docs/v3/install-setup/getting-started/repository/)
+* see how to [Create a DevOps git repository and install the git operator](https://jenkins-x.io/docs/v3/getting-started/)
 
 ## Setting up the Jenkins X Git Operator
 
 If you already have a git repository to manage this cluster via gitOps then:
 
 * install the Git Operator via the [jx admin operator](https://github.com/jenkins-x/jx-admin/blob/master/docs/cmd/jx-admin_operator.md) command
-* see how to [Install the Jenkins X Git Operator](https://jenkins-x.io/docs/v3/install-setup/getting-started/operator/)
+* see how to [Install the Jenkins X Git Operator](https://jenkins-x.io/docs/v3/guides/operator/)
 `
 )
 
