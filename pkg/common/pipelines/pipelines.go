@@ -80,6 +80,12 @@ func ToPipelineActivity(pr *v1beta1.PipelineRun) *v1.PipelineActivity {
 	annotations := pr.Annotations
 	labels := pr.Labels
 	pa := &v1.PipelineActivity{}
+	if pa.APIVersion == "" {
+		pa.APIVersion = "jenkins.io/v1"
+	}
+	if pa.Kind == "" {
+		pa.Kind = "PipelineActivity"
+	}
 	pa.Name = pr.Name
 	pa.Namespace = pr.Namespace
 	pa.Annotations = annotations
@@ -116,6 +122,9 @@ func ToPipelineActivity(pr *v1beta1.PipelineRun) *v1.PipelineActivity {
 	}
 
 	podName := ""
+	running := false
+	failed := false
+	succeeded := true
 	if pr.Status.TaskRuns != nil {
 		for _, v := range pr.Status.TaskRuns {
 			if v.Status == nil {
@@ -124,6 +133,8 @@ func ToPipelineActivity(pr *v1beta1.PipelineRun) *v1.PipelineActivity {
 			if podName == "" {
 				podName = v.Status.PodName
 			}
+
+			previousStepTerminated := false
 			for _, step := range v.Status.Steps {
 				name := step.Name
 				var started *metav1.Time
@@ -134,11 +145,21 @@ func ToPipelineActivity(pr *v1beta1.PipelineRun) *v1.PipelineActivity {
 				if terminated != nil {
 					if terminated.ExitCode == 0 {
 						status = v1.ActivityStatusTypeSucceeded
+						succeeded = true
 					} else if !terminated.FinishedAt.IsZero() {
 						status = v1.ActivityStatusTypeFailed
+						failed = true
 					}
 					started = &terminated.StartedAt
 					completed = &terminated.FinishedAt
+					previousStepTerminated = true
+				} else if step.Running != nil {
+					if previousStepTerminated {
+						started = &step.Running.StartedAt
+						status = v1.ActivityStatusTypeRunning
+					}
+					previousStepTerminated = false
+					running = true
 				}
 
 				paStep := v1.PipelineActivityStep{
@@ -157,6 +178,18 @@ func ToPipelineActivity(pr *v1beta1.PipelineRun) *v1.PipelineActivity {
 			}
 		}
 	}
+	if string(ps.Status) == "" {
+		if failed {
+			ps.Status = v1.ActivityStatusTypeFailed
+		} else if running {
+			ps.Status = v1.ActivityStatusTypeRunning
+		} else if succeeded {
+			ps.Status = v1.ActivityStatusTypeSucceeded
+		} else {
+			ps.Status = v1.ActivityStatusTypePending
+		}
+	}
+
 	if podName != "" {
 		pa.Labels["podName"] = podName
 	}

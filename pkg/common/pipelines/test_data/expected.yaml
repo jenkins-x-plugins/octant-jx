@@ -1,0 +1,104 @@
+apiVersion: jenkins.io/v1
+kind: PipelineActivity
+metadata:
+  annotations:
+    lighthouse.jenkins-x.io/cloneURI: https://github.com/jstrachan/nodey510.git
+    lighthouse.jenkins-x.io/job: main
+  creationTimestamp: null
+  labels:
+    created-by-lighthouse: "true"
+    event-GUID: 8581a5f6-fb38-11ea-9b20-71ca9950db29
+    lighthouse.jenkins-x.io/baseSHA: 5a694a615045f2821aa40aefe86aab9192667193
+    lighthouse.jenkins-x.io/branch: master
+    lighthouse.jenkins-x.io/buildNum: "1600603078522"
+    lighthouse.jenkins-x.io/context: main
+    lighthouse.jenkins-x.io/id: 868a17ab-fb38-11ea-a434-5e87fb7da1e8
+    lighthouse.jenkins-x.io/job: main
+    lighthouse.jenkins-x.io/lastCommitSHA: 5a694a615045f2821aa40aefe86aab9192667193
+    lighthouse.jenkins-x.io/refs.org: jstrachan
+    lighthouse.jenkins-x.io/refs.repo: nodey510
+    lighthouse.jenkins-x.io/type: postsubmit
+    podName: main-rvs7k-from-build-pack-6n942-pod-j8l2d
+    tekton.dev/pipeline: main-rvs7k
+  name: main-rvs7k
+  namespace: jx
+spec:
+  baseSHA: 5a694a615045f2821aa40aefe86aab9192667193
+  batchPipelineActivity: {}
+  build: "1600603078522"
+  context: main
+  gitBranch: master
+  gitOwner: jstrachan
+  gitRepository: nodey510
+  gitUrl: https://github.com/jstrachan/nodey510.git
+  lastCommitSHA: 5a694a615045f2821aa40aefe86aab9192667193
+  status: Running
+  steps:
+  - kind: Stage
+    stage:
+      completedTimestamp: "2020-09-20T11:58:08Z"
+      name: Git Clone
+      startedTimestamp: "2020-09-20T11:58:08Z"
+      status: Succeeded
+  - kind: Stage
+    stage:
+      completedTimestamp: "2020-09-20T11:58:09Z"
+      name: Git Setup
+      startedTimestamp: "2020-09-20T11:58:09Z"
+      status: Succeeded
+  - kind: Stage
+    stage:
+      completedTimestamp: "2020-09-20T11:58:11Z"
+      name: Next Version
+      startedTimestamp: "2020-09-20T11:58:09Z"
+      status: Succeeded
+  - kind: Stage
+    stage:
+      completedTimestamp: "2020-09-20T11:58:14Z"
+      name: Tag Version
+      startedTimestamp: "2020-09-20T11:58:11Z"
+      status: Succeeded
+  - kind: Stage
+    stage:
+      completedTimestamp: "2020-09-20T11:58:15Z"
+      name: Setup Builder Home
+      startedTimestamp: "2020-09-20T11:58:15Z"
+      status: Succeeded
+  - kind: Stage
+    stage:
+      completedTimestamp: "2020-09-20T11:58:17Z"
+      name: Git Merge
+      startedTimestamp: "2020-09-20T11:58:16Z"
+      status: Succeeded
+  - kind: Stage
+    stage:
+      completedTimestamp: "2020-09-20T11:58:18Z"
+      name: Build Npmrc
+      startedTimestamp: "2020-09-20T11:58:17Z"
+      status: Succeeded
+  - kind: Stage
+    stage:
+      name: Build Npm Install
+      startedTimestamp: "2020-09-20T11:58:05Z"
+      status: Running
+  - kind: Stage
+    stage:
+      name: Build Npm Test
+      status: Pending
+  - kind: Stage
+    stage:
+      name: Build Container Build
+      status: Pending
+  - kind: Stage
+    stage:
+      name: Promote Changelog
+      status: Pending
+  - kind: Stage
+    stage:
+      name: Promote Helm Release
+      status: Pending
+  - kind: Stage
+    stage:
+      name: Promote Jx Promote
+      status: Pending
+status: {}
