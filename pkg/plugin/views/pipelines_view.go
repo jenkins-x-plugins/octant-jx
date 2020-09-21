@@ -7,14 +7,13 @@ import (
 	"strings"
 	"time"
 
-	"github.com/jenkins-x/jx-logging/pkg/log"
-
 	v1 "github.com/jenkins-x/jx-api/pkg/apis/jenkins.io/v1"
+	"github.com/jenkins-x/jx-logging/pkg/log"
+	"github.com/jenkins-x/octant-jx/pkg/common/pipelines"
 	"github.com/jenkins-x/octant-jx/pkg/common/pluginctx"
 	"github.com/jenkins-x/octant-jx/pkg/common/viewhelpers"
 	"github.com/jenkins-x/octant-jx/pkg/plugin"
 	"github.com/vmware-tanzu/octant/pkg/plugin/service"
-	"github.com/vmware-tanzu/octant/pkg/store"
 	"github.com/vmware-tanzu/octant/pkg/view/component"
 )
 
@@ -55,11 +54,7 @@ func BuildPipelinesView(request service.Request, config *PipelinesViewConfig) (c
 	ctx := request.Context()
 	client := request.DashboardClient()
 
-	dl, err := client.List(ctx, store.Key{
-		APIVersion: "jenkins.io/v1",
-		Kind:       "PipelineActivity",
-		Namespace:  config.Context.Namespace,
-	})
+	paList, err := pipelines.GetPipelines(ctx, client, config.Context.Namespace)
 
 	if err != nil {
 		log.Logger().Infof("failed: %s", err.Error())
@@ -78,19 +73,6 @@ func BuildPipelinesView(request service.Request, config *PipelinesViewConfig) (c
 		component.NewTableCols(colNames...),
 		[]component.TableRow{})
 
-	paList := []*v1.PipelineActivity{}
-	if dl != nil {
-		for k, v := range dl.Items {
-			pa, err := viewhelpers.ToPipelineActivity(&dl.Items[k])
-			if err != nil {
-				log.Logger().Infof("failed to convert to PipelineActivity for %s: %s", v.GetName(), err.Error())
-				continue
-			}
-			if pa != nil {
-				paList = append(paList, pa)
-			}
-		}
-	}
 	if config.Filter != nil {
 		allList := paList
 		paList = []*v1.PipelineActivity{}

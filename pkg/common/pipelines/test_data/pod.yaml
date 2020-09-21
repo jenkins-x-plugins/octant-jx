@@ -1,0 +1,1453 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    lighthouse.jenkins-x.io/cloneURI: https://github.com/jstrachan/nodey510.git
+    lighthouse.jenkins-x.io/job: main
+    pipeline.tekton.dev/release: devel
+    tekton.dev/ready: READY
+  creationTimestamp: "2020-09-20T11:57:59Z"
+  labels:
+    app.kubernetes.io/managed-by: tekton-pipelines
+    created-by-lighthouse: "true"
+    event-GUID: 8581a5f6-fb38-11ea-9b20-71ca9950db29
+    lighthouse.jenkins-x.io/baseSHA: 5a694a615045f2821aa40aefe86aab9192667193
+    lighthouse.jenkins-x.io/branch: master
+    lighthouse.jenkins-x.io/buildNum: "1600603078522"
+    lighthouse.jenkins-x.io/context: main
+    lighthouse.jenkins-x.io/id: 868a17ab-fb38-11ea-a434-5e87fb7da1e8
+    lighthouse.jenkins-x.io/job: main
+    lighthouse.jenkins-x.io/lastCommitSHA: 5a694a615045f2821aa40aefe86aab9192667193
+    lighthouse.jenkins-x.io/refs.org: jstrachan
+    lighthouse.jenkins-x.io/refs.repo: nodey510
+    lighthouse.jenkins-x.io/type: postsubmit
+    tekton.dev/pipeline: main-rvs7k
+    tekton.dev/pipelineRun: main-rvs7k
+    tekton.dev/pipelineTask: from-build-pack
+    tekton.dev/taskRun: main-rvs7k-from-build-pack-6n942
+  name: main-rvs7k-from-build-pack-6n942-pod-j8l2d
+  namespace: jx
+  ownerReferences:
+  - apiVersion: tekton.dev/v1beta1
+    blockOwnerDeletion: true
+    controller: true
+    kind: TaskRun
+    name: main-rvs7k-from-build-pack-6n942
+    uid: 17fbd59f-e866-42b4-9174-6ff174bfb9d4
+  resourceVersion: "1632184"
+  selfLink: /api/v1/namespaces/jx/pods/main-rvs7k-from-build-pack-6n942-pod-j8l2d
+  uid: 53830ad8-ab56-4543-8864-3a7b0f1fdd30
+spec:
+  containers:
+  - args:
+    - -wait_file
+    - /tekton/downward/ready
+    - -wait_file_content
+    - -post_file
+    - /tekton/tools/0
+    - -termination_path
+    - /tekton/termination
+    - -docker-config=tekton-container-registry-auth
+    - -basic-git=tekton-git=https://github.com
+    - -entrypoint
+    - /bin/sh
+    - --
+    - -c
+    - 'mkdir -p $HOME; git config --global --add user.name $GIT_AUTHOR_NAME; git config
+      --global --add user.email $GIT_AUTHOR_EMAIL; git config --global credential.helper
+      store; git clone https://github.com/jstrachan/nodey510.git source; echo cloned
+      url: https://github.com/jstrachan/nodey510.git to dir: source; cd source; git
+      checkout master; echo checked out revision: master to dir: source'
+    command:
+    - /tekton/tools/entrypoint
+    env:
+    - name: HOME
+      value: /tekton/home
+    - name: GIT_AUTHOR_EMAIL
+      value: jenkins-x@googlegroups.com
+    - name: GIT_AUTHOR_NAME
+      value: jenkins-x-bot
+    - name: GIT_COMMITTER_EMAIL
+      value: jenkins-x@googlegroups.com
+    - name: GIT_COMMITTER_NAME
+      value: jenkins-x-bot
+    - name: XDG_CONFIG_HOME
+      value: /workspace/xdg_config
+    - name: REPO_OWNER
+    - name: REPO_NAME
+    - name: BRANCH_NAME
+      value: master
+    image: gcr.io/jenkinsxio/builder-jx:2.1.32-662
+    imagePullPolicy: IfNotPresent
+    name: step-git-clone
+    resources:
+      requests:
+        cpu: "0"
+        ephemeral-storage: "0"
+        memory: "0"
+    terminationMessagePath: /tekton/termination
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /home/jenkins
+      name: workspace-volume
+    - mountPath: /tekton/tools
+      name: tekton-internal-tools
+    - mountPath: /tekton/downward
+      name: tekton-internal-downward
+    - mountPath: /tekton/creds
+      name: tekton-creds-init-home-zs8kd
+    - mountPath: /workspace
+      name: tekton-internal-workspace
+    - mountPath: /tekton/home
+      name: tekton-internal-home
+    - mountPath: /tekton/results
+      name: tekton-internal-results
+    - mountPath: /tekton/creds-secrets/tekton-container-registry-auth
+      name: tekton-internal-secret-volume-tekton-container-registry-a-tzvbh
+    - mountPath: /tekton/creds-secrets/tekton-git
+      name: tekton-internal-secret-volume-tekton-git-kwtwl
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: tekton-bot-token-29ck8
+      readOnly: true
+    workingDir: /workspace
+  - args:
+    - -wait_file
+    - /tekton/tools/0
+    - -post_file
+    - /tekton/tools/1
+    - -termination_path
+    - /tekton/termination
+    - -docker-config=tekton-container-registry-auth
+    - -basic-git=tekton-git=https://github.com
+    - -entrypoint
+    - jx
+    - --
+    - gitops
+    - git
+    - setup
+    - --namespace
+    - jx-git-operator
+    command:
+    - /tekton/tools/entrypoint
+    env:
+    - name: HOME
+      value: /tekton/home
+    image: gcr.io/jenkinsxio/jx-cli:latest
+    imagePullPolicy: Always
+    name: step-git-setup
+    resources:
+      requests:
+        cpu: "0"
+        ephemeral-storage: "0"
+        memory: "0"
+    terminationMessagePath: /tekton/termination
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /home/jenkins
+      name: workspace-volume
+    - mountPath: /tekton/tools
+      name: tekton-internal-tools
+    - mountPath: /tekton/creds
+      name: tekton-creds-init-home-mjdhg
+    - mountPath: /workspace
+      name: tekton-internal-workspace
+    - mountPath: /tekton/home
+      name: tekton-internal-home
+    - mountPath: /tekton/results
+      name: tekton-internal-results
+    - mountPath: /tekton/creds-secrets/tekton-container-registry-auth
+      name: tekton-internal-secret-volume-tekton-container-registry-a-tzvbh
+    - mountPath: /tekton/creds-secrets/tekton-git
+      name: tekton-internal-secret-volume-tekton-git-kwtwl
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: tekton-bot-token-29ck8
+      readOnly: true
+    workingDir: /workspace
+  - args:
+    - -wait_file
+    - /tekton/tools/1
+    - -post_file
+    - /tekton/tools/2
+    - -termination_path
+    - /tekton/termination
+    - -docker-config=tekton-container-registry-auth
+    - -basic-git=tekton-git=https://github.com
+    - -entrypoint
+    - /bin/sh
+    - --
+    - -c
+    - jx step next-version --filename package.json
+    command:
+    - /tekton/tools/entrypoint
+    env:
+    - name: HOME
+      value: /tekton/home
+    image: gcr.io/jenkinsxio-labs-private/jxl:0.0.136
+    imagePullPolicy: IfNotPresent
+    name: step-next-version
+    resources:
+      requests:
+        cpu: "0"
+        ephemeral-storage: "0"
+        memory: "0"
+    terminationMessagePath: /tekton/termination
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /tekton/tools
+      name: tekton-internal-tools
+    - mountPath: /tekton/creds
+      name: tekton-creds-init-home-gxmq9
+    - mountPath: /workspace
+      name: tekton-internal-workspace
+    - mountPath: /tekton/home
+      name: tekton-internal-home
+    - mountPath: /tekton/results
+      name: tekton-internal-results
+    - mountPath: /tekton/creds-secrets/tekton-container-registry-auth
+      name: tekton-internal-secret-volume-tekton-container-registry-a-tzvbh
+    - mountPath: /tekton/creds-secrets/tekton-git
+      name: tekton-internal-secret-volume-tekton-git-kwtwl
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: tekton-bot-token-29ck8
+      readOnly: true
+    workingDir: /workspace/source
+  - args:
+    - -wait_file
+    - /tekton/tools/2
+    - -post_file
+    - /tekton/tools/3
+    - -termination_path
+    - /tekton/termination
+    - -docker-config=tekton-container-registry-auth
+    - -basic-git=tekton-git=https://github.com
+    - -entrypoint
+    - /bin/sh
+    - --
+    - -c
+    - jx step tag --version $(cat VERSION)
+    command:
+    - /tekton/tools/entrypoint
+    env:
+    - name: HOME
+      value: /tekton/home
+    image: gcr.io/jenkinsxio-labs-private/jxl:0.0.136
+    imagePullPolicy: IfNotPresent
+    name: step-tag-version
+    resources:
+      requests:
+        cpu: "0"
+        ephemeral-storage: "0"
+        memory: "0"
+    terminationMessagePath: /tekton/termination
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /tekton/tools
+      name: tekton-internal-tools
+    - mountPath: /tekton/creds
+      name: tekton-creds-init-home-tr48k
+    - mountPath: /workspace
+      name: tekton-internal-workspace
+    - mountPath: /tekton/home
+      name: tekton-internal-home
+    - mountPath: /tekton/results
+      name: tekton-internal-results
+    - mountPath: /tekton/creds-secrets/tekton-container-registry-auth
+      name: tekton-internal-secret-volume-tekton-container-registry-a-tzvbh
+    - mountPath: /tekton/creds-secrets/tekton-git
+      name: tekton-internal-secret-volume-tekton-git-kwtwl
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: tekton-bot-token-29ck8
+      readOnly: true
+    workingDir: /workspace/source
+  - args:
+    - -wait_file
+    - /tekton/tools/3
+    - -post_file
+    - /tekton/tools/4
+    - -termination_path
+    - /tekton/termination
+    - -docker-config=tekton-container-registry-auth
+    - -basic-git=tekton-git=https://github.com
+    - -entrypoint
+    - /bin/sh
+    - --
+    - -c
+    - '[ -d /builder/home ] || mkdir -p /builder && ln -s /tekton/home /builder/home'
+    command:
+    - /tekton/tools/entrypoint
+    env:
+    - name: HOME
+      value: /tekton/home
+    - name: DOCKER_REGISTRY
+      value: docker.io
+    - name: GIT_AUTHOR_EMAIL
+      value: jenkins-x@googlegroups.com
+    - name: GIT_AUTHOR_NAME
+      value: jenkins-x-bot
+    - name: GIT_COMMITTER_EMAIL
+      value: jenkins-x@googlegroups.com
+    - name: GIT_COMMITTER_NAME
+      value: jenkins-x-bot
+    - name: XDG_CONFIG_HOME
+      value: /workspace/xdg_config
+    - name: DOCKER_REGISTRY_ORG
+      value: jenkins-x-labs-bdd
+    - name: BUILD_NUMBER
+      value: "1"
+    - name: PIPELINE_KIND
+      value: release
+    - name: REPO_OWNER
+    - name: REPO_NAME
+    - name: JOB_NAME
+      value: jenkins-x-quickstarts/node-http/master
+    - name: APP_NAME
+    - name: BRANCH_NAME
+      value: master
+    - name: JX_BATCH_MODE
+      value: "true"
+    - name: VERSION
+      value: 0.0.1
+    - name: PREVIEW_VERSION
+      value: 0.0.1
+    image: gcr.io/jenkinsxio/builder-jx:2.1.142-761
+    imagePullPolicy: IfNotPresent
+    name: step-setup-builder-home
+    resources:
+      requests:
+        cpu: 400m
+        ephemeral-storage: "0"
+        memory: 512Mi
+    securityContext:
+      privileged: true
+    terminationMessagePath: /tekton/termination
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /home/jenkins
+      name: workspace-volume
+    - mountPath: /etc/podinfo
+      name: podinfo
+      readOnly: true
+    - mountPath: /tekton/tools
+      name: tekton-internal-tools
+    - mountPath: /tekton/creds
+      name: tekton-creds-init-home-pjgz4
+    - mountPath: /workspace
+      name: tekton-internal-workspace
+    - mountPath: /tekton/home
+      name: tekton-internal-home
+    - mountPath: /tekton/results
+      name: tekton-internal-results
+    - mountPath: /tekton/creds-secrets/tekton-container-registry-auth
+      name: tekton-internal-secret-volume-tekton-container-registry-a-tzvbh
+    - mountPath: /tekton/creds-secrets/tekton-git
+      name: tekton-internal-secret-volume-tekton-git-kwtwl
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: tekton-bot-token-29ck8
+      readOnly: true
+    workingDir: /workspace/source
+  - args:
+    - -wait_file
+    - /tekton/tools/4
+    - -post_file
+    - /tekton/tools/5
+    - -termination_path
+    - /tekton/termination
+    - -docker-config=tekton-container-registry-auth
+    - -basic-git=tekton-git=https://github.com
+    - -entrypoint
+    - jx
+    - --
+    - step
+    - git
+    - merge
+    - --verbose
+    command:
+    - /tekton/tools/entrypoint
+    env:
+    - name: HOME
+      value: /tekton/home
+    - name: DOCKER_REGISTRY
+      value: docker.io
+    - name: GIT_AUTHOR_EMAIL
+      value: jenkins-x@googlegroups.com
+    - name: GIT_AUTHOR_NAME
+      value: jenkins-x-bot
+    - name: GIT_COMMITTER_EMAIL
+      value: jenkins-x@googlegroups.com
+    - name: GIT_COMMITTER_NAME
+      value: jenkins-x-bot
+    - name: XDG_CONFIG_HOME
+      value: /workspace/xdg_config
+    - name: DOCKER_REGISTRY_ORG
+      value: jenkins-x-labs-bdd
+    - name: BUILD_NUMBER
+      value: "1"
+    - name: PIPELINE_KIND
+      value: release
+    - name: REPO_OWNER
+    - name: REPO_NAME
+    - name: JOB_NAME
+      value: jenkins-x-quickstarts/node-http/master
+    - name: APP_NAME
+    - name: BRANCH_NAME
+      value: master
+    - name: JX_BATCH_MODE
+      value: "true"
+    - name: VERSION
+      value: 0.0.1
+    - name: PREVIEW_VERSION
+      value: 0.0.1
+    image: gcr.io/jenkinsxio/builder-jx:2.1.142-761
+    imagePullPolicy: IfNotPresent
+    name: step-git-merge
+    resources:
+      requests:
+        cpu: "0"
+        ephemeral-storage: "0"
+        memory: "0"
+    securityContext:
+      privileged: true
+    terminationMessagePath: /tekton/termination
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /home/jenkins
+      name: workspace-volume
+    - mountPath: /etc/podinfo
+      name: podinfo
+      readOnly: true
+    - mountPath: /tekton/tools
+      name: tekton-internal-tools
+    - mountPath: /tekton/creds
+      name: tekton-creds-init-home-hj8p8
+    - mountPath: /workspace
+      name: tekton-internal-workspace
+    - mountPath: /tekton/home
+      name: tekton-internal-home
+    - mountPath: /tekton/results
+      name: tekton-internal-results
+    - mountPath: /tekton/creds-secrets/tekton-container-registry-auth
+      name: tekton-internal-secret-volume-tekton-container-registry-a-tzvbh
+    - mountPath: /tekton/creds-secrets/tekton-git
+      name: tekton-internal-secret-volume-tekton-git-kwtwl
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: tekton-bot-token-29ck8
+      readOnly: true
+    workingDir: /workspace/source
+  - args:
+    - -wait_file
+    - /tekton/tools/5
+    - -post_file
+    - /tekton/tools/6
+    - -termination_path
+    - /tekton/termination
+    - -docker-config=tekton-container-registry-auth
+    - -basic-git=tekton-git=https://github.com
+    - -entrypoint
+    - /bin/sh
+    - --
+    - -c
+    - jx step credential -s npm-token -k file -f /builder/home/.npmrc --optional=true
+    command:
+    - /tekton/tools/entrypoint
+    env:
+    - name: HOME
+      value: /tekton/home
+    - name: DOCKER_REGISTRY
+      value: docker.io
+    - name: GIT_AUTHOR_EMAIL
+      value: jenkins-x@googlegroups.com
+    - name: GIT_AUTHOR_NAME
+      value: jenkins-x-bot
+    - name: GIT_COMMITTER_EMAIL
+      value: jenkins-x@googlegroups.com
+    - name: GIT_COMMITTER_NAME
+      value: jenkins-x-bot
+    - name: XDG_CONFIG_HOME
+      value: /workspace/xdg_config
+    - name: DOCKER_REGISTRY_ORG
+      value: jenkins-x-labs-bdd
+    - name: BUILD_NUMBER
+      value: "1"
+    - name: PIPELINE_KIND
+      value: release
+    - name: REPO_OWNER
+    - name: REPO_NAME
+    - name: JOB_NAME
+      value: jenkins-x-quickstarts/node-http/master
+    - name: APP_NAME
+    - name: BRANCH_NAME
+      value: master
+    - name: JX_BATCH_MODE
+      value: "true"
+    - name: VERSION
+      value: 0.0.1
+    - name: PREVIEW_VERSION
+      value: 0.0.1
+    image: gcr.io/jenkinsxio/builder-nodejs:2.1.148-767
+    imagePullPolicy: IfNotPresent
+    name: step-build-npmrc
+    resources:
+      requests:
+        cpu: "0"
+        ephemeral-storage: "0"
+        memory: "0"
+    securityContext:
+      privileged: true
+    terminationMessagePath: /tekton/termination
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /home/jenkins
+      name: workspace-volume
+    - mountPath: /etc/podinfo
+      name: podinfo
+      readOnly: true
+    - mountPath: /tekton/tools
+      name: tekton-internal-tools
+    - mountPath: /tekton/creds
+      name: tekton-creds-init-home-j5mzd
+    - mountPath: /workspace
+      name: tekton-internal-workspace
+    - mountPath: /tekton/home
+      name: tekton-internal-home
+    - mountPath: /tekton/results
+      name: tekton-internal-results
+    - mountPath: /tekton/creds-secrets/tekton-container-registry-auth
+      name: tekton-internal-secret-volume-tekton-container-registry-a-tzvbh
+    - mountPath: /tekton/creds-secrets/tekton-git
+      name: tekton-internal-secret-volume-tekton-git-kwtwl
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: tekton-bot-token-29ck8
+      readOnly: true
+    workingDir: /workspace/source
+  - args:
+    - -wait_file
+    - /tekton/tools/6
+    - -post_file
+    - /tekton/tools/7
+    - -termination_path
+    - /tekton/termination
+    - -docker-config=tekton-container-registry-auth
+    - -basic-git=tekton-git=https://github.com
+    - -entrypoint
+    - /bin/sh
+    - --
+    - -c
+    - npm install
+    command:
+    - /tekton/tools/entrypoint
+    env:
+    - name: HOME
+      value: /tekton/home
+    - name: DOCKER_REGISTRY
+      value: docker.io
+    - name: GIT_AUTHOR_EMAIL
+      value: jenkins-x@googlegroups.com
+    - name: GIT_AUTHOR_NAME
+      value: jenkins-x-bot
+    - name: GIT_COMMITTER_EMAIL
+      value: jenkins-x@googlegroups.com
+    - name: GIT_COMMITTER_NAME
+      value: jenkins-x-bot
+    - name: XDG_CONFIG_HOME
+      value: /workspace/xdg_config
+    - name: DOCKER_REGISTRY_ORG
+      value: jenkins-x-labs-bdd
+    - name: BUILD_NUMBER
+      value: "1"
+    - name: PIPELINE_KIND
+      value: release
+    - name: REPO_OWNER
+    - name: REPO_NAME
+    - name: JOB_NAME
+      value: jenkins-x-quickstarts/node-http/master
+    - name: APP_NAME
+    - name: BRANCH_NAME
+      value: master
+    - name: JX_BATCH_MODE
+      value: "true"
+    - name: VERSION
+      value: 0.0.1
+    - name: PREVIEW_VERSION
+      value: 0.0.1
+    image: gcr.io/jenkinsxio/builder-nodejs:2.1.148-767
+    imagePullPolicy: IfNotPresent
+    name: step-build-npm-install
+    resources:
+      requests:
+        cpu: "0"
+        ephemeral-storage: "0"
+        memory: "0"
+    securityContext:
+      privileged: true
+    terminationMessagePath: /tekton/termination
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /home/jenkins
+      name: workspace-volume
+    - mountPath: /etc/podinfo
+      name: podinfo
+      readOnly: true
+    - mountPath: /tekton/tools
+      name: tekton-internal-tools
+    - mountPath: /tekton/creds
+      name: tekton-creds-init-home-l65jj
+    - mountPath: /workspace
+      name: tekton-internal-workspace
+    - mountPath: /tekton/home
+      name: tekton-internal-home
+    - mountPath: /tekton/results
+      name: tekton-internal-results
+    - mountPath: /tekton/creds-secrets/tekton-container-registry-auth
+      name: tekton-internal-secret-volume-tekton-container-registry-a-tzvbh
+    - mountPath: /tekton/creds-secrets/tekton-git
+      name: tekton-internal-secret-volume-tekton-git-kwtwl
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: tekton-bot-token-29ck8
+      readOnly: true
+    workingDir: /workspace/source
+  - args:
+    - -wait_file
+    - /tekton/tools/7
+    - -post_file
+    - /tekton/tools/8
+    - -termination_path
+    - /tekton/termination
+    - -docker-config=tekton-container-registry-auth
+    - -basic-git=tekton-git=https://github.com
+    - -entrypoint
+    - /bin/sh
+    - --
+    - -c
+    - CI=true DISPLAY=:99 npm test
+    command:
+    - /tekton/tools/entrypoint
+    env:
+    - name: HOME
+      value: /tekton/home
+    - name: DOCKER_REGISTRY
+      value: docker.io
+    - name: GIT_AUTHOR_EMAIL
+      value: jenkins-x@googlegroups.com
+    - name: GIT_AUTHOR_NAME
+      value: jenkins-x-bot
+    - name: GIT_COMMITTER_EMAIL
+      value: jenkins-x@googlegroups.com
+    - name: GIT_COMMITTER_NAME
+      value: jenkins-x-bot
+    - name: XDG_CONFIG_HOME
+      value: /workspace/xdg_config
+    - name: DOCKER_REGISTRY_ORG
+      value: jenkins-x-labs-bdd
+    - name: BUILD_NUMBER
+      value: "1"
+    - name: PIPELINE_KIND
+      value: release
+    - name: REPO_OWNER
+    - name: REPO_NAME
+    - name: JOB_NAME
+      value: jenkins-x-quickstarts/node-http/master
+    - name: APP_NAME
+    - name: BRANCH_NAME
+      value: master
+    - name: JX_BATCH_MODE
+      value: "true"
+    - name: VERSION
+      value: 0.0.1
+    - name: PREVIEW_VERSION
+      value: 0.0.1
+    image: gcr.io/jenkinsxio/builder-nodejs:2.1.148-767
+    imagePullPolicy: IfNotPresent
+    name: step-build-npm-test
+    resources:
+      requests:
+        cpu: "0"
+        ephemeral-storage: "0"
+        memory: "0"
+    securityContext:
+      privileged: true
+    terminationMessagePath: /tekton/termination
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /home/jenkins
+      name: workspace-volume
+    - mountPath: /etc/podinfo
+      name: podinfo
+      readOnly: true
+    - mountPath: /tekton/tools
+      name: tekton-internal-tools
+    - mountPath: /tekton/creds
+      name: tekton-creds-init-home-lnt5h
+    - mountPath: /workspace
+      name: tekton-internal-workspace
+    - mountPath: /tekton/home
+      name: tekton-internal-home
+    - mountPath: /tekton/results
+      name: tekton-internal-results
+    - mountPath: /tekton/creds-secrets/tekton-container-registry-auth
+      name: tekton-internal-secret-volume-tekton-container-registry-a-tzvbh
+    - mountPath: /tekton/creds-secrets/tekton-git
+      name: tekton-internal-secret-volume-tekton-git-kwtwl
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: tekton-bot-token-29ck8
+      readOnly: true
+    workingDir: /workspace/source
+  - args:
+    - -wait_file
+    - /tekton/tools/8
+    - -post_file
+    - /tekton/tools/9
+    - -termination_path
+    - /tekton/termination
+    - -docker-config=tekton-container-registry-auth
+    - -basic-git=tekton-git=https://github.com
+    - -entrypoint
+    - /busybox/sh
+    - --
+    - -c
+    - /kaniko/executor $KANIKO_FLAGS --cache=true --cache-dir=/workspace --context=/workspace/source
+      --dockerfile=/workspace/source/Dockerfile --destination=$DOCKER_REGISTRY/$DOCKER_REGISTRY_ORG/$APP_NAME:$VERSION
+      --cache-repo=$DOCKER_REGISTRY/$DOCKER_REGISTRY_ORG/cache
+    command:
+    - /tekton/tools/entrypoint
+    env:
+    - name: HOME
+      value: /tekton/home
+    - name: DOCKER_REGISTRY
+      value: docker.io
+    - name: GIT_AUTHOR_EMAIL
+      value: jenkins-x@googlegroups.com
+    - name: GIT_AUTHOR_NAME
+      value: jenkins-x-bot
+    - name: GIT_COMMITTER_EMAIL
+      value: jenkins-x@googlegroups.com
+    - name: GIT_COMMITTER_NAME
+      value: jenkins-x-bot
+    - name: GOOGLE_APPLICATION_CREDENTIALS
+    - name: NO_GOOGLE_APPLICATION_CREDENTIALS
+      value: "true"
+    - name: XDG_CONFIG_HOME
+      value: /workspace/xdg_config
+    - name: DOCKER_REGISTRY_ORG
+      value: jenkins-x-labs-bdd
+    - name: BUILD_NUMBER
+      value: "1"
+    - name: PIPELINE_KIND
+      value: release
+    - name: REPO_OWNER
+    - name: REPO_NAME
+    - name: JOB_NAME
+      value: jenkins-x-quickstarts/node-http/master
+    - name: APP_NAME
+    - name: BRANCH_NAME
+      value: master
+    - name: JX_BATCH_MODE
+      value: "true"
+    - name: VERSION
+      value: 0.0.1
+    - name: PREVIEW_VERSION
+      value: 0.0.1
+    image: gcr.io/kaniko-project/executor:debug-v0.24.0
+    imagePullPolicy: IfNotPresent
+    name: step-build-container-build
+    resources:
+      requests:
+        cpu: "0"
+        ephemeral-storage: "0"
+        memory: "0"
+    securityContext:
+      privileged: true
+    terminationMessagePath: /tekton/termination
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /home/jenkins
+      name: workspace-volume
+    - mountPath: /etc/podinfo
+      name: podinfo
+      readOnly: true
+    - mountPath: /tekton/tools
+      name: tekton-internal-tools
+    - mountPath: /tekton/creds
+      name: tekton-creds-init-home-xxxdt
+    - mountPath: /workspace
+      name: tekton-internal-workspace
+    - mountPath: /tekton/home
+      name: tekton-internal-home
+    - mountPath: /tekton/results
+      name: tekton-internal-results
+    - mountPath: /tekton/creds-secrets/tekton-container-registry-auth
+      name: tekton-internal-secret-volume-tekton-container-registry-a-tzvbh
+    - mountPath: /tekton/creds-secrets/tekton-git
+      name: tekton-internal-secret-volume-tekton-git-kwtwl
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: tekton-bot-token-29ck8
+      readOnly: true
+    workingDir: /workspace/source
+  - args:
+    - -wait_file
+    - /tekton/tools/9
+    - -post_file
+    - /tekton/tools/10
+    - -termination_path
+    - /tekton/termination
+    - -docker-config=tekton-container-registry-auth
+    - -basic-git=tekton-git=https://github.com
+    - -entrypoint
+    - /bin/sh
+    - --
+    - -c
+    - cd /workspace/source/charts/node-http && jx step changelog --batch-mode --version
+      v${VERSION}
+    command:
+    - /tekton/tools/entrypoint
+    env:
+    - name: HOME
+      value: /tekton/home
+    - name: DOCKER_REGISTRY
+      value: docker.io
+    - name: GIT_AUTHOR_EMAIL
+      value: jenkins-x@googlegroups.com
+    - name: GIT_AUTHOR_NAME
+      value: jenkins-x-bot
+    - name: GIT_COMMITTER_EMAIL
+      value: jenkins-x@googlegroups.com
+    - name: GIT_COMMITTER_NAME
+      value: jenkins-x-bot
+    - name: XDG_CONFIG_HOME
+      value: /workspace/xdg_config
+    - name: DOCKER_REGISTRY_ORG
+      value: jenkins-x-labs-bdd
+    - name: BUILD_NUMBER
+      value: "1"
+    - name: PIPELINE_KIND
+      value: release
+    - name: REPO_OWNER
+    - name: REPO_NAME
+    - name: JOB_NAME
+      value: jenkins-x-quickstarts/node-http/master
+    - name: APP_NAME
+    - name: BRANCH_NAME
+      value: master
+    - name: JX_BATCH_MODE
+      value: "true"
+    - name: VERSION
+      value: 0.0.1
+    - name: PREVIEW_VERSION
+      value: 0.0.1
+    image: gcr.io/jenkinsxio/builder-go:2.1.142-761
+    imagePullPolicy: IfNotPresent
+    name: step-promote-changelog
+    resources:
+      requests:
+        cpu: "0"
+        ephemeral-storage: "0"
+        memory: "0"
+    securityContext:
+      privileged: true
+    terminationMessagePath: /tekton/termination
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /home/jenkins
+      name: workspace-volume
+    - mountPath: /etc/podinfo
+      name: podinfo
+      readOnly: true
+    - mountPath: /tekton/tools
+      name: tekton-internal-tools
+    - mountPath: /tekton/creds
+      name: tekton-creds-init-home-ps7cf
+    - mountPath: /workspace
+      name: tekton-internal-workspace
+    - mountPath: /tekton/home
+      name: tekton-internal-home
+    - mountPath: /tekton/results
+      name: tekton-internal-results
+    - mountPath: /tekton/creds-secrets/tekton-container-registry-auth
+      name: tekton-internal-secret-volume-tekton-container-registry-a-tzvbh
+    - mountPath: /tekton/creds-secrets/tekton-git
+      name: tekton-internal-secret-volume-tekton-git-kwtwl
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: tekton-bot-token-29ck8
+      readOnly: true
+    workingDir: /workspace/source
+  - args:
+    - -wait_file
+    - /tekton/tools/10
+    - -post_file
+    - /tekton/tools/11
+    - -termination_path
+    - /tekton/termination
+    - -docker-config=tekton-container-registry-auth
+    - -basic-git=tekton-git=https://github.com
+    - -entrypoint
+    - /bin/sh
+    - --
+    - -c
+    - cd /workspace/source/charts/node-http && jx step helm release
+    command:
+    - /tekton/tools/entrypoint
+    env:
+    - name: HOME
+      value: /tekton/home
+    - name: DOCKER_REGISTRY
+      value: docker.io
+    - name: GIT_AUTHOR_EMAIL
+      value: jenkins-x@googlegroups.com
+    - name: GIT_AUTHOR_NAME
+      value: jenkins-x-bot
+    - name: GIT_COMMITTER_EMAIL
+      value: jenkins-x@googlegroups.com
+    - name: GIT_COMMITTER_NAME
+      value: jenkins-x-bot
+    - name: XDG_CONFIG_HOME
+      value: /workspace/xdg_config
+    - name: DOCKER_REGISTRY_ORG
+      value: jenkins-x-labs-bdd
+    - name: BUILD_NUMBER
+      value: "1"
+    - name: PIPELINE_KIND
+      value: release
+    - name: REPO_OWNER
+    - name: REPO_NAME
+    - name: JOB_NAME
+      value: jenkins-x-quickstarts/node-http/master
+    - name: APP_NAME
+    - name: BRANCH_NAME
+      value: master
+    - name: JX_BATCH_MODE
+      value: "true"
+    - name: VERSION
+      value: 0.0.1
+    - name: PREVIEW_VERSION
+      value: 0.0.1
+    image: gcr.io/jenkinsxio/builder-go:2.1.142-761
+    imagePullPolicy: IfNotPresent
+    name: step-promote-helm-release
+    resources:
+      requests:
+        cpu: "0"
+        ephemeral-storage: "0"
+        memory: "0"
+    securityContext:
+      privileged: true
+    terminationMessagePath: /tekton/termination
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /home/jenkins
+      name: workspace-volume
+    - mountPath: /etc/podinfo
+      name: podinfo
+      readOnly: true
+    - mountPath: /tekton/tools
+      name: tekton-internal-tools
+    - mountPath: /tekton/creds
+      name: tekton-creds-init-home-xvk7j
+    - mountPath: /workspace
+      name: tekton-internal-workspace
+    - mountPath: /tekton/home
+      name: tekton-internal-home
+    - mountPath: /tekton/results
+      name: tekton-internal-results
+    - mountPath: /tekton/creds-secrets/tekton-container-registry-auth
+      name: tekton-internal-secret-volume-tekton-container-registry-a-tzvbh
+    - mountPath: /tekton/creds-secrets/tekton-git
+      name: tekton-internal-secret-volume-tekton-git-kwtwl
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: tekton-bot-token-29ck8
+      readOnly: true
+    workingDir: /workspace/source
+  - args:
+    - -wait_file
+    - /tekton/tools/11
+    - -post_file
+    - /tekton/tools/12
+    - -termination_path
+    - /tekton/termination
+    - -docker-config=tekton-container-registry-auth
+    - -basic-git=tekton-git=https://github.com
+    - -entrypoint
+    - /bin/sh
+    - --
+    - -c
+    - cd /workspace/source/charts/node-http && jx promote -b --all-auto --timeout
+      1h
+    command:
+    - /tekton/tools/entrypoint
+    env:
+    - name: HOME
+      value: /tekton/home
+    - name: DOCKER_REGISTRY
+      value: docker.io
+    - name: GIT_AUTHOR_EMAIL
+      value: jenkins-x@googlegroups.com
+    - name: GIT_AUTHOR_NAME
+      value: jenkins-x-bot
+    - name: GIT_COMMITTER_EMAIL
+      value: jenkins-x@googlegroups.com
+    - name: GIT_COMMITTER_NAME
+      value: jenkins-x-bot
+    - name: XDG_CONFIG_HOME
+      value: /workspace/xdg_config
+    - name: DOCKER_REGISTRY_ORG
+      value: jenkins-x-labs-bdd
+    - name: BUILD_NUMBER
+      value: "1"
+    - name: PIPELINE_KIND
+      value: release
+    - name: REPO_OWNER
+    - name: REPO_NAME
+    - name: JOB_NAME
+      value: jenkins-x-quickstarts/node-http/master
+    - name: APP_NAME
+    - name: BRANCH_NAME
+      value: master
+    - name: JX_BATCH_MODE
+      value: "true"
+    - name: VERSION
+      value: 0.0.1
+    - name: PREVIEW_VERSION
+      value: 0.0.1
+    image: gcr.io/jenkinsxio/jx-cli:3.0.288
+    imagePullPolicy: IfNotPresent
+    name: step-promote-jx-promote
+    resources:
+      requests:
+        cpu: "0"
+        ephemeral-storage: "0"
+        memory: "0"
+    securityContext:
+      privileged: true
+    terminationMessagePath: /tekton/termination
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /home/jenkins
+      name: workspace-volume
+    - mountPath: /etc/podinfo
+      name: podinfo
+      readOnly: true
+    - mountPath: /tekton/tools
+      name: tekton-internal-tools
+    - mountPath: /tekton/creds
+      name: tekton-creds-init-home-z6gsm
+    - mountPath: /workspace
+      name: tekton-internal-workspace
+    - mountPath: /tekton/home
+      name: tekton-internal-home
+    - mountPath: /tekton/results
+      name: tekton-internal-results
+    - mountPath: /tekton/creds-secrets/tekton-container-registry-auth
+      name: tekton-internal-secret-volume-tekton-container-registry-a-tzvbh
+    - mountPath: /tekton/creds-secrets/tekton-git
+      name: tekton-internal-secret-volume-tekton-git-kwtwl
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: tekton-bot-token-29ck8
+      readOnly: true
+    workingDir: /workspace/source
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  initContainers:
+  - args:
+    - -c
+    - mkdir -p /workspace/source
+    command:
+    - sh
+    image: gcr.io/distroless/base@sha256:60f5ffe6fc481e9102747b043b3873a01893a5a8138f970c5f5fc06fb7494656
+    imagePullPolicy: IfNotPresent
+    name: working-dir-initializer
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /workspace
+      name: tekton-internal-workspace
+    - mountPath: /tekton/home
+      name: tekton-internal-home
+    - mountPath: /tekton/results
+      name: tekton-internal-results
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: tekton-bot-token-29ck8
+      readOnly: true
+    workingDir: /workspace
+  - command:
+    - cp
+    - /ko-app/entrypoint
+    - /tekton/tools/entrypoint
+    image: gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/entrypoint:v0.16.3@sha256:2c691255e2b1e3987235d18c11da6081626f194ec5e44c1317d76d8b4eb80ef6
+    imagePullPolicy: IfNotPresent
+    name: place-tools
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /tekton/tools
+      name: tekton-internal-tools
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: tekton-bot-token-29ck8
+      readOnly: true
+  nodeName: gke-jstrachan-catalog2-default-pool-27d0aede-lf4w
+  priority: 0
+  restartPolicy: Never
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: tekton-bot
+  serviceAccountName: tekton-bot
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - emptyDir: {}
+    name: tekton-internal-workspace
+  - emptyDir: {}
+    name: tekton-internal-home
+  - emptyDir: {}
+    name: tekton-internal-results
+  - name: tekton-internal-secret-volume-tekton-container-registry-a-tzvbh
+    secret:
+      defaultMode: 420
+      secretName: tekton-container-registry-auth
+  - name: tekton-internal-secret-volume-tekton-git-kwtwl
+    secret:
+      defaultMode: 420
+      secretName: tekton-git
+  - emptyDir: {}
+    name: tekton-internal-tools
+  - downwardAPI:
+      defaultMode: 420
+      items:
+      - fieldRef:
+          apiVersion: v1
+          fieldPath: metadata.annotations['tekton.dev/ready']
+        path: ready
+    name: tekton-internal-downward
+  - emptyDir:
+      medium: Memory
+    name: tekton-creds-init-home-zs8kd
+  - emptyDir:
+      medium: Memory
+    name: tekton-creds-init-home-mjdhg
+  - emptyDir:
+      medium: Memory
+    name: tekton-creds-init-home-gxmq9
+  - emptyDir:
+      medium: Memory
+    name: tekton-creds-init-home-tr48k
+  - emptyDir:
+      medium: Memory
+    name: tekton-creds-init-home-pjgz4
+  - emptyDir:
+      medium: Memory
+    name: tekton-creds-init-home-hj8p8
+  - emptyDir:
+      medium: Memory
+    name: tekton-creds-init-home-j5mzd
+  - emptyDir:
+      medium: Memory
+    name: tekton-creds-init-home-l65jj
+  - emptyDir:
+      medium: Memory
+    name: tekton-creds-init-home-lnt5h
+  - emptyDir:
+      medium: Memory
+    name: tekton-creds-init-home-xxxdt
+  - emptyDir:
+      medium: Memory
+    name: tekton-creds-init-home-ps7cf
+  - emptyDir:
+      medium: Memory
+    name: tekton-creds-init-home-xvk7j
+  - emptyDir:
+      medium: Memory
+    name: tekton-creds-init-home-z6gsm
+  - emptyDir: {}
+    name: workspace-volume
+  - downwardAPI:
+      defaultMode: 420
+      items:
+      - fieldRef:
+          apiVersion: v1
+          fieldPath: metadata.labels
+        path: labels
+    name: podinfo
+  - name: tekton-bot-token-29ck8
+    secret:
+      defaultMode: 420
+      secretName: tekton-bot-token-29ck8
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2020-09-20T11:58:02Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2020-09-20T11:58:09Z"
+    message: 'containers with unready status: [step-git-clone step-git-setup step-next-version
+      step-tag-version step-setup-builder-home step-git-merge step-build-npmrc step-build-npm-install
+      step-build-npm-test step-build-container-build step-promote-changelog step-promote-helm-release
+      step-promote-jx-promote]'
+    reason: ContainersNotReady
+    status: "False"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2020-09-20T11:58:09Z"
+    message: 'containers with unready status: [step-git-clone step-git-setup step-next-version
+      step-tag-version step-setup-builder-home step-git-merge step-build-npmrc step-build-npm-install
+      step-build-npm-test step-build-container-build step-promote-changelog step-promote-helm-release
+      step-promote-jx-promote]'
+    reason: ContainersNotReady
+    status: "False"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2020-09-20T11:57:59Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: docker://59c821b5fb8345c329681e4b7d9813cb2721e5b052e9e8f60920a1a512aa7e0a
+    image: gcr.io/kaniko-project/executor:debug-v0.24.0
+    imageID: docker-pullable://gcr.io/kaniko-project/executor@sha256:be318701bf818b309cb5b6bcbc709e88161db4229d105423abe5b66948a2f676
+    lastState: {}
+    name: step-build-container-build
+    ready: false
+    restartCount: 0
+    started: false
+    state:
+      terminated:
+        containerID: docker://59c821b5fb8345c329681e4b7d9813cb2721e5b052e9e8f60920a1a512aa7e0a
+        exitCode: 1
+        finishedAt: "2020-09-20T11:58:24Z"
+        message: '[{"key":"StartedAt","value":"2020-09-20T11:58:22.534Z","resourceRef":{}}]'
+        reason: Error
+        startedAt: "2020-09-20T11:58:05Z"
+  - containerID: docker://f306b31570ee29812575ff929c57e1d19ce6ba7c6beeb77429b0ffb5df97e2d3
+    image: gcr.io/jenkinsxio/builder-nodejs:2.1.148-767
+    imageID: docker-pullable://gcr.io/jenkinsxio/builder-nodejs@sha256:9fc9d4532c5193188cfb70744148c1ac932d1a395f309e33d107e1580c603580
+    lastState: {}
+    name: step-build-npm-install
+    ready: false
+    restartCount: 0
+    started: false
+    state:
+      terminated:
+        containerID: docker://f306b31570ee29812575ff929c57e1d19ce6ba7c6beeb77429b0ffb5df97e2d3
+        exitCode: 0
+        finishedAt: "2020-09-20T11:58:20Z"
+        message: '[{"key":"StartedAt","value":"2020-09-20T11:58:19.094Z","resourceRef":{}}]'
+        reason: Completed
+        startedAt: "2020-09-20T11:58:05Z"
+  - containerID: docker://cb562ea1e56be091c4ecf1a52e20b73e729ac8e4b5b1cff41873473ce329968f
+    image: gcr.io/jenkinsxio/builder-nodejs:2.1.148-767
+    imageID: docker-pullable://gcr.io/jenkinsxio/builder-nodejs@sha256:9fc9d4532c5193188cfb70744148c1ac932d1a395f309e33d107e1580c603580
+    lastState: {}
+    name: step-build-npm-test
+    ready: false
+    restartCount: 0
+    started: false
+    state:
+      terminated:
+        containerID: docker://cb562ea1e56be091c4ecf1a52e20b73e729ac8e4b5b1cff41873473ce329968f
+        exitCode: 0
+        finishedAt: "2020-09-20T11:58:21Z"
+        message: '[{"key":"StartedAt","value":"2020-09-20T11:58:21.303Z","resourceRef":{}}]'
+        reason: Completed
+        startedAt: "2020-09-20T11:58:05Z"
+  - containerID: docker://e291e2ac31e64f9762108ad50a09d5f4af75ef860fe7e2b7478dc98306b27b56
+    image: gcr.io/jenkinsxio/builder-nodejs:2.1.148-767
+    imageID: docker-pullable://gcr.io/jenkinsxio/builder-nodejs@sha256:9fc9d4532c5193188cfb70744148c1ac932d1a395f309e33d107e1580c603580
+    lastState: {}
+    name: step-build-npmrc
+    ready: false
+    restartCount: 0
+    started: false
+    state:
+      terminated:
+        containerID: docker://e291e2ac31e64f9762108ad50a09d5f4af75ef860fe7e2b7478dc98306b27b56
+        exitCode: 0
+        finishedAt: "2020-09-20T11:58:18Z"
+        message: '[{"key":"StartedAt","value":"2020-09-20T11:58:17.878Z","resourceRef":{}}]'
+        reason: Completed
+        startedAt: "2020-09-20T11:58:04Z"
+  - containerID: docker://e3ad120a66fb88f340c0f24ddec2ae740f24ccf1314e8975f36390f30b888096
+    image: gcr.io/jenkinsxio/builder-jx:2.1.32-662
+    imageID: docker-pullable://gcr.io/jenkinsxio/builder-jx@sha256:ae504f2426df367f426b255e359d03e25e5bd137d846a422432d2d405c85598a
+    lastState: {}
+    name: step-git-clone
+    ready: false
+    restartCount: 0
+    started: false
+    state:
+      terminated:
+        containerID: docker://e3ad120a66fb88f340c0f24ddec2ae740f24ccf1314e8975f36390f30b888096
+        exitCode: 0
+        finishedAt: "2020-09-20T11:58:08Z"
+        message: '[{"key":"StartedAt","value":"2020-09-20T11:58:08.227Z","resourceRef":{}}]'
+        reason: Completed
+        startedAt: "2020-09-20T11:58:03Z"
+  - containerID: docker://dc45ee6a2737599f37990827f0bdda0bb26fa4e550419920c46e4548b5e28688
+    image: gcr.io/jenkinsxio/builder-jx:2.1.142-761
+    imageID: docker-pullable://gcr.io/jenkinsxio/builder-jx@sha256:40c90b3a199f3c10780b68fe855956fd7f694907f62ff4c263f0cbb2fa89a023
+    lastState: {}
+    name: step-git-merge
+    ready: false
+    restartCount: 0
+    started: false
+    state:
+      terminated:
+        containerID: docker://dc45ee6a2737599f37990827f0bdda0bb26fa4e550419920c46e4548b5e28688
+        exitCode: 0
+        finishedAt: "2020-09-20T11:58:17Z"
+        message: '[{"key":"StartedAt","value":"2020-09-20T11:58:16.672Z","resourceRef":{}}]'
+        reason: Completed
+        startedAt: "2020-09-20T11:58:04Z"
+  - containerID: docker://44a78a101791e0c317e9aa915a42162f181b82399c3d770d80610ab4698e1848
+    image: gcr.io/jenkinsxio/jx-cli:latest
+    imageID: docker-pullable://gcr.io/jenkinsxio/jx-cli@sha256:69dca4c8b349fba21d5471ec589378a1bf171ae9ffcc400e5e00e926418a17f4
+    lastState: {}
+    name: step-git-setup
+    ready: false
+    restartCount: 0
+    started: false
+    state:
+      terminated:
+        containerID: docker://44a78a101791e0c317e9aa915a42162f181b82399c3d770d80610ab4698e1848
+        exitCode: 0
+        finishedAt: "2020-09-20T11:58:09Z"
+        message: '[{"key":"StartedAt","value":"2020-09-20T11:58:09.742Z","resourceRef":{}}]'
+        reason: Completed
+        startedAt: "2020-09-20T11:58:03Z"
+  - containerID: docker://8012dec16cda68d81fdc876607d84c2d5c0aff413cb9ef6727ac12abcea85676
+    image: gcr.io/jenkinsxio-labs-private/jxl:0.0.136
+    imageID: docker-pullable://gcr.io/jenkinsxio-labs-private/jxl@sha256:cdb9d377623da0cfba77f2be2c8ea544e03df76cd88e5a63af3ed6dc027e599c
+    lastState: {}
+    name: step-next-version
+    ready: false
+    restartCount: 0
+    started: false
+    state:
+      terminated:
+        containerID: docker://8012dec16cda68d81fdc876607d84c2d5c0aff413cb9ef6727ac12abcea85676
+        exitCode: 0
+        finishedAt: "2020-09-20T11:58:11Z"
+        message: '[{"key":"StartedAt","value":"2020-09-20T11:58:09.975Z","resourceRef":{}}]'
+        reason: Completed
+        startedAt: "2020-09-20T11:58:03Z"
+  - containerID: docker://7041801bed1f3f3b8f4b10278772a3ab97efa4713bca95e88da098ffcb0fa5e3
+    image: gcr.io/jenkinsxio/builder-go:2.1.142-761
+    imageID: docker-pullable://gcr.io/jenkinsxio/builder-go@sha256:c157d03686df5b6799afa4ce224c0d734090463e0d62031272377abd429ffab8
+    lastState: {}
+    name: step-promote-changelog
+    ready: false
+    restartCount: 0
+    started: false
+    state:
+      terminated:
+        containerID: docker://7041801bed1f3f3b8f4b10278772a3ab97efa4713bca95e88da098ffcb0fa5e3
+        exitCode: 1
+        finishedAt: "2020-09-20T11:58:24Z"
+        message: '[{"key":"StartedAt","value":"2020-09-20T11:58:24.728Z","resourceRef":{}}]'
+        reason: Error
+        startedAt: "2020-09-20T11:58:05Z"
+  - containerID: docker://03a7509bd98abe074dca98947f155fbc5252a7e613a0033786dd67b24914a897
+    image: gcr.io/jenkinsxio/builder-go:2.1.142-761
+    imageID: docker-pullable://gcr.io/jenkinsxio/builder-go@sha256:c157d03686df5b6799afa4ce224c0d734090463e0d62031272377abd429ffab8
+    lastState: {}
+    name: step-promote-helm-release
+    ready: false
+    restartCount: 0
+    started: false
+    state:
+      terminated:
+        containerID: docker://03a7509bd98abe074dca98947f155fbc5252a7e613a0033786dd67b24914a897
+        exitCode: 1
+        finishedAt: "2020-09-20T11:58:24Z"
+        message: '[{"key":"StartedAt","value":"2020-09-20T11:58:24.918Z","resourceRef":{}}]'
+        reason: Error
+        startedAt: "2020-09-20T11:58:05Z"
+  - containerID: docker://f921142ab7fe24a07606f55ce843880bc7379e3cb609c52b4e79ff4199fb70af
+    image: gcr.io/jenkinsxio/jx-cli:3.0.288
+    imageID: docker-pullable://gcr.io/jenkinsxio/jx-cli@sha256:0ffd71d0bafaa41e6dbad8724f3a7605695d2f87278e55346447ab2b8d88f600
+    lastState: {}
+    name: step-promote-jx-promote
+    ready: false
+    restartCount: 0
+    started: false
+    state:
+      terminated:
+        containerID: docker://f921142ab7fe24a07606f55ce843880bc7379e3cb609c52b4e79ff4199fb70af
+        exitCode: 1
+        finishedAt: "2020-09-20T11:58:25Z"
+        message: '[{"key":"StartedAt","value":"2020-09-20T11:58:25.129Z","resourceRef":{}}]'
+        reason: Error
+        startedAt: "2020-09-20T11:58:06Z"
+  - containerID: docker://1502d791557541fc317965b32eb6d5a2b800c5c40a2cba10d449cbb5ac88630d
+    image: gcr.io/jenkinsxio/builder-jx:2.1.142-761
+    imageID: docker-pullable://gcr.io/jenkinsxio/builder-jx@sha256:40c90b3a199f3c10780b68fe855956fd7f694907f62ff4c263f0cbb2fa89a023
+    lastState: {}
+    name: step-setup-builder-home
+    ready: false
+    restartCount: 0
+    started: false
+    state:
+      terminated:
+        containerID: docker://1502d791557541fc317965b32eb6d5a2b800c5c40a2cba10d449cbb5ac88630d
+        exitCode: 0
+        finishedAt: "2020-09-20T11:58:15Z"
+        message: '[{"key":"StartedAt","value":"2020-09-20T11:58:15.470Z","resourceRef":{}}]'
+        reason: Completed
+        startedAt: "2020-09-20T11:58:04Z"
+  - containerID: docker://0aa954638ef846e6a10003a4cdc806d6df7572b9582c91fa05b5c2df03fe53a8
+    image: gcr.io/jenkinsxio-labs-private/jxl:0.0.136
+    imageID: docker-pullable://gcr.io/jenkinsxio-labs-private/jxl@sha256:cdb9d377623da0cfba77f2be2c8ea544e03df76cd88e5a63af3ed6dc027e599c
+    lastState: {}
+    name: step-tag-version
+    ready: false
+    restartCount: 0
+    started: false
+    state:
+      terminated:
+        containerID: docker://0aa954638ef846e6a10003a4cdc806d6df7572b9582c91fa05b5c2df03fe53a8
+        exitCode: 0
+        finishedAt: "2020-09-20T11:58:14Z"
+        message: '[{"key":"StartedAt","value":"2020-09-20T11:58:11.240Z","resourceRef":{}}]'
+        reason: Completed
+        startedAt: "2020-09-20T11:58:04Z"
+  hostIP: 10.128.0.92
+  initContainerStatuses:
+  - containerID: docker://16d72370ce1280993b70bb0ab7a5708f2debc4fc5b84e532a8e72357e80edbf9
+    image: sha256:1f045d526344870ee4bc3458e416e3dfa5da727b7c5490a5fda7a62e1355c0ea
+    imageID: docker-pullable://gcr.io/distroless/base@sha256:60f5ffe6fc481e9102747b043b3873a01893a5a8138f970c5f5fc06fb7494656
+    lastState: {}
+    name: working-dir-initializer
+    ready: true
+    restartCount: 0
+    state:
+      terminated:
+        containerID: docker://16d72370ce1280993b70bb0ab7a5708f2debc4fc5b84e532a8e72357e80edbf9
+        exitCode: 0
+        finishedAt: "2020-09-20T11:58:00Z"
+        reason: Completed
+        startedAt: "2020-09-20T11:58:00Z"
+  - containerID: docker://ec9ea552a94527ea3d0bd64fc306a1e66484c6e93276c42851ec2ab12f40b8dd
+    image: sha256:0af9f1c00d569defd3f1246f160ad37debacc8b0336a655da39eec34cf7513bf
+    imageID: docker-pullable://gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/entrypoint@sha256:2c691255e2b1e3987235d18c11da6081626f194ec5e44c1317d76d8b4eb80ef6
+    lastState: {}
+    name: place-tools
+    ready: true
+    restartCount: 0
+    state:
+      terminated:
+        containerID: docker://ec9ea552a94527ea3d0bd64fc306a1e66484c6e93276c42851ec2ab12f40b8dd
+        exitCode: 0
+        finishedAt: "2020-09-20T11:58:02Z"
+        reason: Completed
+        startedAt: "2020-09-20T11:58:02Z"
+  phase: Failed
+  podIP: 10.44.0.77
+  podIPs:
+  - ip: 10.44.0.77
+  qosClass: Burstable
+  startTime: "2020-09-20T11:57:59Z"

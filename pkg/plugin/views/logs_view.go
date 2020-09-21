@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/jenkins-x/jx-logging/pkg/log"
+	"github.com/jenkins-x/octant-jx/pkg/common/pipelines"
 
 	"github.com/jenkins-x/octant-jx/pkg/common/pluginctx"
 	"github.com/jenkins-x/octant-jx/pkg/common/viewhelpers"
@@ -25,19 +26,12 @@ func BuildPipelineLog(request service.Request, pluginContext pluginctx.Context) 
 
 	log.Logger().Infof("BuildPipelineLog querying for PipelineActivity %s\n", name)
 
-	u, err := viewhelpers.GetResourceByName(ctx, client, "jenkins.io/v1", "PipelineActivity", name, pluginContext.Namespace)
-	if err != nil {
-		return nil, err
-	}
-	if u == nil {
-		return component.NewText("Error: pipeline not found"), nil
-	}
-
-	pa, err := viewhelpers.ToPipelineActivity(u)
+	pa, err := pipelines.GetPipeline(ctx, client, pluginContext.Namespace, name)
 	if err != nil {
 		log.Logger().Info(err)
 		return nil, err
 	}
+
 	s := &pa.Spec
 	header := component.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(
 		plugin.RootBreadcrumb,

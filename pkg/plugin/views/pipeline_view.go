@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/jenkins-x/jx-logging/pkg/log"
+	"github.com/jenkins-x/octant-jx/pkg/common/pipelines"
 
 	v1 "github.com/jenkins-x/jx-api/pkg/apis/jenkins.io/v1"
 	"github.com/jenkins-x/octant-jx/pkg/common/links"
@@ -30,15 +31,7 @@ func BuildPipelineView(request service.Request, pluginContext pluginctx.Context)
 
 	log.Logger().Debugf("BuildPipelineView querying for PipelineActivity %s in namespace %s\n", name, ns)
 
-	u, err := viewhelpers.GetResourceByName(ctx, client, "jenkins.io/v1", "PipelineActivity", name, ns)
-	if err != nil {
-		return nil, err
-	}
-	if u == nil {
-		return component.NewText("Error: pipeline not found"), nil
-	}
-
-	pa, err := viewhelpers.ToPipelineActivity(u)
+	pa, err := pipelines.GetPipeline(ctx, client, ns, name)
 	if err != nil {
 		log.Logger().Info(err)
 		return nil, err
@@ -97,6 +90,16 @@ func BuildPipelineView(request service.Request, pluginContext pluginctx.Context)
 }
 
 func findPodForPipeline(ctx context.Context, client service.Dashboard, pluginContext pluginctx.Context, pa *v1.PipelineActivity) (*unstructured.Unstructured, error) {
+	if pa.Labels != nil {
+		podName := pa.Labels["podName"]
+		if podName != "" {
+			u, err := viewhelpers.GetResourceByName(ctx, client, "v1", "Pod", podName, pluginContext.Namespace)
+			if err == nil {
+				return u, nil
+			}
+			log.Logger().Warnf("failed to find pod %s/%s with error %s", pluginContext.Namespace, podName, err.Error())
+		}
+	}
 	s := &pa.Spec
 	selector := labels.Set{
 		"branch":     s.GitBranch,

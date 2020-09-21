@@ -1,0 +1,2276 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  annotations:
+    lighthouse.jenkins-x.io/cloneURI: https://github.com/jstrachan/nodey510.git
+    lighthouse.jenkins-x.io/job: main
+  creationTimestamp: "2020-09-20T11:57:58Z"
+  generateName: main-
+  generation: 1
+  labels:
+    created-by-lighthouse: "true"
+    event-GUID: 8581a5f6-fb38-11ea-9b20-71ca9950db29
+    lighthouse.jenkins-x.io/baseSHA: 5a694a615045f2821aa40aefe86aab9192667193
+    lighthouse.jenkins-x.io/branch: master
+    lighthouse.jenkins-x.io/buildNum: "1600603078522"
+    lighthouse.jenkins-x.io/context: main
+    lighthouse.jenkins-x.io/id: 868a17ab-fb38-11ea-a434-5e87fb7da1e8
+    lighthouse.jenkins-x.io/job: main
+    lighthouse.jenkins-x.io/lastCommitSHA: 5a694a615045f2821aa40aefe86aab9192667193
+    lighthouse.jenkins-x.io/refs.org: jstrachan
+    lighthouse.jenkins-x.io/refs.repo: nodey510
+    lighthouse.jenkins-x.io/type: postsubmit
+    tekton.dev/pipeline: main-rvs7k
+  name: main-rvs7k
+  namespace: jx
+  ownerReferences:
+  - apiVersion: lighthouse.jenkins.io/v1alpha1
+    blockOwnerDeletion: true
+    controller: true
+    kind: LighthouseJob
+    name: 868a17ab-fb38-11ea-a434-5e87fb7da1e8
+    uid: 1d128375-81cb-4477-939b-6fdce7dc6790
+  resourceVersion: "1632120"
+  selfLink: /apis/tekton.dev/v1beta1/namespaces/jx/pipelineruns/main-rvs7k
+  uid: a71fb1ee-8039-4981-b331-438b05f26372
+spec:
+  params:
+  - name: version
+    value: 0.0.1
+  - name: BUILD_ID
+    value: "1600603078522"
+  - name: JOB_NAME
+    value: main
+  - name: JOB_SPEC
+    value: type:postsubmit
+  - name: JOB_TYPE
+    value: postsubmit
+  - name: PULL_BASE_REF
+    value: master
+  - name: PULL_BASE_SHA
+    value: 5a694a615045f2821aa40aefe86aab9192667193
+  - name: PULL_REFS
+    value: master:5a694a615045f2821aa40aefe86aab9192667193
+  - name: REPO_NAME
+    value: nodey510
+  - name: REPO_OWNER
+    value: jstrachan
+  - name: REPO_URL
+    value: https://github.com/jstrachan/nodey510.git
+  pipelineSpec:
+    params:
+    - default: 0.0.1
+      description: the version number for this pipeline which is used as a tag on
+        docker images and helm charts
+      name: version
+      type: string
+    - description: git url to clone
+      name: REPO_URL
+      type: string
+    - default: master
+      description: git revision to checkout (branch, tag, sha, ref…)
+      name: revision
+      type: string
+    - default: source
+      description: subdirectory inside of /workspace to clone the git repo
+      name: subdirectory
+      type: string
+    - default: ""
+      description: git repository owner name
+      name: repo_owner
+      type: string
+    - default: ""
+      description: git repository name
+      name: repo_name
+      type: string
+    - default: ""
+      description: app name
+      name: app_name
+      type: string
+    - default: docker.io
+      description: container registry
+      name: container_registry
+      type: string
+    - default: jenkins-x-labs-bdd
+      description: container registry owner name
+      name: container_registry_owner
+      type: string
+    - default: "1"
+      description: build number
+      name: build_id
+      type: string
+    - default: jenkins-x@googlegroups.com
+      description: pipeline git author email
+      name: git_author_email
+      type: string
+    - default: jenkins-x-bot
+      description: pipeline git author name
+      name: git_author_name
+      type: string
+    - default: jenkins-x@googlegroups.com
+      description: pipeline git committer email
+      name: git_committer_email
+      type: string
+    - default: jenkins-x-bot
+      description: pipeline git committer name
+      name: git_committer_name
+      type: string
+    tasks:
+    - name: from-build-pack
+      params:
+      - name: version
+        value: $(params.version)
+      - name: REPO_URL
+        value: $(params.REPO_URL)
+      - name: revision
+        value: $(params.revision)
+      - name: subdirectory
+        value: $(params.subdirectory)
+      - name: repo_owner
+        value: $(params.repo_owner)
+      - name: repo_name
+        value: $(params.repo_name)
+      - name: app_name
+        value: $(params.app_name)
+      - name: container_registry
+        value: $(params.container_registry)
+      - name: container_registry_owner
+        value: $(params.container_registry_owner)
+      - name: build_id
+        value: $(params.build_id)
+      - name: git_author_email
+        value: $(params.git_author_email)
+      - name: git_author_name
+        value: $(params.git_author_name)
+      - name: git_committer_email
+        value: $(params.git_committer_email)
+      - name: git_committer_name
+        value: $(params.git_committer_name)
+      resources: {}
+      taskSpec:
+        metadata: {}
+        params:
+        - default: 0.0.1
+          description: the version number for this pipeline which is used as a tag
+            on docker images and helm charts
+          name: version
+          type: string
+        - description: git url to clone
+          name: REPO_URL
+          type: string
+        - default: master
+          description: git revision to checkout (branch, tag, sha, ref…)
+          name: revision
+          type: string
+        - default: source
+          description: subdirectory inside of /workspace to clone the git repo
+          name: subdirectory
+          type: string
+        - default: ""
+          description: git repository owner name
+          name: repo_owner
+          type: string
+        - default: ""
+          description: git repository name
+          name: repo_name
+          type: string
+        - default: ""
+          description: app name
+          name: app_name
+          type: string
+        - default: docker.io
+          description: container registry
+          name: container_registry
+          type: string
+        - default: jenkins-x-labs-bdd
+          description: container registry owner name
+          name: container_registry_owner
+          type: string
+        - default: "1"
+          description: build number
+          name: build_id
+          type: string
+        - default: jenkins-x@googlegroups.com
+          description: pipeline git author email
+          name: git_author_email
+          type: string
+        - default: jenkins-x-bot
+          description: pipeline git author name
+          name: git_author_name
+          type: string
+        - default: jenkins-x@googlegroups.com
+          description: pipeline git committer email
+          name: git_committer_email
+          type: string
+        - default: jenkins-x-bot
+          description: pipeline git committer name
+          name: git_committer_name
+          type: string
+        steps:
+        - args:
+          - -c
+          - 'mkdir -p $HOME; git config --global --add user.name $GIT_AUTHOR_NAME;
+            git config --global --add user.email $GIT_AUTHOR_EMAIL; git config --global
+            credential.helper store; git clone $(inputs.params.REPO_URL) $(inputs.params.subdirectory);
+            echo cloned url: $(inputs.params.REPO_URL) to dir: $(inputs.params.subdirectory);
+            cd $(inputs.params.subdirectory); git checkout $(inputs.params.revision);
+            echo checked out revision: $(inputs.params.revision) to dir: $(inputs.params.subdirectory)'
+          command:
+          - /bin/sh
+          env:
+          - name: GIT_AUTHOR_EMAIL
+            value: $(inputs.params.git_author_email)
+          - name: GIT_AUTHOR_NAME
+            value: $(inputs.params.git_author_name)
+          - name: GIT_COMMITTER_EMAIL
+            value: $(inputs.params.git_committer_email)
+          - name: GIT_COMMITTER_NAME
+            value: $(inputs.params.git_committer_name)
+          - name: XDG_CONFIG_HOME
+            value: /workspace/xdg_config
+          - name: REPO_OWNER
+            value: $(inputs.params.repo_owner)
+          - name: REPO_NAME
+            value: $(inputs.params.repo_name)
+          - name: BRANCH_NAME
+            value: $(inputs.params.revision)
+          image: gcr.io/jenkinsxio/builder-jx:2.1.32-662
+          name: git-clone
+          resources: {}
+          volumeMounts:
+          - mountPath: /home/jenkins
+            name: workspace-volume
+          workingDir: /workspace
+        - args:
+          - gitops
+          - git
+          - setup
+          - --namespace
+          - jx-git-operator
+          command:
+          - jx
+          image: gcr.io/jenkinsxio/jx-cli:latest
+          name: git-setup
+          resources: {}
+          volumeMounts:
+          - mountPath: /home/jenkins
+            name: workspace-volume
+          workingDir: /workspace
+        - args:
+          - -c
+          - jx step next-version --filename package.json
+          command:
+          - /bin/sh
+          image: gcr.io/jenkinsxio-labs-private/jxl:0.0.136
+          name: next-version
+          resources: {}
+          workingDir: /workspace/source
+        - args:
+          - -c
+          - jx step tag --version $(cat VERSION)
+          command:
+          - /bin/sh
+          image: gcr.io/jenkinsxio-labs-private/jxl:0.0.136
+          name: tag-version
+          resources: {}
+          workingDir: /workspace/source
+        - args:
+          - '[ -d /builder/home ] || mkdir -p /builder && ln -s /tekton/home /builder/home'
+          command:
+          - /bin/sh
+          - -c
+          env:
+          - name: DOCKER_REGISTRY
+            value: $(inputs.params.container_registry)
+          - name: GIT_AUTHOR_EMAIL
+            value: $(inputs.params.git_author_email)
+          - name: GIT_AUTHOR_NAME
+            value: $(inputs.params.git_author_name)
+          - name: GIT_COMMITTER_EMAIL
+            value: $(inputs.params.git_committer_email)
+          - name: GIT_COMMITTER_NAME
+            value: $(inputs.params.git_committer_name)
+          - name: XDG_CONFIG_HOME
+            value: /workspace/xdg_config
+          - name: DOCKER_REGISTRY_ORG
+            value: $(inputs.params.container_registry_owner)
+          - name: BUILD_NUMBER
+            value: "1"
+          - name: PIPELINE_KIND
+            value: release
+          - name: REPO_OWNER
+            value: $(inputs.params.repo_owner)
+          - name: REPO_NAME
+            value: $(inputs.params.repo_name)
+          - name: JOB_NAME
+            value: jenkins-x-quickstarts/node-http/master
+          - name: APP_NAME
+            value: $(inputs.params.app_name)
+          - name: BRANCH_NAME
+            value: $(inputs.params.revision)
+          - name: JX_BATCH_MODE
+            value: "true"
+          - name: VERSION
+            value: $(inputs.params.version)
+          - name: PREVIEW_VERSION
+            value: $(inputs.params.version)
+          image: gcr.io/jenkinsxio/builder-jx:2.1.142-761
+          name: setup-builder-home
+          resources:
+            requests:
+              cpu: 400m
+              memory: 512Mi
+          securityContext:
+            privileged: true
+          volumeMounts:
+          - mountPath: /home/jenkins
+            name: workspace-volume
+          - mountPath: /etc/podinfo
+            name: podinfo
+            readOnly: true
+          workingDir: /workspace/source
+        - args:
+          - step
+          - git
+          - merge
+          - --verbose
+          command:
+          - jx
+          env:
+          - name: DOCKER_REGISTRY
+            value: $(inputs.params.container_registry)
+          - name: GIT_AUTHOR_EMAIL
+            value: $(inputs.params.git_author_email)
+          - name: GIT_AUTHOR_NAME
+            value: $(inputs.params.git_author_name)
+          - name: GIT_COMMITTER_EMAIL
+            value: $(inputs.params.git_committer_email)
+          - name: GIT_COMMITTER_NAME
+            value: $(inputs.params.git_committer_name)
+          - name: XDG_CONFIG_HOME
+            value: /workspace/xdg_config
+          - name: DOCKER_REGISTRY_ORG
+            value: $(inputs.params.container_registry_owner)
+          - name: BUILD_NUMBER
+            value: "1"
+          - name: PIPELINE_KIND
+            value: release
+          - name: REPO_OWNER
+            value: $(inputs.params.repo_owner)
+          - name: REPO_NAME
+            value: $(inputs.params.repo_name)
+          - name: JOB_NAME
+            value: jenkins-x-quickstarts/node-http/master
+          - name: APP_NAME
+            value: $(inputs.params.app_name)
+          - name: BRANCH_NAME
+            value: $(inputs.params.revision)
+          - name: JX_BATCH_MODE
+            value: "true"
+          - name: VERSION
+            value: $(inputs.params.version)
+          - name: PREVIEW_VERSION
+            value: $(inputs.params.version)
+          image: gcr.io/jenkinsxio/builder-jx:2.1.142-761
+          name: git-merge
+          resources:
+            requests:
+              cpu: 400m
+              memory: 512Mi
+          securityContext:
+            privileged: true
+          volumeMounts:
+          - mountPath: /home/jenkins
+            name: workspace-volume
+          - mountPath: /etc/podinfo
+            name: podinfo
+            readOnly: true
+          workingDir: /workspace/source
+        - args:
+          - jx step credential -s npm-token -k file -f /builder/home/.npmrc --optional=true
+          command:
+          - /bin/sh
+          - -c
+          env:
+          - name: DOCKER_REGISTRY
+            value: $(inputs.params.container_registry)
+          - name: GIT_AUTHOR_EMAIL
+            value: $(inputs.params.git_author_email)
+          - name: GIT_AUTHOR_NAME
+            value: $(inputs.params.git_author_name)
+          - name: GIT_COMMITTER_EMAIL
+            value: $(inputs.params.git_committer_email)
+          - name: GIT_COMMITTER_NAME
+            value: $(inputs.params.git_committer_name)
+          - name: XDG_CONFIG_HOME
+            value: /workspace/xdg_config
+          - name: DOCKER_REGISTRY_ORG
+            value: $(inputs.params.container_registry_owner)
+          - name: BUILD_NUMBER
+            value: "1"
+          - name: PIPELINE_KIND
+            value: release
+          - name: REPO_OWNER
+            value: $(inputs.params.repo_owner)
+          - name: REPO_NAME
+            value: $(inputs.params.repo_name)
+          - name: JOB_NAME
+            value: jenkins-x-quickstarts/node-http/master
+          - name: APP_NAME
+            value: $(inputs.params.app_name)
+          - name: BRANCH_NAME
+            value: $(inputs.params.revision)
+          - name: JX_BATCH_MODE
+            value: "true"
+          - name: VERSION
+            value: $(inputs.params.version)
+          - name: PREVIEW_VERSION
+            value: $(inputs.params.version)
+          image: gcr.io/jenkinsxio/builder-nodejs:2.1.148-767
+          name: build-npmrc
+          resources:
+            requests:
+              cpu: 400m
+              memory: 512Mi
+          securityContext:
+            privileged: true
+          volumeMounts:
+          - mountPath: /home/jenkins
+            name: workspace-volume
+          - mountPath: /etc/podinfo
+            name: podinfo
+            readOnly: true
+          workingDir: /workspace/source
+        - args:
+          - npm install
+          command:
+          - /bin/sh
+          - -c
+          env:
+          - name: DOCKER_REGISTRY
+            value: $(inputs.params.container_registry)
+          - name: GIT_AUTHOR_EMAIL
+            value: $(inputs.params.git_author_email)
+          - name: GIT_AUTHOR_NAME
+            value: $(inputs.params.git_author_name)
+          - name: GIT_COMMITTER_EMAIL
+            value: $(inputs.params.git_committer_email)
+          - name: GIT_COMMITTER_NAME
+            value: $(inputs.params.git_committer_name)
+          - name: XDG_CONFIG_HOME
+            value: /workspace/xdg_config
+          - name: DOCKER_REGISTRY_ORG
+            value: $(inputs.params.container_registry_owner)
+          - name: BUILD_NUMBER
+            value: "1"
+          - name: PIPELINE_KIND
+            value: release
+          - name: REPO_OWNER
+            value: $(inputs.params.repo_owner)
+          - name: REPO_NAME
+            value: $(inputs.params.repo_name)
+          - name: JOB_NAME
+            value: jenkins-x-quickstarts/node-http/master
+          - name: APP_NAME
+            value: $(inputs.params.app_name)
+          - name: BRANCH_NAME
+            value: $(inputs.params.revision)
+          - name: JX_BATCH_MODE
+            value: "true"
+          - name: VERSION
+            value: $(inputs.params.version)
+          - name: PREVIEW_VERSION
+            value: $(inputs.params.version)
+          image: gcr.io/jenkinsxio/builder-nodejs:2.1.148-767
+          name: build-npm-install
+          resources:
+            requests:
+              cpu: 400m
+              memory: 512Mi
+          securityContext:
+            privileged: true
+          volumeMounts:
+          - mountPath: /home/jenkins
+            name: workspace-volume
+          - mountPath: /etc/podinfo
+            name: podinfo
+            readOnly: true
+          workingDir: /workspace/source
+        - args:
+          - CI=true DISPLAY=:99 npm test
+          command:
+          - /bin/sh
+          - -c
+          env:
+          - name: DOCKER_REGISTRY
+            value: $(inputs.params.container_registry)
+          - name: GIT_AUTHOR_EMAIL
+            value: $(inputs.params.git_author_email)
+          - name: GIT_AUTHOR_NAME
+            value: $(inputs.params.git_author_name)
+          - name: GIT_COMMITTER_EMAIL
+            value: $(inputs.params.git_committer_email)
+          - name: GIT_COMMITTER_NAME
+            value: $(inputs.params.git_committer_name)
+          - name: XDG_CONFIG_HOME
+            value: /workspace/xdg_config
+          - name: DOCKER_REGISTRY_ORG
+            value: $(inputs.params.container_registry_owner)
+          - name: BUILD_NUMBER
+            value: "1"
+          - name: PIPELINE_KIND
+            value: release
+          - name: REPO_OWNER
+            value: $(inputs.params.repo_owner)
+          - name: REPO_NAME
+            value: $(inputs.params.repo_name)
+          - name: JOB_NAME
+            value: jenkins-x-quickstarts/node-http/master
+          - name: APP_NAME
+            value: $(inputs.params.app_name)
+          - name: BRANCH_NAME
+            value: $(inputs.params.revision)
+          - name: JX_BATCH_MODE
+            value: "true"
+          - name: VERSION
+            value: $(inputs.params.version)
+          - name: PREVIEW_VERSION
+            value: $(inputs.params.version)
+          image: gcr.io/jenkinsxio/builder-nodejs:2.1.148-767
+          name: build-npm-test
+          resources:
+            requests:
+              cpu: 400m
+              memory: 512Mi
+          securityContext:
+            privileged: true
+          volumeMounts:
+          - mountPath: /home/jenkins
+            name: workspace-volume
+          - mountPath: /etc/podinfo
+            name: podinfo
+            readOnly: true
+          workingDir: /workspace/source
+        - args:
+          - /kaniko/executor $KANIKO_FLAGS --cache=true --cache-dir=/workspace --context=/workspace/source
+            --dockerfile=/workspace/source/Dockerfile --destination=$DOCKER_REGISTRY/$DOCKER_REGISTRY_ORG/$APP_NAME:$VERSION
+            --cache-repo=$DOCKER_REGISTRY/$DOCKER_REGISTRY_ORG/cache
+          command:
+          - /busybox/sh
+          - -c
+          env:
+          - name: DOCKER_REGISTRY
+            value: $(inputs.params.container_registry)
+          - name: GIT_AUTHOR_EMAIL
+            value: $(inputs.params.git_author_email)
+          - name: GIT_AUTHOR_NAME
+            value: $(inputs.params.git_author_name)
+          - name: GIT_COMMITTER_EMAIL
+            value: $(inputs.params.git_committer_email)
+          - name: GIT_COMMITTER_NAME
+            value: $(inputs.params.git_committer_name)
+          - name: GOOGLE_APPLICATION_CREDENTIALS
+          - name: NO_GOOGLE_APPLICATION_CREDENTIALS
+            value: "true"
+          - name: XDG_CONFIG_HOME
+            value: /workspace/xdg_config
+          - name: DOCKER_REGISTRY_ORG
+            value: $(inputs.params.container_registry_owner)
+          - name: BUILD_NUMBER
+            value: "1"
+          - name: PIPELINE_KIND
+            value: release
+          - name: REPO_OWNER
+            value: $(inputs.params.repo_owner)
+          - name: REPO_NAME
+            value: $(inputs.params.repo_name)
+          - name: JOB_NAME
+            value: jenkins-x-quickstarts/node-http/master
+          - name: APP_NAME
+            value: $(inputs.params.app_name)
+          - name: BRANCH_NAME
+            value: $(inputs.params.revision)
+          - name: JX_BATCH_MODE
+            value: "true"
+          - name: VERSION
+            value: $(inputs.params.version)
+          - name: PREVIEW_VERSION
+            value: $(inputs.params.version)
+          image: gcr.io/kaniko-project/executor:debug-v0.24.0
+          name: build-container-build
+          resources:
+            requests:
+              cpu: 400m
+              memory: 512Mi
+          securityContext:
+            privileged: true
+          volumeMounts:
+          - mountPath: /home/jenkins
+            name: workspace-volume
+          - mountPath: /etc/podinfo
+            name: podinfo
+            readOnly: true
+          workingDir: /workspace/source
+        - args:
+          - cd /workspace/source/charts/node-http && jx step changelog --batch-mode
+            --version v${VERSION}
+          command:
+          - /bin/sh
+          - -c
+          env:
+          - name: DOCKER_REGISTRY
+            value: $(inputs.params.container_registry)
+          - name: GIT_AUTHOR_EMAIL
+            value: $(inputs.params.git_author_email)
+          - name: GIT_AUTHOR_NAME
+            value: $(inputs.params.git_author_name)
+          - name: GIT_COMMITTER_EMAIL
+            value: $(inputs.params.git_committer_email)
+          - name: GIT_COMMITTER_NAME
+            value: $(inputs.params.git_committer_name)
+          - name: XDG_CONFIG_HOME
+            value: /workspace/xdg_config
+          - name: DOCKER_REGISTRY_ORG
+            value: $(inputs.params.container_registry_owner)
+          - name: BUILD_NUMBER
+            value: "1"
+          - name: PIPELINE_KIND
+            value: release
+          - name: REPO_OWNER
+            value: $(inputs.params.repo_owner)
+          - name: REPO_NAME
+            value: $(inputs.params.repo_name)
+          - name: JOB_NAME
+            value: jenkins-x-quickstarts/node-http/master
+          - name: APP_NAME
+            value: $(inputs.params.app_name)
+          - name: BRANCH_NAME
+            value: $(inputs.params.revision)
+          - name: JX_BATCH_MODE
+            value: "true"
+          - name: VERSION
+            value: $(inputs.params.version)
+          - name: PREVIEW_VERSION
+            value: $(inputs.params.version)
+          image: gcr.io/jenkinsxio/builder-go:2.1.142-761
+          name: promote-changelog
+          resources:
+            requests:
+              cpu: 400m
+              memory: 512Mi
+          securityContext:
+            privileged: true
+          volumeMounts:
+          - mountPath: /home/jenkins
+            name: workspace-volume
+          - mountPath: /etc/podinfo
+            name: podinfo
+            readOnly: true
+          workingDir: /workspace/source
+        - args:
+          - cd /workspace/source/charts/node-http && jx step helm release
+          command:
+          - /bin/sh
+          - -c
+          env:
+          - name: DOCKER_REGISTRY
+            value: $(inputs.params.container_registry)
+          - name: GIT_AUTHOR_EMAIL
+            value: $(inputs.params.git_author_email)
+          - name: GIT_AUTHOR_NAME
+            value: $(inputs.params.git_author_name)
+          - name: GIT_COMMITTER_EMAIL
+            value: $(inputs.params.git_committer_email)
+          - name: GIT_COMMITTER_NAME
+            value: $(inputs.params.git_committer_name)
+          - name: XDG_CONFIG_HOME
+            value: /workspace/xdg_config
+          - name: DOCKER_REGISTRY_ORG
+            value: $(inputs.params.container_registry_owner)
+          - name: BUILD_NUMBER
+            value: "1"
+          - name: PIPELINE_KIND
+            value: release
+          - name: REPO_OWNER
+            value: $(inputs.params.repo_owner)
+          - name: REPO_NAME
+            value: $(inputs.params.repo_name)
+          - name: JOB_NAME
+            value: jenkins-x-quickstarts/node-http/master
+          - name: APP_NAME
+            value: $(inputs.params.app_name)
+          - name: BRANCH_NAME
+            value: $(inputs.params.revision)
+          - name: JX_BATCH_MODE
+            value: "true"
+          - name: VERSION
+            value: $(inputs.params.version)
+          - name: PREVIEW_VERSION
+            value: $(inputs.params.version)
+          image: gcr.io/jenkinsxio/builder-go:2.1.142-761
+          name: promote-helm-release
+          resources:
+            requests:
+              cpu: 400m
+              memory: 512Mi
+          securityContext:
+            privileged: true
+          volumeMounts:
+          - mountPath: /home/jenkins
+            name: workspace-volume
+          - mountPath: /etc/podinfo
+            name: podinfo
+            readOnly: true
+          workingDir: /workspace/source
+        - args:
+          - cd /workspace/source/charts/node-http && jx promote -b --all-auto --timeout
+            1h
+          command:
+          - /bin/sh
+          - -c
+          env:
+          - name: DOCKER_REGISTRY
+            value: $(inputs.params.container_registry)
+          - name: GIT_AUTHOR_EMAIL
+            value: $(inputs.params.git_author_email)
+          - name: GIT_AUTHOR_NAME
+            value: $(inputs.params.git_author_name)
+          - name: GIT_COMMITTER_EMAIL
+            value: $(inputs.params.git_committer_email)
+          - name: GIT_COMMITTER_NAME
+            value: $(inputs.params.git_committer_name)
+          - name: XDG_CONFIG_HOME
+            value: /workspace/xdg_config
+          - name: DOCKER_REGISTRY_ORG
+            value: $(inputs.params.container_registry_owner)
+          - name: BUILD_NUMBER
+            value: "1"
+          - name: PIPELINE_KIND
+            value: release
+          - name: REPO_OWNER
+            value: $(inputs.params.repo_owner)
+          - name: REPO_NAME
+            value: $(inputs.params.repo_name)
+          - name: JOB_NAME
+            value: jenkins-x-quickstarts/node-http/master
+          - name: APP_NAME
+            value: $(inputs.params.app_name)
+          - name: BRANCH_NAME
+            value: $(inputs.params.revision)
+          - name: JX_BATCH_MODE
+            value: "true"
+          - name: VERSION
+            value: $(inputs.params.version)
+          - name: PREVIEW_VERSION
+            value: $(inputs.params.version)
+          image: gcr.io/jenkinsxio/jx-cli:3.0.288
+          name: promote-jx-promote
+          resources:
+            requests:
+              cpu: 400m
+              memory: 512Mi
+          securityContext:
+            privileged: true
+          volumeMounts:
+          - mountPath: /home/jenkins
+            name: workspace-volume
+          - mountPath: /etc/podinfo
+            name: podinfo
+            readOnly: true
+          workingDir: /workspace/source
+        volumes:
+        - emptyDir: {}
+          name: workspace-volume
+        - downwardAPI:
+            items:
+            - fieldRef:
+                fieldPath: metadata.labels
+              path: labels
+          name: podinfo
+  podTemplate: {}
+  serviceAccountName: tekton-bot
+  timeout: 240h0m0s
+status:
+  conditions:
+  - lastTransitionTime: "2020-09-20T11:57:58Z"
+    message: 'Tasks Completed: 0 (Failed: 0, Cancelled 0), Incomplete: 1, Skipped:
+      0'
+    reason: Running
+    status: Unknown
+    type: Succeeded
+  pipelineSpec:
+    params:
+    - default: 0.0.1
+      description: the version number for this pipeline which is used as a tag on
+        docker images and helm charts
+      name: version
+      type: string
+    - description: git url to clone
+      name: REPO_URL
+      type: string
+    - default: master
+      description: git revision to checkout (branch, tag, sha, ref…)
+      name: revision
+      type: string
+    - default: source
+      description: subdirectory inside of /workspace to clone the git repo
+      name: subdirectory
+      type: string
+    - default: ""
+      description: git repository owner name
+      name: repo_owner
+      type: string
+    - default: ""
+      description: git repository name
+      name: repo_name
+      type: string
+    - default: ""
+      description: app name
+      name: app_name
+      type: string
+    - default: docker.io
+      description: container registry
+      name: container_registry
+      type: string
+    - default: jenkins-x-labs-bdd
+      description: container registry owner name
+      name: container_registry_owner
+      type: string
+    - default: "1"
+      description: build number
+      name: build_id
+      type: string
+    - default: jenkins-x@googlegroups.com
+      description: pipeline git author email
+      name: git_author_email
+      type: string
+    - default: jenkins-x-bot
+      description: pipeline git author name
+      name: git_author_name
+      type: string
+    - default: jenkins-x@googlegroups.com
+      description: pipeline git committer email
+      name: git_committer_email
+      type: string
+    - default: jenkins-x-bot
+      description: pipeline git committer name
+      name: git_committer_name
+      type: string
+    tasks:
+    - name: from-build-pack
+      params:
+      - name: version
+        value: $(params.version)
+      - name: REPO_URL
+        value: $(params.REPO_URL)
+      - name: revision
+        value: $(params.revision)
+      - name: subdirectory
+        value: $(params.subdirectory)
+      - name: repo_owner
+        value: $(params.repo_owner)
+      - name: repo_name
+        value: $(params.repo_name)
+      - name: app_name
+        value: $(params.app_name)
+      - name: container_registry
+        value: $(params.container_registry)
+      - name: container_registry_owner
+        value: $(params.container_registry_owner)
+      - name: build_id
+        value: $(params.build_id)
+      - name: git_author_email
+        value: $(params.git_author_email)
+      - name: git_author_name
+        value: $(params.git_author_name)
+      - name: git_committer_email
+        value: $(params.git_committer_email)
+      - name: git_committer_name
+        value: $(params.git_committer_name)
+      resources: {}
+      taskSpec:
+        metadata: {}
+        params:
+        - default: 0.0.1
+          description: the version number for this pipeline which is used as a tag
+            on docker images and helm charts
+          name: version
+          type: string
+        - description: git url to clone
+          name: REPO_URL
+          type: string
+        - default: master
+          description: git revision to checkout (branch, tag, sha, ref…)
+          name: revision
+          type: string
+        - default: source
+          description: subdirectory inside of /workspace to clone the git repo
+          name: subdirectory
+          type: string
+        - default: ""
+          description: git repository owner name
+          name: repo_owner
+          type: string
+        - default: ""
+          description: git repository name
+          name: repo_name
+          type: string
+        - default: ""
+          description: app name
+          name: app_name
+          type: string
+        - default: docker.io
+          description: container registry
+          name: container_registry
+          type: string
+        - default: jenkins-x-labs-bdd
+          description: container registry owner name
+          name: container_registry_owner
+          type: string
+        - default: "1"
+          description: build number
+          name: build_id
+          type: string
+        - default: jenkins-x@googlegroups.com
+          description: pipeline git author email
+          name: git_author_email
+          type: string
+        - default: jenkins-x-bot
+          description: pipeline git author name
+          name: git_author_name
+          type: string
+        - default: jenkins-x@googlegroups.com
+          description: pipeline git committer email
+          name: git_committer_email
+          type: string
+        - default: jenkins-x-bot
+          description: pipeline git committer name
+          name: git_committer_name
+          type: string
+        steps:
+        - args:
+          - -c
+          - 'mkdir -p $HOME; git config --global --add user.name $GIT_AUTHOR_NAME;
+            git config --global --add user.email $GIT_AUTHOR_EMAIL; git config --global
+            credential.helper store; git clone $(inputs.params.REPO_URL) $(inputs.params.subdirectory);
+            echo cloned url: $(inputs.params.REPO_URL) to dir: $(inputs.params.subdirectory);
+            cd $(inputs.params.subdirectory); git checkout $(inputs.params.revision);
+            echo checked out revision: $(inputs.params.revision) to dir: $(inputs.params.subdirectory)'
+          command:
+          - /bin/sh
+          env:
+          - name: GIT_AUTHOR_EMAIL
+            value: $(inputs.params.git_author_email)
+          - name: GIT_AUTHOR_NAME
+            value: $(inputs.params.git_author_name)
+          - name: GIT_COMMITTER_EMAIL
+            value: $(inputs.params.git_committer_email)
+          - name: GIT_COMMITTER_NAME
+            value: $(inputs.params.git_committer_name)
+          - name: XDG_CONFIG_HOME
+            value: /workspace/xdg_config
+          - name: REPO_OWNER
+            value: $(inputs.params.repo_owner)
+          - name: REPO_NAME
+            value: $(inputs.params.repo_name)
+          - name: BRANCH_NAME
+            value: $(inputs.params.revision)
+          image: gcr.io/jenkinsxio/builder-jx:2.1.32-662
+          name: git-clone
+          resources: {}
+          volumeMounts:
+          - mountPath: /home/jenkins
+            name: workspace-volume
+          workingDir: /workspace
+        - args:
+          - gitops
+          - git
+          - setup
+          - --namespace
+          - jx-git-operator
+          command:
+          - jx
+          image: gcr.io/jenkinsxio/jx-cli:latest
+          name: git-setup
+          resources: {}
+          volumeMounts:
+          - mountPath: /home/jenkins
+            name: workspace-volume
+          workingDir: /workspace
+        - args:
+          - -c
+          - jx step next-version --filename package.json
+          command:
+          - /bin/sh
+          image: gcr.io/jenkinsxio-labs-private/jxl:0.0.136
+          name: next-version
+          resources: {}
+          workingDir: /workspace/source
+        - args:
+          - -c
+          - jx step tag --version $(cat VERSION)
+          command:
+          - /bin/sh
+          image: gcr.io/jenkinsxio-labs-private/jxl:0.0.136
+          name: tag-version
+          resources: {}
+          workingDir: /workspace/source
+        - args:
+          - '[ -d /builder/home ] || mkdir -p /builder && ln -s /tekton/home /builder/home'
+          command:
+          - /bin/sh
+          - -c
+          env:
+          - name: DOCKER_REGISTRY
+            value: $(inputs.params.container_registry)
+          - name: GIT_AUTHOR_EMAIL
+            value: $(inputs.params.git_author_email)
+          - name: GIT_AUTHOR_NAME
+            value: $(inputs.params.git_author_name)
+          - name: GIT_COMMITTER_EMAIL
+            value: $(inputs.params.git_committer_email)
+          - name: GIT_COMMITTER_NAME
+            value: $(inputs.params.git_committer_name)
+          - name: XDG_CONFIG_HOME
+            value: /workspace/xdg_config
+          - name: DOCKER_REGISTRY_ORG
+            value: $(inputs.params.container_registry_owner)
+          - name: BUILD_NUMBER
+            value: "1"
+          - name: PIPELINE_KIND
+            value: release
+          - name: REPO_OWNER
+            value: $(inputs.params.repo_owner)
+          - name: REPO_NAME
+            value: $(inputs.params.repo_name)
+          - name: JOB_NAME
+            value: jenkins-x-quickstarts/node-http/master
+          - name: APP_NAME
+            value: $(inputs.params.app_name)
+          - name: BRANCH_NAME
+            value: $(inputs.params.revision)
+          - name: JX_BATCH_MODE
+            value: "true"
+          - name: VERSION
+            value: $(inputs.params.version)
+          - name: PREVIEW_VERSION
+            value: $(inputs.params.version)
+          image: gcr.io/jenkinsxio/builder-jx:2.1.142-761
+          name: setup-builder-home
+          resources:
+            requests:
+              cpu: 400m
+              memory: 512Mi
+          securityContext:
+            privileged: true
+          volumeMounts:
+          - mountPath: /home/jenkins
+            name: workspace-volume
+          - mountPath: /etc/podinfo
+            name: podinfo
+            readOnly: true
+          workingDir: /workspace/source
+        - args:
+          - step
+          - git
+          - merge
+          - --verbose
+          command:
+          - jx
+          env:
+          - name: DOCKER_REGISTRY
+            value: $(inputs.params.container_registry)
+          - name: GIT_AUTHOR_EMAIL
+            value: $(inputs.params.git_author_email)
+          - name: GIT_AUTHOR_NAME
+            value: $(inputs.params.git_author_name)
+          - name: GIT_COMMITTER_EMAIL
+            value: $(inputs.params.git_committer_email)
+          - name: GIT_COMMITTER_NAME
+            value: $(inputs.params.git_committer_name)
+          - name: XDG_CONFIG_HOME
+            value: /workspace/xdg_config
+          - name: DOCKER_REGISTRY_ORG
+            value: $(inputs.params.container_registry_owner)
+          - name: BUILD_NUMBER
+            value: "1"
+          - name: PIPELINE_KIND
+            value: release
+          - name: REPO_OWNER
+            value: $(inputs.params.repo_owner)
+          - name: REPO_NAME
+            value: $(inputs.params.repo_name)
+          - name: JOB_NAME
+            value: jenkins-x-quickstarts/node-http/master
+          - name: APP_NAME
+            value: $(inputs.params.app_name)
+          - name: BRANCH_NAME
+            value: $(inputs.params.revision)
+          - name: JX_BATCH_MODE
+            value: "true"
+          - name: VERSION
+            value: $(inputs.params.version)
+          - name: PREVIEW_VERSION
+            value: $(inputs.params.version)
+          image: gcr.io/jenkinsxio/builder-jx:2.1.142-761
+          name: git-merge
+          resources:
+            requests:
+              cpu: 400m
+              memory: 512Mi
+          securityContext:
+            privileged: true
+          volumeMounts:
+          - mountPath: /home/jenkins
+            name: workspace-volume
+          - mountPath: /etc/podinfo
+            name: podinfo
+            readOnly: true
+          workingDir: /workspace/source
+        - args:
+          - jx step credential -s npm-token -k file -f /builder/home/.npmrc --optional=true
+          command:
+          - /bin/sh
+          - -c
+          env:
+          - name: DOCKER_REGISTRY
+            value: $(inputs.params.container_registry)
+          - name: GIT_AUTHOR_EMAIL
+            value: $(inputs.params.git_author_email)
+          - name: GIT_AUTHOR_NAME
+            value: $(inputs.params.git_author_name)
+          - name: GIT_COMMITTER_EMAIL
+            value: $(inputs.params.git_committer_email)
+          - name: GIT_COMMITTER_NAME
+            value: $(inputs.params.git_committer_name)
+          - name: XDG_CONFIG_HOME
+            value: /workspace/xdg_config
+          - name: DOCKER_REGISTRY_ORG
+            value: $(inputs.params.container_registry_owner)
+          - name: BUILD_NUMBER
+            value: "1"
+          - name: PIPELINE_KIND
+            value: release
+          - name: REPO_OWNER
+            value: $(inputs.params.repo_owner)
+          - name: REPO_NAME
+            value: $(inputs.params.repo_name)
+          - name: JOB_NAME
+            value: jenkins-x-quickstarts/node-http/master
+          - name: APP_NAME
+            value: $(inputs.params.app_name)
+          - name: BRANCH_NAME
+            value: $(inputs.params.revision)
+          - name: JX_BATCH_MODE
+            value: "true"
+          - name: VERSION
+            value: $(inputs.params.version)
+          - name: PREVIEW_VERSION
+            value: $(inputs.params.version)
+          image: gcr.io/jenkinsxio/builder-nodejs:2.1.148-767
+          name: build-npmrc
+          resources:
+            requests:
+              cpu: 400m
+              memory: 512Mi
+          securityContext:
+            privileged: true
+          volumeMounts:
+          - mountPath: /home/jenkins
+            name: workspace-volume
+          - mountPath: /etc/podinfo
+            name: podinfo
+            readOnly: true
+          workingDir: /workspace/source
+        - args:
+          - npm install
+          command:
+          - /bin/sh
+          - -c
+          env:
+          - name: DOCKER_REGISTRY
+            value: $(inputs.params.container_registry)
+          - name: GIT_AUTHOR_EMAIL
+            value: $(inputs.params.git_author_email)
+          - name: GIT_AUTHOR_NAME
+            value: $(inputs.params.git_author_name)
+          - name: GIT_COMMITTER_EMAIL
+            value: $(inputs.params.git_committer_email)
+          - name: GIT_COMMITTER_NAME
+            value: $(inputs.params.git_committer_name)
+          - name: XDG_CONFIG_HOME
+            value: /workspace/xdg_config
+          - name: DOCKER_REGISTRY_ORG
+            value: $(inputs.params.container_registry_owner)
+          - name: BUILD_NUMBER
+            value: "1"
+          - name: PIPELINE_KIND
+            value: release
+          - name: REPO_OWNER
+            value: $(inputs.params.repo_owner)
+          - name: REPO_NAME
+            value: $(inputs.params.repo_name)
+          - name: JOB_NAME
+            value: jenkins-x-quickstarts/node-http/master
+          - name: APP_NAME
+            value: $(inputs.params.app_name)
+          - name: BRANCH_NAME
+            value: $(inputs.params.revision)
+          - name: JX_BATCH_MODE
+            value: "true"
+          - name: VERSION
+            value: $(inputs.params.version)
+          - name: PREVIEW_VERSION
+            value: $(inputs.params.version)
+          image: gcr.io/jenkinsxio/builder-nodejs:2.1.148-767
+          name: build-npm-install
+          resources:
+            requests:
+              cpu: 400m
+              memory: 512Mi
+          securityContext:
+            privileged: true
+          volumeMounts:
+          - mountPath: /home/jenkins
+            name: workspace-volume
+          - mountPath: /etc/podinfo
+            name: podinfo
+            readOnly: true
+          workingDir: /workspace/source
+        - args:
+          - CI=true DISPLAY=:99 npm test
+          command:
+          - /bin/sh
+          - -c
+          env:
+          - name: DOCKER_REGISTRY
+            value: $(inputs.params.container_registry)
+          - name: GIT_AUTHOR_EMAIL
+            value: $(inputs.params.git_author_email)
+          - name: GIT_AUTHOR_NAME
+            value: $(inputs.params.git_author_name)
+          - name: GIT_COMMITTER_EMAIL
+            value: $(inputs.params.git_committer_email)
+          - name: GIT_COMMITTER_NAME
+            value: $(inputs.params.git_committer_name)
+          - name: XDG_CONFIG_HOME
+            value: /workspace/xdg_config
+          - name: DOCKER_REGISTRY_ORG
+            value: $(inputs.params.container_registry_owner)
+          - name: BUILD_NUMBER
+            value: "1"
+          - name: PIPELINE_KIND
+            value: release
+          - name: REPO_OWNER
+            value: $(inputs.params.repo_owner)
+          - name: REPO_NAME
+            value: $(inputs.params.repo_name)
+          - name: JOB_NAME
+            value: jenkins-x-quickstarts/node-http/master
+          - name: APP_NAME
+            value: $(inputs.params.app_name)
+          - name: BRANCH_NAME
+            value: $(inputs.params.revision)
+          - name: JX_BATCH_MODE
+            value: "true"
+          - name: VERSION
+            value: $(inputs.params.version)
+          - name: PREVIEW_VERSION
+            value: $(inputs.params.version)
+          image: gcr.io/jenkinsxio/builder-nodejs:2.1.148-767
+          name: build-npm-test
+          resources:
+            requests:
+              cpu: 400m
+              memory: 512Mi
+          securityContext:
+            privileged: true
+          volumeMounts:
+          - mountPath: /home/jenkins
+            name: workspace-volume
+          - mountPath: /etc/podinfo
+            name: podinfo
+            readOnly: true
+          workingDir: /workspace/source
+        - args:
+          - /kaniko/executor $KANIKO_FLAGS --cache=true --cache-dir=/workspace --context=/workspace/source
+            --dockerfile=/workspace/source/Dockerfile --destination=$DOCKER_REGISTRY/$DOCKER_REGISTRY_ORG/$APP_NAME:$VERSION
+            --cache-repo=$DOCKER_REGISTRY/$DOCKER_REGISTRY_ORG/cache
+          command:
+          - /busybox/sh
+          - -c
+          env:
+          - name: DOCKER_REGISTRY
+            value: $(inputs.params.container_registry)
+          - name: GIT_AUTHOR_EMAIL
+            value: $(inputs.params.git_author_email)
+          - name: GIT_AUTHOR_NAME
+            value: $(inputs.params.git_author_name)
+          - name: GIT_COMMITTER_EMAIL
+            value: $(inputs.params.git_committer_email)
+          - name: GIT_COMMITTER_NAME
+            value: $(inputs.params.git_committer_name)
+          - name: GOOGLE_APPLICATION_CREDENTIALS
+          - name: NO_GOOGLE_APPLICATION_CREDENTIALS
+            value: "true"
+          - name: XDG_CONFIG_HOME
+            value: /workspace/xdg_config
+          - name: DOCKER_REGISTRY_ORG
+            value: $(inputs.params.container_registry_owner)
+          - name: BUILD_NUMBER
+            value: "1"
+          - name: PIPELINE_KIND
+            value: release
+          - name: REPO_OWNER
+            value: $(inputs.params.repo_owner)
+          - name: REPO_NAME
+            value: $(inputs.params.repo_name)
+          - name: JOB_NAME
+            value: jenkins-x-quickstarts/node-http/master
+          - name: APP_NAME
+            value: $(inputs.params.app_name)
+          - name: BRANCH_NAME
+            value: $(inputs.params.revision)
+          - name: JX_BATCH_MODE
+            value: "true"
+          - name: VERSION
+            value: $(inputs.params.version)
+          - name: PREVIEW_VERSION
+            value: $(inputs.params.version)
+          image: gcr.io/kaniko-project/executor:debug-v0.24.0
+          name: build-container-build
+          resources:
+            requests:
+              cpu: 400m
+              memory: 512Mi
+          securityContext:
+            privileged: true
+          volumeMounts:
+          - mountPath: /home/jenkins
+            name: workspace-volume
+          - mountPath: /etc/podinfo
+            name: podinfo
+            readOnly: true
+          workingDir: /workspace/source
+        - args:
+          - cd /workspace/source/charts/node-http && jx step changelog --batch-mode
+            --version v${VERSION}
+          command:
+          - /bin/sh
+          - -c
+          env:
+          - name: DOCKER_REGISTRY
+            value: $(inputs.params.container_registry)
+          - name: GIT_AUTHOR_EMAIL
+            value: $(inputs.params.git_author_email)
+          - name: GIT_AUTHOR_NAME
+            value: $(inputs.params.git_author_name)
+          - name: GIT_COMMITTER_EMAIL
+            value: $(inputs.params.git_committer_email)
+          - name: GIT_COMMITTER_NAME
+            value: $(inputs.params.git_committer_name)
+          - name: XDG_CONFIG_HOME
+            value: /workspace/xdg_config
+          - name: DOCKER_REGISTRY_ORG
+            value: $(inputs.params.container_registry_owner)
+          - name: BUILD_NUMBER
+            value: "1"
+          - name: PIPELINE_KIND
+            value: release
+          - name: REPO_OWNER
+            value: $(inputs.params.repo_owner)
+          - name: REPO_NAME
+            value: $(inputs.params.repo_name)
+          - name: JOB_NAME
+            value: jenkins-x-quickstarts/node-http/master
+          - name: APP_NAME
+            value: $(inputs.params.app_name)
+          - name: BRANCH_NAME
+            value: $(inputs.params.revision)
+          - name: JX_BATCH_MODE
+            value: "true"
+          - name: VERSION
+            value: $(inputs.params.version)
+          - name: PREVIEW_VERSION
+            value: $(inputs.params.version)
+          image: gcr.io/jenkinsxio/builder-go:2.1.142-761
+          name: promote-changelog
+          resources:
+            requests:
+              cpu: 400m
+              memory: 512Mi
+          securityContext:
+            privileged: true
+          volumeMounts:
+          - mountPath: /home/jenkins
+            name: workspace-volume
+          - mountPath: /etc/podinfo
+            name: podinfo
+            readOnly: true
+          workingDir: /workspace/source
+        - args:
+          - cd /workspace/source/charts/node-http && jx step helm release
+          command:
+          - /bin/sh
+          - -c
+          env:
+          - name: DOCKER_REGISTRY
+            value: $(inputs.params.container_registry)
+          - name: GIT_AUTHOR_EMAIL
+            value: $(inputs.params.git_author_email)
+          - name: GIT_AUTHOR_NAME
+            value: $(inputs.params.git_author_name)
+          - name: GIT_COMMITTER_EMAIL
+            value: $(inputs.params.git_committer_email)
+          - name: GIT_COMMITTER_NAME
+            value: $(inputs.params.git_committer_name)
+          - name: XDG_CONFIG_HOME
+            value: /workspace/xdg_config
+          - name: DOCKER_REGISTRY_ORG
+            value: $(inputs.params.container_registry_owner)
+          - name: BUILD_NUMBER
+            value: "1"
+          - name: PIPELINE_KIND
+            value: release
+          - name: REPO_OWNER
+            value: $(inputs.params.repo_owner)
+          - name: REPO_NAME
+            value: $(inputs.params.repo_name)
+          - name: JOB_NAME
+            value: jenkins-x-quickstarts/node-http/master
+          - name: APP_NAME
+            value: $(inputs.params.app_name)
+          - name: BRANCH_NAME
+            value: $(inputs.params.revision)
+          - name: JX_BATCH_MODE
+            value: "true"
+          - name: VERSION
+            value: $(inputs.params.version)
+          - name: PREVIEW_VERSION
+            value: $(inputs.params.version)
+          image: gcr.io/jenkinsxio/builder-go:2.1.142-761
+          name: promote-helm-release
+          resources:
+            requests:
+              cpu: 400m
+              memory: 512Mi
+          securityContext:
+            privileged: true
+          volumeMounts:
+          - mountPath: /home/jenkins
+            name: workspace-volume
+          - mountPath: /etc/podinfo
+            name: podinfo
+            readOnly: true
+          workingDir: /workspace/source
+        - args:
+          - cd /workspace/source/charts/node-http && jx promote -b --all-auto --timeout
+            1h
+          command:
+          - /bin/sh
+          - -c
+          env:
+          - name: DOCKER_REGISTRY
+            value: $(inputs.params.container_registry)
+          - name: GIT_AUTHOR_EMAIL
+            value: $(inputs.params.git_author_email)
+          - name: GIT_AUTHOR_NAME
+            value: $(inputs.params.git_author_name)
+          - name: GIT_COMMITTER_EMAIL
+            value: $(inputs.params.git_committer_email)
+          - name: GIT_COMMITTER_NAME
+            value: $(inputs.params.git_committer_name)
+          - name: XDG_CONFIG_HOME
+            value: /workspace/xdg_config
+          - name: DOCKER_REGISTRY_ORG
+            value: $(inputs.params.container_registry_owner)
+          - name: BUILD_NUMBER
+            value: "1"
+          - name: PIPELINE_KIND
+            value: release
+          - name: REPO_OWNER
+            value: $(inputs.params.repo_owner)
+          - name: REPO_NAME
+            value: $(inputs.params.repo_name)
+          - name: JOB_NAME
+            value: jenkins-x-quickstarts/node-http/master
+          - name: APP_NAME
+            value: $(inputs.params.app_name)
+          - name: BRANCH_NAME
+            value: $(inputs.params.revision)
+          - name: JX_BATCH_MODE
+            value: "true"
+          - name: VERSION
+            value: $(inputs.params.version)
+          - name: PREVIEW_VERSION
+            value: $(inputs.params.version)
+          image: gcr.io/jenkinsxio/jx-cli:3.0.288
+          name: promote-jx-promote
+          resources:
+            requests:
+              cpu: 400m
+              memory: 512Mi
+          securityContext:
+            privileged: true
+          volumeMounts:
+          - mountPath: /home/jenkins
+            name: workspace-volume
+          - mountPath: /etc/podinfo
+            name: podinfo
+            readOnly: true
+          workingDir: /workspace/source
+        volumes:
+        - emptyDir: {}
+          name: workspace-volume
+        - downwardAPI:
+            items:
+            - fieldRef:
+                fieldPath: metadata.labels
+              path: labels
+          name: podinfo
+  startTime: "2020-09-20T11:57:58Z"
+  taskRuns:
+    main-rvs7k-from-build-pack-6n942:
+      pipelineTaskName: from-build-pack
+      status:
+        conditions:
+        - lastTransitionTime: "2020-09-20T11:58:06Z"
+          message: Not all Steps in the Task have finished executing
+          reason: Running
+          status: Unknown
+          type: Succeeded
+        podName: main-rvs7k-from-build-pack-6n942-pod-j8l2d
+        startTime: "2020-09-20T11:57:58Z"
+        steps:
+        - container: step-git-clone
+          imageID: docker-pullable://gcr.io/jenkinsxio/builder-jx@sha256:ae504f2426df367f426b255e359d03e25e5bd137d846a422432d2d405c85598a
+          name: git-clone
+          terminated:
+            containerID: docker://e3ad120a66fb88f340c0f24ddec2ae740f24ccf1314e8975f36390f30b888096
+            exitCode: 0
+            finishedAt: "2020-09-20T11:58:08Z"
+            reason: Completed
+            startedAt: "2020-09-20T11:58:08Z"
+        - container: step-git-setup
+          imageID: docker-pullable://gcr.io/jenkinsxio/jx-cli@sha256:69dca4c8b349fba21d5471ec589378a1bf171ae9ffcc400e5e00e926418a17f4
+          name: git-setup
+          terminated:
+            containerID: docker://44a78a101791e0c317e9aa915a42162f181b82399c3d770d80610ab4698e1848
+            exitCode: 0
+            finishedAt: "2020-09-20T11:58:09Z"
+            reason: Completed
+            startedAt: "2020-09-20T11:58:09Z"
+        - container: step-next-version
+          imageID: docker-pullable://gcr.io/jenkinsxio-labs-private/jxl@sha256:cdb9d377623da0cfba77f2be2c8ea544e03df76cd88e5a63af3ed6dc027e599c
+          name: next-version
+          terminated:
+            containerID: docker://8012dec16cda68d81fdc876607d84c2d5c0aff413cb9ef6727ac12abcea85676
+            exitCode: 0
+            finishedAt: "2020-09-20T11:58:11Z"
+            reason: Completed
+            startedAt: "2020-09-20T11:58:09Z"
+        - container: step-tag-version
+          imageID: docker-pullable://gcr.io/jenkinsxio-labs-private/jxl@sha256:cdb9d377623da0cfba77f2be2c8ea544e03df76cd88e5a63af3ed6dc027e599c
+          name: tag-version
+          terminated:
+            containerID: docker://0aa954638ef846e6a10003a4cdc806d6df7572b9582c91fa05b5c2df03fe53a8
+            exitCode: 0
+            finishedAt: "2020-09-20T11:58:14Z"
+            reason: Completed
+            startedAt: "2020-09-20T11:58:11Z"
+        - container: step-setup-builder-home
+          imageID: docker-pullable://gcr.io/jenkinsxio/builder-jx@sha256:40c90b3a199f3c10780b68fe855956fd7f694907f62ff4c263f0cbb2fa89a023
+          name: setup-builder-home
+          terminated:
+            containerID: docker://1502d791557541fc317965b32eb6d5a2b800c5c40a2cba10d449cbb5ac88630d
+            exitCode: 0
+            finishedAt: "2020-09-20T11:58:15Z"
+            reason: Completed
+            startedAt: "2020-09-20T11:58:15Z"
+        - container: step-git-merge
+          imageID: docker-pullable://gcr.io/jenkinsxio/builder-jx@sha256:40c90b3a199f3c10780b68fe855956fd7f694907f62ff4c263f0cbb2fa89a023
+          name: git-merge
+          terminated:
+            containerID: docker://dc45ee6a2737599f37990827f0bdda0bb26fa4e550419920c46e4548b5e28688
+            exitCode: 0
+            finishedAt: "2020-09-20T11:58:17Z"
+            reason: Completed
+            startedAt: "2020-09-20T11:58:16Z"
+        - container: step-build-npmrc
+          imageID: docker-pullable://gcr.io/jenkinsxio/builder-nodejs@sha256:9fc9d4532c5193188cfb70744148c1ac932d1a395f309e33d107e1580c603580
+          name: build-npmrc
+          terminated:
+            containerID: docker://e291e2ac31e64f9762108ad50a09d5f4af75ef860fe7e2b7478dc98306b27b56
+            exitCode: 0
+            finishedAt: "2020-09-20T11:58:18Z"
+            reason: Completed
+            startedAt: "2020-09-20T11:58:17Z"
+        - container: step-build-npm-install
+          imageID: docker-pullable://gcr.io/jenkinsxio/builder-nodejs@sha256:9fc9d4532c5193188cfb70744148c1ac932d1a395f309e33d107e1580c603580
+          name: build-npm-install
+          running:
+            startedAt: "2020-09-20T11:58:05Z"
+        - container: step-build-npm-test
+          imageID: docker-pullable://gcr.io/jenkinsxio/builder-nodejs@sha256:9fc9d4532c5193188cfb70744148c1ac932d1a395f309e33d107e1580c603580
+          name: build-npm-test
+          running:
+            startedAt: "2020-09-20T11:58:05Z"
+        - container: step-build-container-build
+          imageID: docker-pullable://gcr.io/kaniko-project/executor@sha256:be318701bf818b309cb5b6bcbc709e88161db4229d105423abe5b66948a2f676
+          name: build-container-build
+          running:
+            startedAt: "2020-09-20T11:58:05Z"
+        - container: step-promote-changelog
+          imageID: docker-pullable://gcr.io/jenkinsxio/builder-go@sha256:c157d03686df5b6799afa4ce224c0d734090463e0d62031272377abd429ffab8
+          name: promote-changelog
+          running:
+            startedAt: "2020-09-20T11:58:05Z"
+        - container: step-promote-helm-release
+          imageID: docker-pullable://gcr.io/jenkinsxio/builder-go@sha256:c157d03686df5b6799afa4ce224c0d734090463e0d62031272377abd429ffab8
+          name: promote-helm-release
+          running:
+            startedAt: "2020-09-20T11:58:05Z"
+        - container: step-promote-jx-promote
+          imageID: docker-pullable://gcr.io/jenkinsxio/jx-cli@sha256:0ffd71d0bafaa41e6dbad8724f3a7605695d2f87278e55346447ab2b8d88f600
+          name: promote-jx-promote
+          running:
+            startedAt: "2020-09-20T11:58:06Z"
+        taskSpec:
+          params:
+          - default: 0.0.1
+            description: the version number for this pipeline which is used as a tag
+              on docker images and helm charts
+            name: version
+            type: string
+          - description: git url to clone
+            name: REPO_URL
+            type: string
+          - default: master
+            description: git revision to checkout (branch, tag, sha, ref…)
+            name: revision
+            type: string
+          - default: source
+            description: subdirectory inside of /workspace to clone the git repo
+            name: subdirectory
+            type: string
+          - default: ""
+            description: git repository owner name
+            name: repo_owner
+            type: string
+          - default: ""
+            description: git repository name
+            name: repo_name
+            type: string
+          - default: ""
+            description: app name
+            name: app_name
+            type: string
+          - default: docker.io
+            description: container registry
+            name: container_registry
+            type: string
+          - default: jenkins-x-labs-bdd
+            description: container registry owner name
+            name: container_registry_owner
+            type: string
+          - default: "1"
+            description: build number
+            name: build_id
+            type: string
+          - default: jenkins-x@googlegroups.com
+            description: pipeline git author email
+            name: git_author_email
+            type: string
+          - default: jenkins-x-bot
+            description: pipeline git author name
+            name: git_author_name
+            type: string
+          - default: jenkins-x@googlegroups.com
+            description: pipeline git committer email
+            name: git_committer_email
+            type: string
+          - default: jenkins-x-bot
+            description: pipeline git committer name
+            name: git_committer_name
+            type: string
+          steps:
+          - args:
+            - -c
+            - 'mkdir -p $HOME; git config --global --add user.name $GIT_AUTHOR_NAME;
+              git config --global --add user.email $GIT_AUTHOR_EMAIL; git config --global
+              credential.helper store; git clone $(inputs.params.REPO_URL) $(inputs.params.subdirectory);
+              echo cloned url: $(inputs.params.REPO_URL) to dir: $(inputs.params.subdirectory);
+              cd $(inputs.params.subdirectory); git checkout $(inputs.params.revision);
+              echo checked out revision: $(inputs.params.revision) to dir: $(inputs.params.subdirectory)'
+            command:
+            - /bin/sh
+            env:
+            - name: GIT_AUTHOR_EMAIL
+              value: $(inputs.params.git_author_email)
+            - name: GIT_AUTHOR_NAME
+              value: $(inputs.params.git_author_name)
+            - name: GIT_COMMITTER_EMAIL
+              value: $(inputs.params.git_committer_email)
+            - name: GIT_COMMITTER_NAME
+              value: $(inputs.params.git_committer_name)
+            - name: XDG_CONFIG_HOME
+              value: /workspace/xdg_config
+            - name: REPO_OWNER
+              value: $(inputs.params.repo_owner)
+            - name: REPO_NAME
+              value: $(inputs.params.repo_name)
+            - name: BRANCH_NAME
+              value: $(inputs.params.revision)
+            image: gcr.io/jenkinsxio/builder-jx:2.1.32-662
+            name: git-clone
+            resources: {}
+            volumeMounts:
+            - mountPath: /home/jenkins
+              name: workspace-volume
+            workingDir: /workspace
+          - args:
+            - gitops
+            - git
+            - setup
+            - --namespace
+            - jx-git-operator
+            command:
+            - jx
+            image: gcr.io/jenkinsxio/jx-cli:latest
+            name: git-setup
+            resources: {}
+            volumeMounts:
+            - mountPath: /home/jenkins
+              name: workspace-volume
+            workingDir: /workspace
+          - args:
+            - -c
+            - jx step next-version --filename package.json
+            command:
+            - /bin/sh
+            image: gcr.io/jenkinsxio-labs-private/jxl:0.0.136
+            name: next-version
+            resources: {}
+            workingDir: /workspace/source
+          - args:
+            - -c
+            - jx step tag --version $(cat VERSION)
+            command:
+            - /bin/sh
+            image: gcr.io/jenkinsxio-labs-private/jxl:0.0.136
+            name: tag-version
+            resources: {}
+            workingDir: /workspace/source
+          - args:
+            - '[ -d /builder/home ] || mkdir -p /builder && ln -s /tekton/home /builder/home'
+            command:
+            - /bin/sh
+            - -c
+            env:
+            - name: DOCKER_REGISTRY
+              value: $(inputs.params.container_registry)
+            - name: GIT_AUTHOR_EMAIL
+              value: $(inputs.params.git_author_email)
+            - name: GIT_AUTHOR_NAME
+              value: $(inputs.params.git_author_name)
+            - name: GIT_COMMITTER_EMAIL
+              value: $(inputs.params.git_committer_email)
+            - name: GIT_COMMITTER_NAME
+              value: $(inputs.params.git_committer_name)
+            - name: XDG_CONFIG_HOME
+              value: /workspace/xdg_config
+            - name: DOCKER_REGISTRY_ORG
+              value: $(inputs.params.container_registry_owner)
+            - name: BUILD_NUMBER
+              value: "1"
+            - name: PIPELINE_KIND
+              value: release
+            - name: REPO_OWNER
+              value: $(inputs.params.repo_owner)
+            - name: REPO_NAME
+              value: $(inputs.params.repo_name)
+            - name: JOB_NAME
+              value: jenkins-x-quickstarts/node-http/master
+            - name: APP_NAME
+              value: $(inputs.params.app_name)
+            - name: BRANCH_NAME
+              value: $(inputs.params.revision)
+            - name: JX_BATCH_MODE
+              value: "true"
+            - name: VERSION
+              value: $(inputs.params.version)
+            - name: PREVIEW_VERSION
+              value: $(inputs.params.version)
+            image: gcr.io/jenkinsxio/builder-jx:2.1.142-761
+            name: setup-builder-home
+            resources:
+              requests:
+                cpu: 400m
+                memory: 512Mi
+            securityContext:
+              privileged: true
+            volumeMounts:
+            - mountPath: /home/jenkins
+              name: workspace-volume
+            - mountPath: /etc/podinfo
+              name: podinfo
+              readOnly: true
+            workingDir: /workspace/source
+          - args:
+            - step
+            - git
+            - merge
+            - --verbose
+            command:
+            - jx
+            env:
+            - name: DOCKER_REGISTRY
+              value: $(inputs.params.container_registry)
+            - name: GIT_AUTHOR_EMAIL
+              value: $(inputs.params.git_author_email)
+            - name: GIT_AUTHOR_NAME
+              value: $(inputs.params.git_author_name)
+            - name: GIT_COMMITTER_EMAIL
+              value: $(inputs.params.git_committer_email)
+            - name: GIT_COMMITTER_NAME
+              value: $(inputs.params.git_committer_name)
+            - name: XDG_CONFIG_HOME
+              value: /workspace/xdg_config
+            - name: DOCKER_REGISTRY_ORG
+              value: $(inputs.params.container_registry_owner)
+            - name: BUILD_NUMBER
+              value: "1"
+            - name: PIPELINE_KIND
+              value: release
+            - name: REPO_OWNER
+              value: $(inputs.params.repo_owner)
+            - name: REPO_NAME
+              value: $(inputs.params.repo_name)
+            - name: JOB_NAME
+              value: jenkins-x-quickstarts/node-http/master
+            - name: APP_NAME
+              value: $(inputs.params.app_name)
+            - name: BRANCH_NAME
+              value: $(inputs.params.revision)
+            - name: JX_BATCH_MODE
+              value: "true"
+            - name: VERSION
+              value: $(inputs.params.version)
+            - name: PREVIEW_VERSION
+              value: $(inputs.params.version)
+            image: gcr.io/jenkinsxio/builder-jx:2.1.142-761
+            name: git-merge
+            resources:
+              requests:
+                cpu: 400m
+                memory: 512Mi
+            securityContext:
+              privileged: true
+            volumeMounts:
+            - mountPath: /home/jenkins
+              name: workspace-volume
+            - mountPath: /etc/podinfo
+              name: podinfo
+              readOnly: true
+            workingDir: /workspace/source
+          - args:
+            - jx step credential -s npm-token -k file -f /builder/home/.npmrc --optional=true
+            command:
+            - /bin/sh
+            - -c
+            env:
+            - name: DOCKER_REGISTRY
+              value: $(inputs.params.container_registry)
+            - name: GIT_AUTHOR_EMAIL
+              value: $(inputs.params.git_author_email)
+            - name: GIT_AUTHOR_NAME
+              value: $(inputs.params.git_author_name)
+            - name: GIT_COMMITTER_EMAIL
+              value: $(inputs.params.git_committer_email)
+            - name: GIT_COMMITTER_NAME
+              value: $(inputs.params.git_committer_name)
+            - name: XDG_CONFIG_HOME
+              value: /workspace/xdg_config
+            - name: DOCKER_REGISTRY_ORG
+              value: $(inputs.params.container_registry_owner)
+            - name: BUILD_NUMBER
+              value: "1"
+            - name: PIPELINE_KIND
+              value: release
+            - name: REPO_OWNER
+              value: $(inputs.params.repo_owner)
+            - name: REPO_NAME
+              value: $(inputs.params.repo_name)
+            - name: JOB_NAME
+              value: jenkins-x-quickstarts/node-http/master
+            - name: APP_NAME
+              value: $(inputs.params.app_name)
+            - name: BRANCH_NAME
+              value: $(inputs.params.revision)
+            - name: JX_BATCH_MODE
+              value: "true"
+            - name: VERSION
+              value: $(inputs.params.version)
+            - name: PREVIEW_VERSION
+              value: $(inputs.params.version)
+            image: gcr.io/jenkinsxio/builder-nodejs:2.1.148-767
+            name: build-npmrc
+            resources:
+              requests:
+                cpu: 400m
+                memory: 512Mi
+            securityContext:
+              privileged: true
+            volumeMounts:
+            - mountPath: /home/jenkins
+              name: workspace-volume
+            - mountPath: /etc/podinfo
+              name: podinfo
+              readOnly: true
+            workingDir: /workspace/source
+          - args:
+            - npm install
+            command:
+            - /bin/sh
+            - -c
+            env:
+            - name: DOCKER_REGISTRY
+              value: $(inputs.params.container_registry)
+            - name: GIT_AUTHOR_EMAIL
+              value: $(inputs.params.git_author_email)
+            - name: GIT_AUTHOR_NAME
+              value: $(inputs.params.git_author_name)
+            - name: GIT_COMMITTER_EMAIL
+              value: $(inputs.params.git_committer_email)
+            - name: GIT_COMMITTER_NAME
+              value: $(inputs.params.git_committer_name)
+            - name: XDG_CONFIG_HOME
+              value: /workspace/xdg_config
+            - name: DOCKER_REGISTRY_ORG
+              value: $(inputs.params.container_registry_owner)
+            - name: BUILD_NUMBER
+              value: "1"
+            - name: PIPELINE_KIND
+              value: release
+            - name: REPO_OWNER
+              value: $(inputs.params.repo_owner)
+            - name: REPO_NAME
+              value: $(inputs.params.repo_name)
+            - name: JOB_NAME
+              value: jenkins-x-quickstarts/node-http/master
+            - name: APP_NAME
+              value: $(inputs.params.app_name)
+            - name: BRANCH_NAME
+              value: $(inputs.params.revision)
+            - name: JX_BATCH_MODE
+              value: "true"
+            - name: VERSION
+              value: $(inputs.params.version)
+            - name: PREVIEW_VERSION
+              value: $(inputs.params.version)
+            image: gcr.io/jenkinsxio/builder-nodejs:2.1.148-767
+            name: build-npm-install
+            resources:
+              requests:
+                cpu: 400m
+                memory: 512Mi
+            securityContext:
+              privileged: true
+            volumeMounts:
+            - mountPath: /home/jenkins
+              name: workspace-volume
+            - mountPath: /etc/podinfo
+              name: podinfo
+              readOnly: true
+            workingDir: /workspace/source
+          - args:
+            - CI=true DISPLAY=:99 npm test
+            command:
+            - /bin/sh
+            - -c
+            env:
+            - name: DOCKER_REGISTRY
+              value: $(inputs.params.container_registry)
+            - name: GIT_AUTHOR_EMAIL
+              value: $(inputs.params.git_author_email)
+            - name: GIT_AUTHOR_NAME
+              value: $(inputs.params.git_author_name)
+            - name: GIT_COMMITTER_EMAIL
+              value: $(inputs.params.git_committer_email)
+            - name: GIT_COMMITTER_NAME
+              value: $(inputs.params.git_committer_name)
+            - name: XDG_CONFIG_HOME
+              value: /workspace/xdg_config
+            - name: DOCKER_REGISTRY_ORG
+              value: $(inputs.params.container_registry_owner)
+            - name: BUILD_NUMBER
+              value: "1"
+            - name: PIPELINE_KIND
+              value: release
+            - name: REPO_OWNER
+              value: $(inputs.params.repo_owner)
+            - name: REPO_NAME
+              value: $(inputs.params.repo_name)
+            - name: JOB_NAME
+              value: jenkins-x-quickstarts/node-http/master
+            - name: APP_NAME
+              value: $(inputs.params.app_name)
+            - name: BRANCH_NAME
+              value: $(inputs.params.revision)
+            - name: JX_BATCH_MODE
+              value: "true"
+            - name: VERSION
+              value: $(inputs.params.version)
+            - name: PREVIEW_VERSION
+              value: $(inputs.params.version)
+            image: gcr.io/jenkinsxio/builder-nodejs:2.1.148-767
+            name: build-npm-test
+            resources:
+              requests:
+                cpu: 400m
+                memory: 512Mi
+            securityContext:
+              privileged: true
+            volumeMounts:
+            - mountPath: /home/jenkins
+              name: workspace-volume
+            - mountPath: /etc/podinfo
+              name: podinfo
+              readOnly: true
+            workingDir: /workspace/source
+          - args:
+            - /kaniko/executor $KANIKO_FLAGS --cache=true --cache-dir=/workspace --context=/workspace/source
+              --dockerfile=/workspace/source/Dockerfile --destination=$DOCKER_REGISTRY/$DOCKER_REGISTRY_ORG/$APP_NAME:$VERSION
+              --cache-repo=$DOCKER_REGISTRY/$DOCKER_REGISTRY_ORG/cache
+            command:
+            - /busybox/sh
+            - -c
+            env:
+            - name: DOCKER_REGISTRY
+              value: $(inputs.params.container_registry)
+            - name: GIT_AUTHOR_EMAIL
+              value: $(inputs.params.git_author_email)
+            - name: GIT_AUTHOR_NAME
+              value: $(inputs.params.git_author_name)
+            - name: GIT_COMMITTER_EMAIL
+              value: $(inputs.params.git_committer_email)
+            - name: GIT_COMMITTER_NAME
+              value: $(inputs.params.git_committer_name)
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+            - name: NO_GOOGLE_APPLICATION_CREDENTIALS
+              value: "true"
+            - name: XDG_CONFIG_HOME
+              value: /workspace/xdg_config
+            - name: DOCKER_REGISTRY_ORG
+              value: $(inputs.params.container_registry_owner)
+            - name: BUILD_NUMBER
+              value: "1"
+            - name: PIPELINE_KIND
+              value: release
+            - name: REPO_OWNER
+              value: $(inputs.params.repo_owner)
+            - name: REPO_NAME
+              value: $(inputs.params.repo_name)
+            - name: JOB_NAME
+              value: jenkins-x-quickstarts/node-http/master
+            - name: APP_NAME
+              value: $(inputs.params.app_name)
+            - name: BRANCH_NAME
+              value: $(inputs.params.revision)
+            - name: JX_BATCH_MODE
+              value: "true"
+            - name: VERSION
+              value: $(inputs.params.version)
+            - name: PREVIEW_VERSION
+              value: $(inputs.params.version)
+            image: gcr.io/kaniko-project/executor:debug-v0.24.0
+            name: build-container-build
+            resources:
+              requests:
+                cpu: 400m
+                memory: 512Mi
+            securityContext:
+              privileged: true
+            volumeMounts:
+            - mountPath: /home/jenkins
+              name: workspace-volume
+            - mountPath: /etc/podinfo
+              name: podinfo
+              readOnly: true
+            workingDir: /workspace/source
+          - args:
+            - cd /workspace/source/charts/node-http && jx step changelog --batch-mode
+              --version v${VERSION}
+            command:
+            - /bin/sh
+            - -c
+            env:
+            - name: DOCKER_REGISTRY
+              value: $(inputs.params.container_registry)
+            - name: GIT_AUTHOR_EMAIL
+              value: $(inputs.params.git_author_email)
+            - name: GIT_AUTHOR_NAME
+              value: $(inputs.params.git_author_name)
+            - name: GIT_COMMITTER_EMAIL
+              value: $(inputs.params.git_committer_email)
+            - name: GIT_COMMITTER_NAME
+              value: $(inputs.params.git_committer_name)
+            - name: XDG_CONFIG_HOME
+              value: /workspace/xdg_config
+            - name: DOCKER_REGISTRY_ORG
+              value: $(inputs.params.container_registry_owner)
+            - name: BUILD_NUMBER
+              value: "1"
+            - name: PIPELINE_KIND
+              value: release
+            - name: REPO_OWNER
+              value: $(inputs.params.repo_owner)
+            - name: REPO_NAME
+              value: $(inputs.params.repo_name)
+            - name: JOB_NAME
+              value: jenkins-x-quickstarts/node-http/master
+            - name: APP_NAME
+              value: $(inputs.params.app_name)
+            - name: BRANCH_NAME
+              value: $(inputs.params.revision)
+            - name: JX_BATCH_MODE
+              value: "true"
+            - name: VERSION
+              value: $(inputs.params.version)
+            - name: PREVIEW_VERSION
+              value: $(inputs.params.version)
+            image: gcr.io/jenkinsxio/builder-go:2.1.142-761
+            name: promote-changelog
+            resources:
+              requests:
+                cpu: 400m
+                memory: 512Mi
+            securityContext:
+              privileged: true
+            volumeMounts:
+            - mountPath: /home/jenkins
+              name: workspace-volume
+            - mountPath: /etc/podinfo
+              name: podinfo
+              readOnly: true
+            workingDir: /workspace/source
+          - args:
+            - cd /workspace/source/charts/node-http && jx step helm release
+            command:
+            - /bin/sh
+            - -c
+            env:
+            - name: DOCKER_REGISTRY
+              value: $(inputs.params.container_registry)
+            - name: GIT_AUTHOR_EMAIL
+              value: $(inputs.params.git_author_email)
+            - name: GIT_AUTHOR_NAME
+              value: $(inputs.params.git_author_name)
+            - name: GIT_COMMITTER_EMAIL
+              value: $(inputs.params.git_committer_email)
+            - name: GIT_COMMITTER_NAME
+              value: $(inputs.params.git_committer_name)
+            - name: XDG_CONFIG_HOME
+              value: /workspace/xdg_config
+            - name: DOCKER_REGISTRY_ORG
+              value: $(inputs.params.container_registry_owner)
+            - name: BUILD_NUMBER
+              value: "1"
+            - name: PIPELINE_KIND
+              value: release
+            - name: REPO_OWNER
+              value: $(inputs.params.repo_owner)
+            - name: REPO_NAME
+              value: $(inputs.params.repo_name)
+            - name: JOB_NAME
+              value: jenkins-x-quickstarts/node-http/master
+            - name: APP_NAME
+              value: $(inputs.params.app_name)
+            - name: BRANCH_NAME
+              value: $(inputs.params.revision)
+            - name: JX_BATCH_MODE
+              value: "true"
+            - name: VERSION
+              value: $(inputs.params.version)
+            - name: PREVIEW_VERSION
+              value: $(inputs.params.version)
+            image: gcr.io/jenkinsxio/builder-go:2.1.142-761
+            name: promote-helm-release
+            resources:
+              requests:
+                cpu: 400m
+                memory: 512Mi
+            securityContext:
+              privileged: true
+            volumeMounts:
+            - mountPath: /home/jenkins
+              name: workspace-volume
+            - mountPath: /etc/podinfo
+              name: podinfo
+              readOnly: true
+            workingDir: /workspace/source
+          - args:
+            - cd /workspace/source/charts/node-http && jx promote -b --all-auto --timeout
+              1h
+            command:
+            - /bin/sh
+            - -c
+            env:
+            - name: DOCKER_REGISTRY
+              value: $(inputs.params.container_registry)
+            - name: GIT_AUTHOR_EMAIL
+              value: $(inputs.params.git_author_email)
+            - name: GIT_AUTHOR_NAME
+              value: $(inputs.params.git_author_name)
+            - name: GIT_COMMITTER_EMAIL
+              value: $(inputs.params.git_committer_email)
+            - name: GIT_COMMITTER_NAME
+              value: $(inputs.params.git_committer_name)
+            - name: XDG_CONFIG_HOME
+              value: /workspace/xdg_config
+            - name: DOCKER_REGISTRY_ORG
+              value: $(inputs.params.container_registry_owner)
+            - name: BUILD_NUMBER
+              value: "1"
+            - name: PIPELINE_KIND
+              value: release
+            - name: REPO_OWNER
+              value: $(inputs.params.repo_owner)
+            - name: REPO_NAME
+              value: $(inputs.params.repo_name)
+            - name: JOB_NAME
+              value: jenkins-x-quickstarts/node-http/master
+            - name: APP_NAME
+              value: $(inputs.params.app_name)
+            - name: BRANCH_NAME
+              value: $(inputs.params.revision)
+            - name: JX_BATCH_MODE
+              value: "true"
+            - name: VERSION
+              value: $(inputs.params.version)
+            - name: PREVIEW_VERSION
+              value: $(inputs.params.version)
+            image: gcr.io/jenkinsxio/jx-cli:3.0.288
+            name: promote-jx-promote
+            resources:
+              requests:
+                cpu: 400m
+                memory: 512Mi
+            securityContext:
+              privileged: true
+            volumeMounts:
+            - mountPath: /home/jenkins
+              name: workspace-volume
+            - mountPath: /etc/podinfo
+              name: podinfo
+              readOnly: true
+            workingDir: /workspace/source
+          volumes:
+          - emptyDir: {}
+            name: workspace-volume
+          - downwardAPI:
+              items:
+              - fieldRef:
+                  fieldPath: metadata.labels
+                path: labels
+            name: podinfo
