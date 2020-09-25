@@ -17,8 +17,8 @@ require (
 	github.com/tektoncd/pipeline v0.14.2
 	github.com/vmware-tanzu/octant v0.12.2-0.20200506154048-420def050373
 	helm.sh/helm/v3 v3.2.4
-	k8s.io/api v0.18.6
-	k8s.io/apimachinery v0.18.6
+	k8s.io/api v0.19.2
+	k8s.io/apimachinery v0.19.2
 	knative.dev/pkg v0.0.0-20200528142800-1c6815d7e4c9
 	sigs.k8s.io/yaml v1.2.0
 )
