@@ -9,7 +9,7 @@ require (
 	github.com/hashicorp/go-hclog v0.9.2 // indirect
 	github.com/hashicorp/go-plugin v1.0.1 // indirect
 	github.com/jenkins-x/jx-api v0.0.20
-	github.com/jenkins-x/jx-helpers v1.0.70
+	github.com/jenkins-x/jx-helpers v1.0.78
 	github.com/jenkins-x/jx-logging v0.0.11
 	github.com/mitchellh/mapstructure v1.2.2 // indirect
 	github.com/pkg/errors v0.9.1
