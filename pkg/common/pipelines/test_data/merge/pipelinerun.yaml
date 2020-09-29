@@ -1,0 +1,1271 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  annotations:
+    lighthouse.jenkins-x.io/cloneURI: https://github.com/jstrachan/nodey510.git
+    lighthouse.jenkins-x.io/job: release
+  creationTimestamp: "2020-09-25T07:30:26Z"
+  generateName: release-
+  generation: 1
+  labels:
+    created-by-lighthouse: "true"
+    event-GUID: fa415776-ff00-11ea-86f1-f1ab7dba0de0
+    lighthouse.jenkins-x.io/baseSHA: 05bb4876fc299ac47c84d675d975bdcfb14ad39e
+    lighthouse.jenkins-x.io/branch: master
+    lighthouse.jenkins-x.io/buildNum: "1601019026059"
+    lighthouse.jenkins-x.io/context: release
+    lighthouse.jenkins-x.io/id: fac307f4-ff00-11ea-a3f9-decc2331f53d
+    lighthouse.jenkins-x.io/job: release
+    lighthouse.jenkins-x.io/lastCommitSHA: 05bb4876fc299ac47c84d675d975bdcfb14ad39e
+    lighthouse.jenkins-x.io/refs.org: jstrachan
+    lighthouse.jenkins-x.io/refs.repo: nodey510
+    lighthouse.jenkins-x.io/type: postsubmit
+    tekton.dev/pipeline: release-b4849
+  name: release-b4849
+  namespace: jx
+  ownerReferences:
+  - apiVersion: lighthouse.jenkins.io/v1alpha1
+    blockOwnerDeletion: true
+    controller: true
+    kind: LighthouseJob
+    name: fac307f4-ff00-11ea-a3f9-decc2331f53d
+    uid: 6041f3e7-bc65-4d4b-967a-fb25259fb714
+  resourceVersion: "5743301"
+  selfLink: /apis/tekton.dev/v1beta1/namespaces/jx/pipelineruns/release-b4849
+  uid: b2d123e6-d8ae-4a56-af81-fbc1e9e78521
+spec:
+  params:
+  - name: version
+    value: 0.0.1
+  - name: BUILD_ID
+    value: "1601019026059"
+  - name: JOB_NAME
+    value: release
+  - name: JOB_SPEC
+    value: type:postsubmit
+  - name: JOB_TYPE
+    value: postsubmit
+  - name: PULL_BASE_REF
+    value: master
+  - name: PULL_BASE_SHA
+    value: 05bb4876fc299ac47c84d675d975bdcfb14ad39e
+  - name: PULL_REFS
+    value: master:05bb4876fc299ac47c84d675d975bdcfb14ad39e
+  - name: REPO_NAME
+    value: nodey510
+  - name: REPO_OWNER
+    value: jstrachan
+  - name: REPO_URL
+    value: https://github.com/jstrachan/nodey510.git
+  pipelineSpec:
+    params:
+    - default: 0.0.1
+      description: the version number for this pipeline which is used as a tag on
+        docker images and helm charts
+      name: version
+      type: string
+    - description: git url to clone
+      name: REPO_URL
+      type: string
+    - default: master
+      description: git revision to checkout (branch, tag, sha, ref…)
+      name: revision
+      type: string
+    - default: source
+      description: subdirectory inside of /workspace to clone the git repo
+      name: subdirectory
+      type: string
+    tasks:
+    - name: from-build-pack
+      params:
+      - name: version
+        value: $(params.version)
+      - name: REPO_URL
+        value: $(params.REPO_URL)
+      - name: revision
+        value: $(params.revision)
+      - name: subdirectory
+        value: $(params.subdirectory)
+      resources: {}
+      taskSpec:
+        metadata: {}
+        params:
+        - default: 0.0.1
+          description: the version number for this pipeline which is used as a tag
+            on docker images and helm charts
+          name: version
+          type: string
+        - description: git url to clone
+          name: REPO_URL
+          type: string
+        - default: master
+          description: git revision to checkout (branch, tag, sha, ref…)
+          name: revision
+          type: string
+        - default: source
+          description: subdirectory inside of /workspace to clone the git repo
+          name: subdirectory
+          type: string
+        stepTemplate:
+          env:
+          - name: PIPELINE_KIND
+            value: release
+          - name: JX_BATCH_MODE
+            value: "true"
+          - name: VERSION
+            value: $(inputs.params.version)
+          name: ""
+          resources:
+            requests:
+              cpu: 400m
+              memory: 512Mi
+          volumeMounts:
+          - mountPath: /home/jenkins
+            name: workspace-volume
+          - mountPath: /etc/podinfo
+            name: podinfo
+            readOnly: true
+          workingDir: /workspace/source
+        steps:
+        - args:
+          - -c
+          - 'mkdir -p $HOME; git config --global --add user.name $GIT_AUTHOR_NAME;
+            git config --global --add user.email $GIT_AUTHOR_EMAIL; git config --global
+            credential.helper store; git clone $(inputs.params.REPO_URL) $(inputs.params.subdirectory);
+            echo cloned url: $(inputs.params.REPO_URL) to dir: $(inputs.params.subdirectory);
+            cd $(inputs.params.subdirectory); git checkout $(inputs.params.revision);
+            echo checked out revision: $(inputs.params.revision) to dir: $(inputs.params.subdirectory)'
+          command:
+          - /bin/sh
+          image: gcr.io/jenkinsxio/builder-jx:2.1.32-662
+          name: git-clone
+          resources: {}
+          workingDir: /workspace
+        - args:
+          - gitops
+          - git
+          - setup
+          - --namespace
+          - jx-git-operator
+          command:
+          - jx
+          image: gcr.io/jenkinsxio/jx-cli:latest
+          name: git-setup
+          resources: {}
+          workingDir: /workspace
+        - args:
+          - -c
+          - jx step next-version --filename package.json
+          command:
+          - /bin/sh
+          image: gcr.io/jenkinsxio-labs-private/jxl:0.0.136
+          name: next-version
+          resources: {}
+        - args:
+          - -c
+          - jx step tag --version $(cat VERSION)
+          command:
+          - /bin/sh
+          image: gcr.io/jenkinsxio-labs-private/jxl:0.0.136
+          name: tag-version
+          resources: {}
+        - args:
+          - '[ -d /builder/home ] || mkdir -p /builder && ln -s /tekton/home /builder/home'
+          command:
+          - /bin/sh
+          - -c
+          image: gcr.io/jenkinsxio/builder-jx:2.1.142-761
+          name: setup-builder-home
+          resources: {}
+        - args:
+          - step
+          - git
+          - merge
+          - --verbose
+          command:
+          - jx
+          image: gcr.io/jenkinsxio/builder-jx:2.1.142-761
+          name: git-merge
+          resources: {}
+        - args:
+          - gitops
+          - variables
+          command:
+          - jx
+          image: gcr.io/jenkinsxio/jx-gitops:0.0.0-SNAPSHOT-PR-213-1
+          name: jx-variables
+          resources: {}
+        - args:
+          - jx step credential -s npm-token -k file -f /builder/home/.npmrc --optional=true
+          command:
+          - /bin/sh
+          - -c
+          image: gcr.io/jenkinsxio/builder-nodejs:2.1.148-767
+          name: build-npmrc
+          resources: {}
+        - args:
+          - npm install
+          command:
+          - /bin/sh
+          - -c
+          image: gcr.io/jenkinsxio/builder-nodejs:2.1.148-767
+          name: build-npm-install
+          resources: {}
+        - args:
+          - CI=true DISPLAY=:99 npm test
+          command:
+          - /bin/sh
+          - -c
+          image: gcr.io/jenkinsxio/builder-nodejs:2.1.148-767
+          name: build-npm-test
+          resources: {}
+        - args:
+          - source .jx/variables.sh && /kaniko/executor $KANIKO_FLAGS --cache=true
+            --cache-dir=/workspace --context=/workspace/source --dockerfile=/workspace/source/Dockerfile
+            --destination=$DOCKER_REGISTRY/$DOCKER_REGISTRY_ORG/$APP_NAME:$VERSION
+            --cache-repo=$DOCKER_REGISTRY/$DOCKER_REGISTRY_ORG/cache
+          command:
+          - /busybox/sh
+          - -c
+          image: gcr.io/kaniko-project/executor:debug-v0.24.0
+          name: build-container-build
+          resources: {}
+        - args:
+          - jx step changelog --batch-mode --version v${VERSION}
+          command:
+          - /bin/sh
+          - -c
+          image: gcr.io/jenkinsxio/builder-go:2.1.142-761
+          name: promote-changelog
+          resources: {}
+        - args:
+          - jx gitops helm release
+          command:
+          - /bin/sh
+          - -c
+          image: gcr.io/jenkinsxio/jx-cli:latest
+          name: promote-helm-release
+          resources: {}
+        - args:
+          - jx-promote -b --all-auto --timeout 1h
+          command:
+          - /bin/sh
+          - -c
+          image: gcr.io/jenkinsxio/jx-promote:0.0.0-SNAPSHOT-PR-66-1
+          name: promote-jx-promote
+          resources: {}
+        volumes:
+        - emptyDir: {}
+          name: workspace-volume
+        - downwardAPI:
+            items:
+            - fieldRef:
+                fieldPath: metadata.labels
+              path: labels
+          name: podinfo
+  podTemplate: {}
+  serviceAccountName: tekton-bot
+  timeout: 240h0m0s
+status:
+  completionTime: "2020-09-25T08:32:23Z"
+  conditions:
+  - lastTransitionTime: "2020-09-25T08:32:23Z"
+    message: 'Tasks Completed: 1 (Failed: 1, Cancelled 0), Skipped: 0'
+    reason: Failed
+    status: "False"
+    type: Succeeded
+  pipelineSpec:
+    params:
+    - default: 0.0.1
+      description: the version number for this pipeline which is used as a tag on
+        docker images and helm charts
+      name: version
+      type: string
+    - description: git url to clone
+      name: REPO_URL
+      type: string
+    - default: master
+      description: git revision to checkout (branch, tag, sha, ref…)
+      name: revision
+      type: string
+    - default: source
+      description: subdirectory inside of /workspace to clone the git repo
+      name: subdirectory
+      type: string
+    tasks:
+    - name: from-build-pack
+      params:
+      - name: version
+        value: $(params.version)
+      - name: REPO_URL
+        value: $(params.REPO_URL)
+      - name: revision
+        value: $(params.revision)
+      - name: subdirectory
+        value: $(params.subdirectory)
+      resources: {}
+      taskSpec:
+        metadata: {}
+        params:
+        - default: 0.0.1
+          description: the version number for this pipeline which is used as a tag
+            on docker images and helm charts
+          name: version
+          type: string
+        - description: git url to clone
+          name: REPO_URL
+          type: string
+        - default: master
+          description: git revision to checkout (branch, tag, sha, ref…)
+          name: revision
+          type: string
+        - default: source
+          description: subdirectory inside of /workspace to clone the git repo
+          name: subdirectory
+          type: string
+        stepTemplate:
+          env:
+          - name: PIPELINE_KIND
+            value: release
+          - name: JX_BATCH_MODE
+            value: "true"
+          - name: VERSION
+            value: $(inputs.params.version)
+          name: ""
+          resources:
+            requests:
+              cpu: 400m
+              memory: 512Mi
+          volumeMounts:
+          - mountPath: /home/jenkins
+            name: workspace-volume
+          - mountPath: /etc/podinfo
+            name: podinfo
+            readOnly: true
+          workingDir: /workspace/source
+        steps:
+        - args:
+          - -c
+          - 'mkdir -p $HOME; git config --global --add user.name $GIT_AUTHOR_NAME;
+            git config --global --add user.email $GIT_AUTHOR_EMAIL; git config --global
+            credential.helper store; git clone $(inputs.params.REPO_URL) $(inputs.params.subdirectory);
+            echo cloned url: $(inputs.params.REPO_URL) to dir: $(inputs.params.subdirectory);
+            cd $(inputs.params.subdirectory); git checkout $(inputs.params.revision);
+            echo checked out revision: $(inputs.params.revision) to dir: $(inputs.params.subdirectory)'
+          command:
+          - /bin/sh
+          env:
+          - name: PIPELINE_KIND
+            value: release
+          - name: JX_BATCH_MODE
+            value: "true"
+          - name: VERSION
+            value: $(inputs.params.version)
+          image: gcr.io/jenkinsxio/builder-jx:2.1.32-662
+          name: git-clone
+          resources:
+            requests:
+              cpu: 400m
+              memory: 512Mi
+          volumeMounts:
+          - mountPath: /home/jenkins
+            name: workspace-volume
+          - mountPath: /etc/podinfo
+            name: podinfo
+            readOnly: true
+          workingDir: /workspace
+        - args:
+          - gitops
+          - git
+          - setup
+          - --namespace
+          - jx-git-operator
+          command:
+          - jx
+          env:
+          - name: PIPELINE_KIND
+            value: release
+          - name: JX_BATCH_MODE
+            value: "true"
+          - name: VERSION
+            value: $(inputs.params.version)
+          image: gcr.io/jenkinsxio/jx-cli:latest
+          name: git-setup
+          resources:
+            requests:
+              cpu: 400m
+              memory: 512Mi
+          volumeMounts:
+          - mountPath: /home/jenkins
+            name: workspace-volume
+          - mountPath: /etc/podinfo
+            name: podinfo
+            readOnly: true
+          workingDir: /workspace
+        - args:
+          - -c
+          - jx step next-version --filename package.json
+          command:
+          - /bin/sh
+          env:
+          - name: PIPELINE_KIND
+            value: release
+          - name: JX_BATCH_MODE
+            value: "true"
+          - name: VERSION
+            value: $(inputs.params.version)
+          image: gcr.io/jenkinsxio-labs-private/jxl:0.0.136
+          name: next-version
+          resources:
+            requests:
+              cpu: 400m
+              memory: 512Mi
+          volumeMounts:
+          - mountPath: /home/jenkins
+            name: workspace-volume
+          - mountPath: /etc/podinfo
+            name: podinfo
+            readOnly: true
+          workingDir: /workspace/source
+        - args:
+          - -c
+          - jx step tag --version $(cat VERSION)
+          command:
+          - /bin/sh
+          env:
+          - name: PIPELINE_KIND
+            value: release
+          - name: JX_BATCH_MODE
+            value: "true"
+          - name: VERSION
+            value: $(inputs.params.version)
+          image: gcr.io/jenkinsxio-labs-private/jxl:0.0.136
+          name: tag-version
+          resources:
+            requests:
+              cpu: 400m
+              memory: 512Mi
+          volumeMounts:
+          - mountPath: /home/jenkins
+            name: workspace-volume
+          - mountPath: /etc/podinfo
+            name: podinfo
+            readOnly: true
+          workingDir: /workspace/source
+        - args:
+          - '[ -d /builder/home ] || mkdir -p /builder && ln -s /tekton/home /builder/home'
+          command:
+          - /bin/sh
+          - -c
+          env:
+          - name: PIPELINE_KIND
+            value: release
+          - name: JX_BATCH_MODE
+            value: "true"
+          - name: VERSION
+            value: $(inputs.params.version)
+          image: gcr.io/jenkinsxio/builder-jx:2.1.142-761
+          name: setup-builder-home
+          resources:
+            requests:
+              cpu: 400m
+              memory: 512Mi
+          volumeMounts:
+          - mountPath: /home/jenkins
+            name: workspace-volume
+          - mountPath: /etc/podinfo
+            name: podinfo
+            readOnly: true
+          workingDir: /workspace/source
+        - args:
+          - step
+          - git
+          - merge
+          - --verbose
+          command:
+          - jx
+          env:
+          - name: PIPELINE_KIND
+            value: release
+          - name: JX_BATCH_MODE
+            value: "true"
+          - name: VERSION
+            value: $(inputs.params.version)
+          image: gcr.io/jenkinsxio/builder-jx:2.1.142-761
+          name: git-merge
+          resources:
+            requests:
+              cpu: 400m
+              memory: 512Mi
+          volumeMounts:
+          - mountPath: /home/jenkins
+            name: workspace-volume
+          - mountPath: /etc/podinfo
+            name: podinfo
+            readOnly: true
+          workingDir: /workspace/source
+        - args:
+          - gitops
+          - variables
+          command:
+          - jx
+          env:
+          - name: PIPELINE_KIND
+            value: release
+          - name: JX_BATCH_MODE
+            value: "true"
+          - name: VERSION
+            value: $(inputs.params.version)
+          image: gcr.io/jenkinsxio/jx-gitops:0.0.0-SNAPSHOT-PR-213-1
+          name: jx-variables
+          resources:
+            requests:
+              cpu: 400m
+              memory: 512Mi
+          volumeMounts:
+          - mountPath: /home/jenkins
+            name: workspace-volume
+          - mountPath: /etc/podinfo
+            name: podinfo
+            readOnly: true
+          workingDir: /workspace/source
+        - args:
+          - jx step credential -s npm-token -k file -f /builder/home/.npmrc --optional=true
+          command:
+          - /bin/sh
+          - -c
+          env:
+          - name: PIPELINE_KIND
+            value: release
+          - name: JX_BATCH_MODE
+            value: "true"
+          - name: VERSION
+            value: $(inputs.params.version)
+          image: gcr.io/jenkinsxio/builder-nodejs:2.1.148-767
+          name: build-npmrc
+          resources:
+            requests:
+              cpu: 400m
+              memory: 512Mi
+          volumeMounts:
+          - mountPath: /home/jenkins
+            name: workspace-volume
+          - mountPath: /etc/podinfo
+            name: podinfo
+            readOnly: true
+          workingDir: /workspace/source
+        - args:
+          - npm install
+          command:
+          - /bin/sh
+          - -c
+          env:
+          - name: PIPELINE_KIND
+            value: release
+          - name: JX_BATCH_MODE
+            value: "true"
+          - name: VERSION
+            value: $(inputs.params.version)
+          image: gcr.io/jenkinsxio/builder-nodejs:2.1.148-767
+          name: build-npm-install
+          resources:
+            requests:
+              cpu: 400m
+              memory: 512Mi
+          volumeMounts:
+          - mountPath: /home/jenkins
+            name: workspace-volume
+          - mountPath: /etc/podinfo
+            name: podinfo
+            readOnly: true
+          workingDir: /workspace/source
+        - args:
+          - CI=true DISPLAY=:99 npm test
+          command:
+          - /bin/sh
+          - -c
+          env:
+          - name: PIPELINE_KIND
+            value: release
+          - name: JX_BATCH_MODE
+            value: "true"
+          - name: VERSION
+            value: $(inputs.params.version)
+          image: gcr.io/jenkinsxio/builder-nodejs:2.1.148-767
+          name: build-npm-test
+          resources:
+            requests:
+              cpu: 400m
+              memory: 512Mi
+          volumeMounts:
+          - mountPath: /home/jenkins
+            name: workspace-volume
+          - mountPath: /etc/podinfo
+            name: podinfo
+            readOnly: true
+          workingDir: /workspace/source
+        - args:
+          - source .jx/variables.sh && /kaniko/executor $KANIKO_FLAGS --cache=true
+            --cache-dir=/workspace --context=/workspace/source --dockerfile=/workspace/source/Dockerfile
+            --destination=$DOCKER_REGISTRY/$DOCKER_REGISTRY_ORG/$APP_NAME:$VERSION
+            --cache-repo=$DOCKER_REGISTRY/$DOCKER_REGISTRY_ORG/cache
+          command:
+          - /busybox/sh
+          - -c
+          env:
+          - name: PIPELINE_KIND
+            value: release
+          - name: JX_BATCH_MODE
+            value: "true"
+          - name: VERSION
+            value: $(inputs.params.version)
+          image: gcr.io/kaniko-project/executor:debug-v0.24.0
+          name: build-container-build
+          resources:
+            requests:
+              cpu: 400m
+              memory: 512Mi
+          volumeMounts:
+          - mountPath: /home/jenkins
+            name: workspace-volume
+          - mountPath: /etc/podinfo
+            name: podinfo
+            readOnly: true
+          workingDir: /workspace/source
+        - args:
+          - jx step changelog --batch-mode --version v${VERSION}
+          command:
+          - /bin/sh
+          - -c
+          env:
+          - name: PIPELINE_KIND
+            value: release
+          - name: JX_BATCH_MODE
+            value: "true"
+          - name: VERSION
+            value: $(inputs.params.version)
+          image: gcr.io/jenkinsxio/builder-go:2.1.142-761
+          name: promote-changelog
+          resources:
+            requests:
+              cpu: 400m
+              memory: 512Mi
+          volumeMounts:
+          - mountPath: /home/jenkins
+            name: workspace-volume
+          - mountPath: /etc/podinfo
+            name: podinfo
+            readOnly: true
+          workingDir: /workspace/source
+        - args:
+          - jx gitops helm release
+          command:
+          - /bin/sh
+          - -c
+          env:
+          - name: PIPELINE_KIND
+            value: release
+          - name: JX_BATCH_MODE
+            value: "true"
+          - name: VERSION
+            value: $(inputs.params.version)
+          image: gcr.io/jenkinsxio/jx-cli:latest
+          name: promote-helm-release
+          resources:
+            requests:
+              cpu: 400m
+              memory: 512Mi
+          volumeMounts:
+          - mountPath: /home/jenkins
+            name: workspace-volume
+          - mountPath: /etc/podinfo
+            name: podinfo
+            readOnly: true
+          workingDir: /workspace/source
+        - args:
+          - jx-promote -b --all-auto --timeout 1h
+          command:
+          - /bin/sh
+          - -c
+          env:
+          - name: PIPELINE_KIND
+            value: release
+          - name: JX_BATCH_MODE
+            value: "true"
+          - name: VERSION
+            value: $(inputs.params.version)
+          image: gcr.io/jenkinsxio/jx-promote:0.0.0-SNAPSHOT-PR-66-1
+          name: promote-jx-promote
+          resources:
+            requests:
+              cpu: 400m
+              memory: 512Mi
+          volumeMounts:
+          - mountPath: /home/jenkins
+            name: workspace-volume
+          - mountPath: /etc/podinfo
+            name: podinfo
+            readOnly: true
+          workingDir: /workspace/source
+        volumes:
+        - emptyDir: {}
+          name: workspace-volume
+        - downwardAPI:
+            items:
+            - fieldRef:
+                fieldPath: metadata.labels
+              path: labels
+          name: podinfo
+  startTime: "2020-09-25T07:30:26Z"
+  taskRuns:
+    release-b4849-from-build-pack-fxf4x:
+      pipelineTaskName: from-build-pack
+      status:
+        completionTime: "2020-09-25T08:32:21Z"
+        conditions:
+        - lastTransitionTime: "2020-09-25T08:32:21Z"
+          message: |
+            "step-promote-jx-promote" exited with code 1 (image: "docker-pullable://gcr.io/jenkinsxio/jx-promote@sha256:1a383480afccaf2a97600d292ac7f0e308da809119c34ba166d6d5b5bd8348c3"); for logs run: kubectl -n jx logs release-b4849-from-build-pack-fxf4x-pod-zklbs -c step-promote-jx-promote
+          reason: Failed
+          status: "False"
+          type: Succeeded
+        podName: release-b4849-from-build-pack-fxf4x-pod-zklbs
+        startTime: "2020-09-25T07:30:26Z"
+        steps:
+        - container: step-git-clone
+          imageID: docker-pullable://gcr.io/jenkinsxio/builder-jx@sha256:ae504f2426df367f426b255e359d03e25e5bd137d846a422432d2d405c85598a
+          name: git-clone
+          terminated:
+            containerID: docker://9e4647c34a1eaa18a5b36174bd00e4f1b0a61cef927128308f00b9659a0a7b7d
+            exitCode: 0
+            finishedAt: "2020-09-25T07:31:02Z"
+            reason: Completed
+            startedAt: "2020-09-25T07:30:59Z"
+        - container: step-git-setup
+          imageID: docker-pullable://gcr.io/jenkinsxio/jx-cli@sha256:a654be002512d67f2b627f706660984215ef4604fded7ba2078f88e328cc5b40
+          name: git-setup
+          terminated:
+            containerID: docker://3570f00030709f0d82508d140dd2ed85de9aeaf1339963e5ea93c78277c303e5
+            exitCode: 0
+            finishedAt: "2020-09-25T07:31:03Z"
+            reason: Completed
+            startedAt: "2020-09-25T07:31:02Z"
+        - container: step-next-version
+          imageID: docker-pullable://gcr.io/jenkinsxio-labs-private/jxl@sha256:cdb9d377623da0cfba77f2be2c8ea544e03df76cd88e5a63af3ed6dc027e599c
+          name: next-version
+          terminated:
+            containerID: docker://ec6ee94f759be8e87cdd4747744a65cc14973373b4f175ee9082a48e6e6fb7f7
+            exitCode: 0
+            finishedAt: "2020-09-25T07:31:08Z"
+            reason: Completed
+            startedAt: "2020-09-25T07:31:04Z"
+        - container: step-tag-version
+          imageID: docker-pullable://gcr.io/jenkinsxio-labs-private/jxl@sha256:cdb9d377623da0cfba77f2be2c8ea544e03df76cd88e5a63af3ed6dc027e599c
+          name: tag-version
+          terminated:
+            containerID: docker://90be91f6a7d06afb6b4e59fc4daba491aae4b0882bdefe4ec91d659adb6cecb7
+            exitCode: 0
+            finishedAt: "2020-09-25T07:31:12Z"
+            reason: Completed
+            startedAt: "2020-09-25T07:31:08Z"
+        - container: step-setup-builder-home
+          imageID: docker-pullable://gcr.io/jenkinsxio/builder-jx@sha256:40c90b3a199f3c10780b68fe855956fd7f694907f62ff4c263f0cbb2fa89a023
+          name: setup-builder-home
+          terminated:
+            containerID: docker://63274e6a5877897677a3ce97eb5bd1e8f30477efb6229e31448c614bdbdfb5f4
+            exitCode: 0
+            finishedAt: "2020-09-25T07:31:12Z"
+            reason: Completed
+            startedAt: "2020-09-25T07:31:12Z"
+        - container: step-git-merge
+          imageID: docker-pullable://gcr.io/jenkinsxio/builder-jx@sha256:40c90b3a199f3c10780b68fe855956fd7f694907f62ff4c263f0cbb2fa89a023
+          name: git-merge
+          terminated:
+            containerID: docker://6d504b1cbc8b6073b2e5dc84ebb3b03b8ffb12f492904b4843c82e40a09fadeb
+            exitCode: 0
+            finishedAt: "2020-09-25T07:31:14Z"
+            reason: Completed
+            startedAt: "2020-09-25T07:31:12Z"
+        - container: step-jx-variables
+          imageID: docker-pullable://gcr.io/jenkinsxio/jx-gitops@sha256:494679c84a195c1ae2abdf552582dcb378a25b3953667805eb92a81c5c6e1cac
+          name: jx-variables
+          terminated:
+            containerID: docker://2ffb2c5a66b91a7e04e6572211004233dbcc642e69d46e6491919757ce0ba8a7
+            exitCode: 0
+            finishedAt: "2020-09-25T07:31:15Z"
+            reason: Completed
+            startedAt: "2020-09-25T07:31:15Z"
+        - container: step-build-npmrc
+          imageID: docker-pullable://gcr.io/jenkinsxio/builder-nodejs@sha256:9fc9d4532c5193188cfb70744148c1ac932d1a395f309e33d107e1580c603580
+          name: build-npmrc
+          terminated:
+            containerID: docker://438ef309f05904c432f8b5f4bc3892d7b410d33f880b1d8d26b1496616eaed2f
+            exitCode: 0
+            finishedAt: "2020-09-25T07:31:18Z"
+            reason: Completed
+            startedAt: "2020-09-25T07:31:16Z"
+        - container: step-build-npm-install
+          imageID: docker-pullable://gcr.io/jenkinsxio/builder-nodejs@sha256:9fc9d4532c5193188cfb70744148c1ac932d1a395f309e33d107e1580c603580
+          name: build-npm-install
+          terminated:
+            containerID: docker://58bad3bc5fc1a986be34d3e86852eea1875e8207102de07792712bb763b03080
+            exitCode: 0
+            finishedAt: "2020-09-25T07:31:28Z"
+            reason: Completed
+            startedAt: "2020-09-25T07:31:19Z"
+        - container: step-build-npm-test
+          imageID: docker-pullable://gcr.io/jenkinsxio/builder-nodejs@sha256:9fc9d4532c5193188cfb70744148c1ac932d1a395f309e33d107e1580c603580
+          name: build-npm-test
+          terminated:
+            containerID: docker://86c4ea949c0f24351e7433dca86431d38d170285e125ca76e7e9686e8bb554b8
+            exitCode: 0
+            finishedAt: "2020-09-25T07:31:29Z"
+            reason: Completed
+            startedAt: "2020-09-25T07:31:28Z"
+        - container: step-build-container-build
+          imageID: docker-pullable://gcr.io/kaniko-project/executor@sha256:be318701bf818b309cb5b6bcbc709e88161db4229d105423abe5b66948a2f676
+          name: build-container-build
+          terminated:
+            containerID: docker://579567c6a8e4f9036f17f1a93b5c15023e18f6648e21e888d28a83baddf2e9f9
+            exitCode: 0
+            finishedAt: "2020-09-25T07:31:46Z"
+            reason: Completed
+            startedAt: "2020-09-25T07:31:29Z"
+        - container: step-promote-changelog
+          imageID: docker-pullable://gcr.io/jenkinsxio/builder-go@sha256:c157d03686df5b6799afa4ce224c0d734090463e0d62031272377abd429ffab8
+          name: promote-changelog
+          terminated:
+            containerID: docker://8416d00b667ea413026295624ec35bc5195bbeee2468bfcd0e788d00e15b555b
+            exitCode: 0
+            finishedAt: "2020-09-25T07:31:55Z"
+            reason: Completed
+            startedAt: "2020-09-25T07:31:47Z"
+        - container: step-promote-helm-release
+          imageID: docker-pullable://gcr.io/jenkinsxio/jx-cli@sha256:a654be002512d67f2b627f706660984215ef4604fded7ba2078f88e328cc5b40
+          name: promote-helm-release
+          terminated:
+            containerID: docker://ab2dc0295f85f7f73432f970d5d3bc080e87849a2638f84ada663ba5b80dc267
+            exitCode: 0
+            finishedAt: "2020-09-25T07:31:57Z"
+            reason: Completed
+            startedAt: "2020-09-25T07:31:55Z"
+        - container: step-promote-jx-promote
+          imageID: docker-pullable://gcr.io/jenkinsxio/jx-promote@sha256:1a383480afccaf2a97600d292ac7f0e308da809119c34ba166d6d5b5bd8348c3
+          name: promote-jx-promote
+          terminated:
+            containerID: docker://f290cc47ccb1f7002770929b2dc5c902832fb2edb56604a13b07c5d2cc2faaf6
+            exitCode: 1
+            finishedAt: "2020-09-25T08:32:19Z"
+            reason: Error
+            startedAt: "2020-09-25T07:31:57Z"
+        taskSpec:
+          params:
+          - default: 0.0.1
+            description: the version number for this pipeline which is used as a tag
+              on docker images and helm charts
+            name: version
+            type: string
+          - description: git url to clone
+            name: REPO_URL
+            type: string
+          - default: master
+            description: git revision to checkout (branch, tag, sha, ref…)
+            name: revision
+            type: string
+          - default: source
+            description: subdirectory inside of /workspace to clone the git repo
+            name: subdirectory
+            type: string
+          stepTemplate:
+            env:
+            - name: PIPELINE_KIND
+              value: release
+            - name: JX_BATCH_MODE
+              value: "true"
+            - name: VERSION
+              value: $(inputs.params.version)
+            name: ""
+            resources:
+              requests:
+                cpu: 400m
+                memory: 512Mi
+            volumeMounts:
+            - mountPath: /home/jenkins
+              name: workspace-volume
+            - mountPath: /etc/podinfo
+              name: podinfo
+              readOnly: true
+            workingDir: /workspace/source
+          steps:
+          - args:
+            - -c
+            - 'mkdir -p $HOME; git config --global --add user.name $GIT_AUTHOR_NAME;
+              git config --global --add user.email $GIT_AUTHOR_EMAIL; git config --global
+              credential.helper store; git clone $(inputs.params.REPO_URL) $(inputs.params.subdirectory);
+              echo cloned url: $(inputs.params.REPO_URL) to dir: $(inputs.params.subdirectory);
+              cd $(inputs.params.subdirectory); git checkout $(inputs.params.revision);
+              echo checked out revision: $(inputs.params.revision) to dir: $(inputs.params.subdirectory)'
+            command:
+            - /bin/sh
+            env:
+            - name: PIPELINE_KIND
+              value: release
+            - name: JX_BATCH_MODE
+              value: "true"
+            - name: VERSION
+              value: $(inputs.params.version)
+            image: gcr.io/jenkinsxio/builder-jx:2.1.32-662
+            name: git-clone
+            resources:
+              requests:
+                cpu: 400m
+                memory: 512Mi
+            volumeMounts:
+            - mountPath: /home/jenkins
+              name: workspace-volume
+            - mountPath: /etc/podinfo
+              name: podinfo
+              readOnly: true
+            workingDir: /workspace
+          - args:
+            - gitops
+            - git
+            - setup
+            - --namespace
+            - jx-git-operator
+            command:
+            - jx
+            env:
+            - name: PIPELINE_KIND
+              value: release
+            - name: JX_BATCH_MODE
+              value: "true"
+            - name: VERSION
+              value: $(inputs.params.version)
+            image: gcr.io/jenkinsxio/jx-cli:latest
+            name: git-setup
+            resources:
+              requests:
+                cpu: 400m
+                memory: 512Mi
+            volumeMounts:
+            - mountPath: /home/jenkins
+              name: workspace-volume
+            - mountPath: /etc/podinfo
+              name: podinfo
+              readOnly: true
+            workingDir: /workspace
+          - args:
+            - -c
+            - jx step next-version --filename package.json
+            command:
+            - /bin/sh
+            env:
+            - name: PIPELINE_KIND
+              value: release
+            - name: JX_BATCH_MODE
+              value: "true"
+            - name: VERSION
+              value: $(inputs.params.version)
+            image: gcr.io/jenkinsxio-labs-private/jxl:0.0.136
+            name: next-version
+            resources:
+              requests:
+                cpu: 400m
+                memory: 512Mi
+            volumeMounts:
+            - mountPath: /home/jenkins
+              name: workspace-volume
+            - mountPath: /etc/podinfo
+              name: podinfo
+              readOnly: true
+            workingDir: /workspace/source
+          - args:
+            - -c
+            - jx step tag --version $(cat VERSION)
+            command:
+            - /bin/sh
+            env:
+            - name: PIPELINE_KIND
+              value: release
+            - name: JX_BATCH_MODE
+              value: "true"
+            - name: VERSION
+              value: $(inputs.params.version)
+            image: gcr.io/jenkinsxio-labs-private/jxl:0.0.136
+            name: tag-version
+            resources:
+              requests:
+                cpu: 400m
+                memory: 512Mi
+            volumeMounts:
+            - mountPath: /home/jenkins
+              name: workspace-volume
+            - mountPath: /etc/podinfo
+              name: podinfo
+              readOnly: true
+            workingDir: /workspace/source
+          - args:
+            - '[ -d /builder/home ] || mkdir -p /builder && ln -s /tekton/home /builder/home'
+            command:
+            - /bin/sh
+            - -c
+            env:
+            - name: PIPELINE_KIND
+              value: release
+            - name: JX_BATCH_MODE
+              value: "true"
+            - name: VERSION
+              value: $(inputs.params.version)
+            image: gcr.io/jenkinsxio/builder-jx:2.1.142-761
+            name: setup-builder-home
+            resources:
+              requests:
+                cpu: 400m
+                memory: 512Mi
+            volumeMounts:
+            - mountPath: /home/jenkins
+              name: workspace-volume
+            - mountPath: /etc/podinfo
+              name: podinfo
+              readOnly: true
+            workingDir: /workspace/source
+          - args:
+            - step
+            - git
+            - merge
+            - --verbose
+            command:
+            - jx
+            env:
+            - name: PIPELINE_KIND
+              value: release
+            - name: JX_BATCH_MODE
+              value: "true"
+            - name: VERSION
+              value: $(inputs.params.version)
+            image: gcr.io/jenkinsxio/builder-jx:2.1.142-761
+            name: git-merge
+            resources:
+              requests:
+                cpu: 400m
+                memory: 512Mi
+            volumeMounts:
+            - mountPath: /home/jenkins
+              name: workspace-volume
+            - mountPath: /etc/podinfo
+              name: podinfo
+              readOnly: true
+            workingDir: /workspace/source
+          - args:
+            - gitops
+            - variables
+            command:
+            - jx
+            env:
+            - name: PIPELINE_KIND
+              value: release
+            - name: JX_BATCH_MODE
+              value: "true"
+            - name: VERSION
+              value: $(inputs.params.version)
+            image: gcr.io/jenkinsxio/jx-gitops:0.0.0-SNAPSHOT-PR-213-1
+            name: jx-variables
+            resources:
+              requests:
+                cpu: 400m
+                memory: 512Mi
+            volumeMounts:
+            - mountPath: /home/jenkins
+              name: workspace-volume
+            - mountPath: /etc/podinfo
+              name: podinfo
+              readOnly: true
+            workingDir: /workspace/source
+          - args:
+            - jx step credential -s npm-token -k file -f /builder/home/.npmrc --optional=true
+            command:
+            - /bin/sh
+            - -c
+            env:
+            - name: PIPELINE_KIND
+              value: release
+            - name: JX_BATCH_MODE
+              value: "true"
+            - name: VERSION
+              value: $(inputs.params.version)
+            image: gcr.io/jenkinsxio/builder-nodejs:2.1.148-767
+            name: build-npmrc
+            resources:
+              requests:
+                cpu: 400m
+                memory: 512Mi
+            volumeMounts:
+            - mountPath: /home/jenkins
+              name: workspace-volume
+            - mountPath: /etc/podinfo
+              name: podinfo
+              readOnly: true
+            workingDir: /workspace/source
+          - args:
+            - npm install
+            command:
+            - /bin/sh
+            - -c
+            env:
+            - name: PIPELINE_KIND
+              value: release
+            - name: JX_BATCH_MODE
+              value: "true"
+            - name: VERSION
+              value: $(inputs.params.version)
+            image: gcr.io/jenkinsxio/builder-nodejs:2.1.148-767
+            name: build-npm-install
+            resources:
+              requests:
+                cpu: 400m
+                memory: 512Mi
+            volumeMounts:
+            - mountPath: /home/jenkins
+              name: workspace-volume
+            - mountPath: /etc/podinfo
+              name: podinfo
+              readOnly: true
+            workingDir: /workspace/source
+          - args:
+            - CI=true DISPLAY=:99 npm test
+            command:
+            - /bin/sh
+            - -c
+            env:
+            - name: PIPELINE_KIND
+              value: release
+            - name: JX_BATCH_MODE
+              value: "true"
+            - name: VERSION
+              value: $(inputs.params.version)
+            image: gcr.io/jenkinsxio/builder-nodejs:2.1.148-767
+            name: build-npm-test
+            resources:
+              requests:
+                cpu: 400m
+                memory: 512Mi
+            volumeMounts:
+            - mountPath: /home/jenkins
+              name: workspace-volume
+            - mountPath: /etc/podinfo
+              name: podinfo
+              readOnly: true
+            workingDir: /workspace/source
+          - args:
+            - source .jx/variables.sh && /kaniko/executor $KANIKO_FLAGS --cache=true
+              --cache-dir=/workspace --context=/workspace/source --dockerfile=/workspace/source/Dockerfile
+              --destination=$DOCKER_REGISTRY/$DOCKER_REGISTRY_ORG/$APP_NAME:$VERSION
+              --cache-repo=$DOCKER_REGISTRY/$DOCKER_REGISTRY_ORG/cache
+            command:
+            - /busybox/sh
+            - -c
+            env:
+            - name: PIPELINE_KIND
+              value: release
+            - name: JX_BATCH_MODE
+              value: "true"
+            - name: VERSION
+              value: $(inputs.params.version)
+            image: gcr.io/kaniko-project/executor:debug-v0.24.0
+            name: build-container-build
+            resources:
+              requests:
+                cpu: 400m
+                memory: 512Mi
+            volumeMounts:
+            - mountPath: /home/jenkins
+              name: workspace-volume
+            - mountPath: /etc/podinfo
+              name: podinfo
+              readOnly: true
+            workingDir: /workspace/source
+          - args:
+            - jx step changelog --batch-mode --version v${VERSION}
+            command:
+            - /bin/sh
+            - -c
+            env:
+            - name: PIPELINE_KIND
+              value: release
+            - name: JX_BATCH_MODE
+              value: "true"
+            - name: VERSION
+              value: $(inputs.params.version)
+            image: gcr.io/jenkinsxio/builder-go:2.1.142-761
+            name: promote-changelog
+            resources:
+              requests:
+                cpu: 400m
+                memory: 512Mi
+            volumeMounts:
+            - mountPath: /home/jenkins
+              name: workspace-volume
+            - mountPath: /etc/podinfo
+              name: podinfo
+              readOnly: true
+            workingDir: /workspace/source
+          - args:
+            - jx gitops helm release
+            command:
+            - /bin/sh
+            - -c
+            env:
+            - name: PIPELINE_KIND
+              value: release
+            - name: JX_BATCH_MODE
+              value: "true"
+            - name: VERSION
+              value: $(inputs.params.version)
+            image: gcr.io/jenkinsxio/jx-cli:latest
+            name: promote-helm-release
+            resources:
+              requests:
+                cpu: 400m
+                memory: 512Mi
+            volumeMounts:
+            - mountPath: /home/jenkins
+              name: workspace-volume
+            - mountPath: /etc/podinfo
+              name: podinfo
+              readOnly: true
+            workingDir: /workspace/source
+          - args:
+            - jx-promote -b --all-auto --timeout 1h
+            command:
+            - /bin/sh
+            - -c
+            env:
+            - name: PIPELINE_KIND
+              value: release
+            - name: JX_BATCH_MODE
+              value: "true"
+            - name: VERSION
+              value: $(inputs.params.version)
+            image: gcr.io/jenkinsxio/jx-promote:0.0.0-SNAPSHOT-PR-66-1
+            name: promote-jx-promote
+            resources:
+              requests:
+                cpu: 400m
+                memory: 512Mi
+            volumeMounts:
+            - mountPath: /home/jenkins
+              name: workspace-volume
+            - mountPath: /etc/podinfo
+              name: podinfo
+              readOnly: true
+            workingDir: /workspace/source
+          volumes:
+          - emptyDir: {}
+            name: workspace-volume
+          - downwardAPI:
+              items:
+              - fieldRef:
+                  fieldPath: metadata.labels
+                path: labels
+            name: podinfo

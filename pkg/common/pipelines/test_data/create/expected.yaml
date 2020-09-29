@@ -36,50 +36,35 @@ spec:
   steps:
   - kind: Stage
     stage:
-      completedTimestamp: "2020-09-20T11:58:08Z"
       name: Git Clone
-      startedTimestamp: "2020-09-20T11:58:08Z"
       status: Succeeded
   - kind: Stage
     stage:
-      completedTimestamp: "2020-09-20T11:58:09Z"
       name: Git Setup
-      startedTimestamp: "2020-09-20T11:58:09Z"
       status: Succeeded
   - kind: Stage
     stage:
-      completedTimestamp: "2020-09-20T11:58:11Z"
       name: Next Version
-      startedTimestamp: "2020-09-20T11:58:09Z"
       status: Succeeded
   - kind: Stage
     stage:
-      completedTimestamp: "2020-09-20T11:58:14Z"
       name: Tag Version
-      startedTimestamp: "2020-09-20T11:58:11Z"
       status: Succeeded
   - kind: Stage
     stage:
-      completedTimestamp: "2020-09-20T11:58:15Z"
       name: Setup Builder Home
-      startedTimestamp: "2020-09-20T11:58:15Z"
       status: Succeeded
   - kind: Stage
     stage:
-      completedTimestamp: "2020-09-20T11:58:17Z"
       name: Git Merge
-      startedTimestamp: "2020-09-20T11:58:16Z"
       status: Succeeded
   - kind: Stage
     stage:
-      completedTimestamp: "2020-09-20T11:58:18Z"
       name: Build Npmrc
-      startedTimestamp: "2020-09-20T11:58:17Z"
       status: Succeeded
   - kind: Stage
     stage:
       name: Build Npm Install
-      startedTimestamp: "2020-09-20T11:58:05Z"
       status: Running
   - kind: Stage
     stage:

@@ -1,0 +1,47 @@
+apiVersion: jenkins.io/v1
+kind: PipelineActivity
+metadata:
+  creationTimestamp: "2020-09-25T08:19:02Z"
+  generation: 2
+  labels:
+    branch: master
+    build: 8vqh9
+    owner: jstrachan
+    provider: github
+    repository: nodey510
+  name: jstrachan-nodey510-master-8vqh9
+  namespace: jx
+  resourceVersion: "5735853"
+  selfLink: /apis/jenkins.io/v1/namespaces/jx/pipelineactivities/jstrachan-nodey510-master-8vqh9
+  uid: 1d63ddde-f8ac-40ca-a6bc-be0ecf798e09
+spec:
+  batchPipelineActivity: {}
+  build: 8vqh9
+  gitBranch: master
+  gitOwner: jstrachan
+  gitRepository: nodey510
+  gitUrl: https://github.com/jstrachan/nodey510.git
+  lastCommitMessage: |
+    fix: use latest promote
+  lastCommitSHA: a8861fd995de349cab52376cd857ca296363cfe1
+  pipeline: jstrachan/nodey510/master
+  releaseNotesURL: https://github.com/jstrachan/nodey510/releases/tag/v0.0.1
+  status: Running
+  steps:
+  - kind: Stage
+    stage:
+      completedTimestamp: "2020-09-25T08:19:12Z"
+      name: Release
+      startedTimestamp: "2020-09-25T08:18:12Z"
+      status: Succeeded
+  - kind: Promote
+    promote:
+      environment: staging
+      pullRequest:
+        pullRequestURL: https://github.com/jstrachan/jx3-demo-catalog-dev/pull/12
+        startedTimestamp: "2020-09-25T08:19:12Z"
+        status: Running
+      startedTimestamp: "2020-09-25T08:19:12Z"
+      status: Running
+  version: 0.0.1
+  workflowStatus: Running

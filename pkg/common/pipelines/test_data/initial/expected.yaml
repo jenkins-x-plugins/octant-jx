@@ -1,0 +1,93 @@
+apiVersion: jenkins.io/v1
+kind: PipelineActivity
+metadata:
+  annotations:
+    lighthouse.jenkins-x.io/cloneURI: https://github.com/jstrachan/nodey510.git
+    lighthouse.jenkins-x.io/job: release
+  creationTimestamp: null
+  labels:
+    created-by-lighthouse: "true"
+    event-GUID: f968a216-0250-11eb-94bf-660aaf33cc41
+    lighthouse.jenkins-x.io/baseSHA: f25284383035dd4b1ed23bd65aa8e1af8da25488
+    lighthouse.jenkins-x.io/branch: master
+    lighthouse.jenkins-x.io/buildNum: "1601383238722"
+    lighthouse.jenkins-x.io/context: release
+    lighthouse.jenkins-x.io/id: fa629a47-0250-11eb-a015-5ab53a0cb27b
+    lighthouse.jenkins-x.io/job: release
+    lighthouse.jenkins-x.io/lastCommitSHA: f25284383035dd4b1ed23bd65aa8e1af8da25488
+    lighthouse.jenkins-x.io/refs.org: jstrachan
+    lighthouse.jenkins-x.io/refs.repo: nodey510
+    lighthouse.jenkins-x.io/type: postsubmit
+    podName: release-jtzr9-from-build-pack-xdkxc-pod-fw8tz
+    tekton.dev/pipeline: release-jtzr9
+  name: release-jtzr9
+  namespace: jx
+spec:
+  baseSHA: f25284383035dd4b1ed23bd65aa8e1af8da25488
+  batchPipelineActivity: {}
+  build: "1601383238722"
+  context: release
+  gitBranch: master
+  gitOwner: jstrachan
+  gitRepository: nodey510
+  gitUrl: https://github.com/jstrachan/nodey510.git
+  lastCommitSHA: f25284383035dd4b1ed23bd65aa8e1af8da25488
+  status: Pending
+  steps:
+  - kind: Stage
+    stage:
+      name: Git Clone
+      status: Pending
+  - kind: Stage
+    stage:
+      name: Git Setup
+      status: Pending
+  - kind: Stage
+    stage:
+      name: Git Merge
+      status: Pending
+  - kind: Stage
+    stage:
+      name: Next Version
+      status: Pending
+  - kind: Stage
+    stage:
+      name: Tag Version
+      status: Pending
+  - kind: Stage
+    stage:
+      name: Setup Builder Home
+      status: Pending
+  - kind: Stage
+    stage:
+      name: Jx Variables
+      status: Pending
+  - kind: Stage
+    stage:
+      name: Build Npmrc
+      status: Pending
+  - kind: Stage
+    stage:
+      name: Build Npm Install
+      status: Pending
+  - kind: Stage
+    stage:
+      name: Build Npm Test
+      status: Pending
+  - kind: Stage
+    stage:
+      name: Build Container Build
+      status: Pending
+  - kind: Stage
+    stage:
+      name: Promote Changelog
+      status: Pending
+  - kind: Stage
+    stage:
+      name: Promote Helm Release
+      status: Pending
+  - kind: Stage
+    stage:
+      name: Promote Jx Promote
+      status: Pending
+status: {}
