@@ -1180,6 +1180,8 @@ github.com/vdemeester/k8s-pkg-credentialprovider v1.17.4/go.mod h1:inCTmtUdr5KJb
 github.com/vektah/gqlparser v1.1.2/go.mod h1:1ycwN7Ij5njmMkPPAOaRFY4rET2Enx7IkVv3vaXspKw=
 github.com/vmware-tanzu/octant v0.16.0 h1:g5HPKls4TZTjp9oQON5WQX5W/5+0PqydZcR119GsozI=
 github.com/vmware-tanzu/octant v0.16.0/go.mod h1:FhWXp2v0bgOQEwuOMOE49DXUu+uwWt8lXh7aOHtrA8A=
+github.com/vmware-tanzu/octant v0.16.1-0.20201005185343-bf5d5c0227dd h1:W6Tn2cQ4DUFhOlNJcaNVTcU02nJMMvD7t4i6jwXZYjU=
+github.com/vmware-tanzu/octant v0.16.1-0.20201005185343-bf5d5c0227dd/go.mod h1:FhWXp2v0bgOQEwuOMOE49DXUu+uwWt8lXh7aOHtrA8A=
 github.com/vmware/govmomi v0.20.3/go.mod h1:URlwyTFZX72RmxtxuaFL2Uj3fD1JTvZdx59bHWk6aFU=
 github.com/vrischmann/envconfig v1.2.0/go.mod h1:c5DuUlkzfsnspy1g7qiqryPCsW+NjsrLsYq4zhwsoHo=
 github.com/xanzy/go-gitlab v0.31.0/go.mod h1:sPLojNBn68fMUWSxIJtdVVIP8uSBYqesTfDUseX11Ug=
