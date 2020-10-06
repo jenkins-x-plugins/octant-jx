@@ -24,8 +24,6 @@ func main() {
 		return
 	}
 
-	os.Setenv("OCTANT_CLIENT_MAX_RECV_MSG_SIZE", "32000000")
-
 	name := settings.GetName()
 	description := settings.GetDescription()
 	capabilities := settings.GetCapabilities()
