@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	v1 "github.com/jenkins-x/jx-api/pkg/apis/jenkins.io/v1"
+	v1 "github.com/jenkins-x/jx-api/v3/pkg/apis/jenkins.io/v1"
 	"github.com/jenkins-x/octant-jx/pkg/common/viewhelpers"
 	"github.com/jenkins-x/octant-jx/pkg/plugin"
 	"github.com/vmware-tanzu/octant/pkg/view/component"

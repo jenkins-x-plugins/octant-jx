@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/jenkins-x/jx-logging/pkg/log"
+	"github.com/jenkins-x/jx-logging/v3/pkg/log"
 
 	"github.com/jenkins-x/octant-jx/pkg/common/pluginctx"
 	"github.com/vmware-tanzu/octant/pkg/plugin/service"
@@ -24,6 +24,8 @@ func main() {
 		return
 	}
 
+	os.Setenv("OCTANT_CLIENT_MAX_RECV_MSG_SIZE", "32000000")
+
 	name := settings.GetName()
 	description := settings.GetDescription()
 	capabilities := settings.GetCapabilities()
@@ -40,5 +42,6 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
 	plugin.Serve()
 }

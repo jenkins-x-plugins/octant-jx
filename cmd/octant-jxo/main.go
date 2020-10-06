@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/jenkins-x/jx-logging/pkg/log"
+	"github.com/jenkins-x/jx-logging/v3/pkg/log"
 
 	"github.com/jenkins-x/octant-jx/pkg/admin/router"
 	"github.com/jenkins-x/octant-jx/pkg/admin/settings"

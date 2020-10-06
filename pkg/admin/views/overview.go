@@ -1,7 +1,7 @@
 package views // import "github.com/jenkins-x/octant-jx/pkg/plugin/views"
 
 import (
-	"github.com/jenkins-x/jx-logging/pkg/log"
+	"github.com/jenkins-x/jx-logging/v3/pkg/log"
 
 	"github.com/jenkins-x/octant-jx/pkg/admin"
 	"github.com/jenkins-x/octant-jx/pkg/common/pluginctx"

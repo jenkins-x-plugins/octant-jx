@@ -1,30 +1,32 @@
 module github.com/jenkins-x/octant-jx
 
-go 1.13
+go 1.15
 
 require (
-	github.com/Azure/go-autorest/autorest v0.10.0 // indirect
-	github.com/Azure/go-autorest/autorest/adal v0.8.3 // indirect
+	//github.com/Azure/go-autorest/autorest v0.10.0 // indirect
+	//github.com/Azure/go-autorest/autorest/adal v0.8.3 // indirect
 	github.com/ghodss/yaml v1.0.1-0.20190212211648-25d852aebe32 // indirect
-	github.com/hashicorp/go-hclog v0.9.2 // indirect
 	github.com/hashicorp/go-plugin v1.0.1 // indirect
-	github.com/jenkins-x/jx-api v0.0.24
-	github.com/jenkins-x/jx-helpers v1.0.83
-	github.com/jenkins-x/jx-logging v0.0.11
-	github.com/mitchellh/mapstructure v1.2.2 // indirect
+	github.com/jenkins-x/jx-api/v3 v3.0.0
+	github.com/jenkins-x/jx-helpers/v3 v3.0.3
+	github.com/jenkins-x/jx-logging/v3 v3.0.0
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.6.1
-	github.com/tektoncd/pipeline v0.14.2
-	github.com/vmware-tanzu/octant v0.12.2-0.20200506154048-420def050373
-	helm.sh/helm/v3 v3.2.4
-	k8s.io/api v0.18.6
-	k8s.io/apimachinery v0.18.6
-	knative.dev/pkg v0.0.0-20200528142800-1c6815d7e4c9
+	github.com/tektoncd/pipeline v0.16.3
+	github.com/vmware-tanzu/octant v0.16.0
+	helm.sh/helm/v3 v3.3.4
+	k8s.io/api v0.19.2
+	k8s.io/apimachinery v0.19.2
+	k8s.io/client-go v11.0.1-0.20190805182717-6502b5e7b1b5+incompatible
 	sigs.k8s.io/yaml v1.2.0
 )
 
 replace (
 	github.com/Azure/go-autorest => github.com/Azure/go-autorest v14.0.1+incompatible
-	k8s.io/apimachinery => k8s.io/apimachinery v0.0.0-20191016225534-b1267f8c42b4
-	k8s.io/client-go => k8s.io/client-go v0.0.0-20190620085101-78d2af792bab
+
+	github.com/tektoncd/pipeline => github.com/jenkins-x/pipeline v0.0.0-20201002150609-ca0741e5d19a
+	k8s.io/api => k8s.io/api v0.19.2
+	k8s.io/apimachinery => k8s.io/apimachinery v0.19.2
+
+	k8s.io/client-go => k8s.io/client-go v0.19.2
 )

@@ -26,7 +26,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/jenkins-x/jx-logging/pkg/log"
+	"github.com/jenkins-x/jx-logging/v3/pkg/log"
 
 	"github.com/jenkins-x/octant-jx/pkg/common/viewhelpers"
 	rspb "helm.sh/helm/v3/pkg/release"

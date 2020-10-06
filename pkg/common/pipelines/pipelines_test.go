@@ -5,9 +5,9 @@ import (
 	"path/filepath"
 	"testing"
 
-	v1 "github.com/jenkins-x/jx-api/pkg/apis/jenkins.io/v1"
-	"github.com/jenkins-x/jx-helpers/pkg/testhelpers"
-	"github.com/jenkins-x/jx-helpers/pkg/yamls"
+	v1 "github.com/jenkins-x/jx-api/v3/pkg/apis/jenkins.io/v1"
+	"github.com/jenkins-x/jx-helpers/v3/pkg/testhelpers"
+	"github.com/jenkins-x/jx-helpers/v3/pkg/yamls"
 	"github.com/stretchr/testify/require"
 	"github.com/tektoncd/pipeline/pkg/apis/pipeline/v1beta1"
 	"sigs.k8s.io/yaml"

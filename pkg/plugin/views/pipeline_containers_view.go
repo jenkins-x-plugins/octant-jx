@@ -5,7 +5,7 @@ import (
 	"io"
 	"strings"
 
-	"github.com/jenkins-x/jx-logging/pkg/log"
+	"github.com/jenkins-x/jx-logging/v3/pkg/log"
 
 	"github.com/jenkins-x/octant-jx/pkg/common/links"
 	"github.com/jenkins-x/octant-jx/pkg/common/pluginctx"
