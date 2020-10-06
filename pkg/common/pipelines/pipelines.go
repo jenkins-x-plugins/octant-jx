@@ -16,6 +16,8 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
+var lookupByNameWhichDoesntExistBreaksOctant = true
+
 func GetPipelines(ctx context.Context, client service.Dashboard, ns string) ([]*v1.PipelineActivity, error) {
 	dl, err := client.List(ctx, store.Key{
 		APIVersion: "jenkins.io/v1",
@@ -51,6 +53,9 @@ func GetPipelines(ctx context.Context, client service.Dashboard, ns string) ([]*
 				continue
 			}
 			pr.Name = ToPipelineActivityName(pr, paList)
+			if pr.Name == "" {
+				continue
+			}
 
 			var pa *v1.PipelineActivity
 			for i, r := range paList {
@@ -70,6 +75,20 @@ func GetPipelines(ctx context.Context, client service.Dashboard, ns string) ([]*
 }
 
 func GetPipeline(ctx context.Context, client service.Dashboard, ns, name string) (*v1.PipelineActivity, error) {
+	if lookupByNameWhichDoesntExistBreaksOctant {
+		paList, err := GetPipelines(ctx, client, ns)
+		if err != nil {
+			log.Logger().Infof("failed to list PipelineActivity in namespace %s: %s", ns, err.Error())
+		}
+		if paList != nil {
+			for _, pa := range paList {
+				if pa.Name == name {
+					return pa, nil
+				}
+			}
+		}
+		return nil, nil
+	}
 	u, err := viewhelpers.GetResourceByName(ctx, client, "jenkins.io/v1", "PipelineActivity", name, ns)
 	if err != nil {
 		paList, err2 := GetPipelines(ctx, client, ns)
@@ -133,8 +152,9 @@ func ToPipelineActivityName(pr *v1beta1.PipelineRun, paList []*v1.PipelineActivi
 	if build == "" {
 		buildID := labels["lighthouse.jenkins-x.io/buildNum"]
 		if buildID == "" {
-			return pr.Name
+			return ""
 		}
+		found := false
 		for _, pa := range paList {
 			if pa.Labels == nil {
 				continue
@@ -142,21 +162,20 @@ func ToPipelineActivityName(pr *v1beta1.PipelineRun, paList []*v1.PipelineActivi
 			if pa.Labels["buildID"] == buildID {
 				if pa.Spec.Build != "" {
 					pr.Labels["build"] = pa.Spec.Build
+					build = pa.Spec.Build
 				}
-				return pa.Name
+				found = true
 			}
 		}
-		if owner != "" && repository != "" && branch != "" {
+		if !found && owner != "" && repository != "" && branch != "" {
 			build = "1"
 			pr.Labels["build"] = build
-		} else {
-			return pr.Name
 		}
 	}
 	if owner != "" && repository != "" && branch != "" && build != "" {
 		return naming.ToValidName(owner + "-" + repository + "-" + branch + "-" + build)
 	}
-	return pr.Name
+	return ""
 }
 
 func ToPipelineActivity(pr *v1beta1.PipelineRun, pa *v1.PipelineActivity) {
