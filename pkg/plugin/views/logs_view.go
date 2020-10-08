@@ -33,7 +33,7 @@ func BuildPipelineLog(request service.Request, pluginContext pluginctx.Context) 
 	}
 
 	s := &pa.Spec
-	header := component.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(
+	header := viewhelpers.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(
 		plugin.RootBreadcrumb,
 		viewhelpers.ToMarkdownLink("Pipelines", plugin.GetPipelinesLink()),
 		s.GitOwner,

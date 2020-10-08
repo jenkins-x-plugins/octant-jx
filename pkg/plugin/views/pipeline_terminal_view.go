@@ -60,7 +60,7 @@ func BuildPipelineTerminalView(request service.Request, pluginContext pluginctx.
 		breadcrumbs = append(breadcrumbs, viewhelpers.ToMarkdownLink("Pipeline", plugin.GetPipelineLink(pipelineName)))
 	}
 	breadcrumbs = append(breadcrumbs, viewhelpers.ToMarkdownLink("Pod", links.GetPodLink(ns, name)), "Terminal")
-	header := component.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(breadcrumbs...))
+	header := viewhelpers.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(breadcrumbs...))
 
 	var terminal component.Component
 	containerName := lastContainer.Name
@@ -75,7 +75,7 @@ func BuildPipelineTerminalView(request service.Request, pluginContext pluginctx.
 		terminal = component.NewTerminal(ns, name, name, nil, details)
 		return terminal, nil
 	} else {
-		terminal = component.NewMarkdownText(fmt.Sprintf("this would be a terminal for pod %s container %s", name, containerName))
+		terminal = viewhelpers.NewMarkdownText(fmt.Sprintf("this would be a terminal for pod %s container %s", name, containerName))
 	}
 
 	flexLayout := component.NewFlexLayout("")

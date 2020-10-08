@@ -57,7 +57,7 @@ func BuildHelmReleasesView(request service.Request, pluginContext pluginctx.Cont
 
 	helmReleases := helm.UnstructuredListToHelmReleaseList(ul)
 
-	header := component.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(plugin.RootBreadcrumb, "Helm"))
+	header := viewhelpers.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(plugin.RootBreadcrumb, "Helm"))
 
 	table := component.NewTableWithRows(
 		"Releases", "There are no Helm releases!",
@@ -93,7 +93,7 @@ func ToHelmStatus(r *rspb.Release) component.Component {
 	statusText := strings.Title(r.Info.Status.String())
 	icon := ToHelmStatusIcon(r.Info.Status)
 	if icon != "" {
-		return component.NewMarkdownText(fmt.Sprintf(`%s %s`, icon, statusText))
+		return viewhelpers.NewMarkdownText(fmt.Sprintf(`%s %s`, icon, statusText))
 	}
 	return component.NewText(statusText)
 }
@@ -134,7 +134,7 @@ func ToHelmName(r *rspb.Release) component.Component {
 	iconPrefix := fmt.Sprintf(`<img src="%s" width="24" height="24">&nbsp;`, icon)
 	name := r.Name
 	ref := plugin.GetHelmReleaseLink(r.Name)
-	return component.NewMarkdownText(fmt.Sprintf(`%s<a href="%s" title="Helm Release %s">%s</a>`, iconPrefix, ref, name, name))
+	return viewhelpers.NewMarkdownText(fmt.Sprintf(`%s<a href="%s" title="Helm Release %s">%s</a>`, iconPrefix, ref, name, name))
 }
 
 func ToHelmUpdated(r *rspb.Release) component.Component {

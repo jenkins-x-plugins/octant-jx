@@ -30,7 +30,7 @@ func BuildWorkspacesView(request service.Request, ws []workspaces.WorkspaceOctan
 	//Todo: request argument is not being used, but removing it requires a bit more work...
 	log.Logger().Debugf("got list of Workspaces %d\n", len(ws))
 
-	header := component.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(admin.RootBreadcrumb, "Workspaces"))
+	header := viewhelpers.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(admin.RootBreadcrumb, "Workspaces"))
 
 	config := &WorkspacesViewConfig{}
 
@@ -88,9 +88,9 @@ func ToWorkspaceName(r *workspaces.WorkspaceOctant) component.Component {
 		return component.NewText(r.Name)
 	}
 	if r.Default {
-		return component.NewMarkdownText(viewhelpers.ToMarkdownLink(r.Name, u))
+		return viewhelpers.NewMarkdownText(viewhelpers.ToMarkdownLink(r.Name, u))
 	}
-	return component.NewMarkdownText(viewhelpers.ToMarkdownExternalLink(r.Name, r.Name, u))
+	return viewhelpers.NewMarkdownText(viewhelpers.ToMarkdownExternalLink(r.Name, r.Name, u))
 }
 
 func ToWorkspaceSort(r *workspaces.Workspace, idx int) component.Component {
@@ -102,5 +102,5 @@ func ToWorkspaceSort(r *workspaces.Workspace, idx int) component.Component {
 }
 
 func ToWorkspaceSource(r *workspaces.Workspace) component.Component {
-	return component.NewMarkdownText(viewhelpers.ToGitLinkMarkdown(r.GitURL))
+	return viewhelpers.NewMarkdownText(viewhelpers.ToGitLinkMarkdown(r.GitURL))
 }

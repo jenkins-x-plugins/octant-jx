@@ -32,11 +32,11 @@ func ToPipelineName(pa *v1.PipelineActivity) component.Component {
 		name += " " + s.Context
 	}
 	md := fmt.Sprintf("[#%s](%s)", name, plugin.GetPipelineLink(pa.Name))
-	return component.NewMarkdownText(md)
+	return viewhelpers.NewMarkdownText(md)
 }
 
 func ToRepository(pa *v1.PipelineActivity) component.Component {
-	return component.NewMarkdownText(ToRepositoryMarkdown(pa))
+	return viewhelpers.NewMarkdownText(ToRepositoryMarkdown(pa))
 }
 
 func ToRepositoryMarkdown(pa *v1.PipelineActivity) string {
@@ -90,7 +90,7 @@ func ToPipelineLastStepStatus(pa *v1.PipelineActivity, addContext, addTimestamp 
 			lastStep += fmt.Sprintf(`&nbsp;&nbsp;<span class="badge" title="%s">%s</span>`, title, durationText)
 		}
 	}
-	return component.NewMarkdownText(lastStep)
+	return viewhelpers.NewMarkdownText(lastStep)
 }
 
 func pipelineDuration(pa *v1.PipelineActivity) string {

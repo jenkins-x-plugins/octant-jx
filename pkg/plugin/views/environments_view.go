@@ -30,7 +30,7 @@ func BuildEnvironmentsView(request service.Request, pluginContext pluginctx.Cont
 
 	log.Logger().Infof("got list of Environment %d\n", len(dl.Items))
 
-	header := component.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(plugin.RootBreadcrumb, "Environments"))
+	header := viewhelpers.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(plugin.RootBreadcrumb, "Environments"))
 
 	table := component.NewTableWithRows(
 		"Environments", "There are no Environments!",

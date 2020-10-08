@@ -41,7 +41,7 @@ func BuildRepositoriesView(request service.Request, pluginContext pluginctx.Cont
 
 	log.Logger().Infof("got list of SourceRepository %d\n", len(dl.Items))
 
-	header := component.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(plugin.RootBreadcrumb, "Repositories"))
+	header := viewhelpers.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(plugin.RootBreadcrumb, "Repositories"))
 
 	config := &RepositoriesViewConfig{}
 
@@ -113,7 +113,7 @@ func ToRepositoryStatus(r *v1.SourceRepository) component.Component {
 			}
 		}
 	}
-	return component.NewMarkdownText(status)
+	return viewhelpers.NewMarkdownText(status)
 }
 
 func ToRepositoryName(r *v1.SourceRepository) component.Component {
@@ -130,5 +130,5 @@ func ToRepositoryName(r *v1.SourceRepository) component.Component {
 			}
 		}
 	}
-	return component.NewMarkdownText(viewhelpers.ToMarkdownLink(s.Repo, u))
+	return viewhelpers.NewMarkdownText(viewhelpers.ToMarkdownLink(s.Repo, u))
 }

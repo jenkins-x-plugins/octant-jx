@@ -26,7 +26,7 @@ func ToEnvironmentName(r *v1.Environment) string {
 }
 
 func ToEnvironmentSource(r *v1.Environment) component.Component {
-	return component.NewMarkdownText(viewhelpers.ToGitLinkMarkdown(r.Spec.Source.URL))
+	return viewhelpers.NewMarkdownText(viewhelpers.ToGitLinkMarkdown(r.Spec.Source.URL))
 }
 
 func ToEnvironmentNamespace(r *v1.Environment) component.Component {

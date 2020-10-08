@@ -32,7 +32,7 @@ func HealthView(request service.Request, _ pluginctx.Context) (component.Compone
 
 	log.Logger().Infof("got list of KuberhealthyState %d\n", len(h.Items))
 
-	header := component.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(admin.RootBreadcrumb, "Health"))
+	header := viewhelpers.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(admin.RootBreadcrumb, "Health"))
 
 	table := component.NewTableWithRows(
 		"Health", "There are no Health statuses!",
@@ -93,7 +93,7 @@ func toHealthTableRow(u *unstructured.Unstructured) (*component.TableRow, error)
 	return &component.TableRow{
 		"Name":      component.NewText(name),
 		"Namespace": component.NewText(namespace),
-		"Healthy":   component.NewMarkdownText(statusComment),
+		"Healthy":   viewhelpers.NewMarkdownText(statusComment),
 		"Errors":    component.NewText(healthErrorMessage),
 	}, nil
 }

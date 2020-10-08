@@ -41,7 +41,7 @@ func ToStepsView(pa *v1.PipelineActivity, pod *unstructured.Unstructured) *compo
 		}
 	}
 	text := w.String()
-	return component.NewMarkdownText(text)
+	return viewhelpers.NewMarkdownText(text)
 }
 
 func addStepRow(w *PipelineStepRenderer, parent *v1.PipelineActivityStep, indent string) bool {
@@ -201,7 +201,7 @@ func ToPipelineStatus(pa *v1.PipelineActivity) component.Component {
 	if pa == nil || pa.Spec.Status == v1.ActivityStatusTypeNone {
 		return component.NewText("")
 	}
-	return component.NewMarkdownText(ToPipelineStatusMarkup(pa.Spec.Status))
+	return viewhelpers.NewMarkdownText(ToPipelineStatusMarkup(pa.Spec.Status))
 }
 
 func ToPipelineStatusMarkup(statusType v1.ActivityStatusType) string {

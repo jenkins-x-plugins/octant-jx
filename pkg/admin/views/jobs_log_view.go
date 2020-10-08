@@ -68,7 +68,7 @@ func BuildJobsViewLogsForPathAndSelector(request service.Request, pluginContext 
 
 	flexLayout := component.NewFlexLayout("")
 	flexLayout.AddSections(component.FlexLayoutSection{
-		{Width: component.WidthFull, View: component.NewMarkdownText(headerText)},
+		{Width: component.WidthFull, View: viewhelpers.NewMarkdownText(headerText)},
 		{Width: component.WidthFull, View: logsView},
 	})
 	return flexLayout, nil

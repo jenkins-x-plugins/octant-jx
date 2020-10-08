@@ -120,7 +120,7 @@ func BuildJobsViewForPath(request service.Request, pluginContext pluginctx.Conte
 	flexLayout := component.NewFlexLayout("")
 
 	if !pluginContext.Composite {
-		header := component.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(admin.RootBreadcrumb, title))
+		header := viewhelpers.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(admin.RootBreadcrumb, title))
 
 		buttonGroup := config.ButtonGroup
 		if buttonGroup == nil {
@@ -154,7 +154,7 @@ func toJobTableRow(r *batchv1.Job, path string) (*component.TableRow, error) {
 		"Name": ToJobName(r),
 		"Pods": ToJobPods(r),
 		"Age":  component.NewTimestamp(r.CreationTimestamp.Time),
-		"":     component.NewMarkdownText(fmt.Sprintf(`<a href='%s' class="btn btn-info-outline btn-sm">Logs</a>`, admin.JobsLogsViewLink(path, r.Name))),
+		"":     viewhelpers.NewMarkdownText(fmt.Sprintf(`<a href='%s' class="btn btn-info-outline btn-sm">Logs</a>`, admin.JobsLogsViewLink(path, r.Name))),
 	}, nil
 }
 
@@ -205,7 +205,7 @@ func ToJobName(r *batchv1.Job) component.Component {
 	if iconPrefix != "" {
 		iconPrefix += "&nbsp;&nbsp;"
 	}
-	return component.NewMarkdownText(fmt.Sprintf(`%s<a href="%s" title="Deployment %s">%s</a>`, iconPrefix, ref, name, name))
+	return viewhelpers.NewMarkdownText(fmt.Sprintf(`%s<a href="%s" title="Deployment %s">%s</a>`, iconPrefix, ref, name, name))
 }
 
 func ToJobPods(r *batchv1.Job) component.Component {
@@ -229,7 +229,7 @@ func ToJobPods(r *batchv1.Job) component.Component {
 		}
 		b.WriteString(fmt.Sprintf(`<span class="badge badge-danger" title="Pods failed">%d</span>`, s.Failed))
 	}
-	return component.NewMarkdownText(b.String())
+	return viewhelpers.NewMarkdownText(b.String())
 }
 
 func ToJobIcon(r *batchv1.Job) string {

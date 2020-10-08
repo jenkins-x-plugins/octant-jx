@@ -111,7 +111,7 @@ func BuildPipelinesView(request service.Request, config *PipelinesViewConfig) (c
 		if headerText == "" {
 			headerText = viewhelpers.ToBreadcrumbMarkdown(plugin.RootBreadcrumb, title)
 		}
-		header := component.NewMarkdownText(headerText)
+		header := viewhelpers.NewMarkdownText(headerText)
 
 		flexLayout.AddSections(component.FlexLayoutSection{
 			{Width: component.WidthFull, View: header},

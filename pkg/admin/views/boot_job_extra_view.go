@@ -56,13 +56,13 @@ func BootJobExtraView(request service.Request, pluginContext pluginctx.Context, 
 		return nil
 	}
 	title := RunCommandTitleMarkdown(secret)
-	card := component.NewCard(component.Title(component.NewMarkdownText(title)))
+	card := component.NewCard(component.Title(viewhelpers.NewMarkdownText(title)))
 	layout := component.NewFlexLayout("starting boot")
 
 	section := component.FlexLayoutSection{
 		{
 			Width: component.WidthFull,
-			View:  component.NewMarkdownText(b.String()),
+			View:  viewhelpers.NewMarkdownText(b.String()),
 		},
 	}
 	layout.AddSections(section)

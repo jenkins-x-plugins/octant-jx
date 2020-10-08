@@ -61,14 +61,14 @@ func BuildPipelineView(request service.Request, pluginContext pluginctx.Context)
 		}
 	}
 	breadcrumbs = append(breadcrumbs, viewhelpers.ToMarkdownLink("Logs", plugin.GetPipelineLogLink(pa.Name)))
-	header := component.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(breadcrumbs...))
+	header := viewhelpers.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(breadcrumbs...))
 
 	detailSummarySections := []component.SummarySection{
 		{Header: "Status", Content: ToPipelineLastStepStatus(pa, true, true)},
 		{Header: "Source", Content: ToRepository(pa)},
 	}
 	statusSummarySections := []component.SummarySection{
-		{Header: "Started", Content: component.NewMarkdownText(ToPipelineStartCompleteTimeMarkdown(pa))},
+		{Header: "Started", Content: viewhelpers.NewMarkdownText(ToPipelineStartCompleteTimeMarkdown(pa))},
 	}
 	if pa.Spec.CompletedTimestamp != nil {
 		statusSummarySections = append(statusSummarySections, component.SummarySection{Header: "Duration", Content: ToDuration(pa)})

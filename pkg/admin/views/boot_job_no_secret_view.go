@@ -2,6 +2,7 @@ package views
 
 import (
 	"github.com/jenkins-x/octant-jx/pkg/common/pluginctx"
+	"github.com/jenkins-x/octant-jx/pkg/common/viewhelpers"
 	"github.com/vmware-tanzu/octant/pkg/plugin/service"
 	"github.com/vmware-tanzu/octant/pkg/view/component"
 )
@@ -33,7 +34,7 @@ If you already have a git repository to manage this cluster via gitOps then:
 
 // BuildNoBootSecretView view that there is no boot secret
 func BuildNoBootSecretView(request service.Request, pluginContext pluginctx.Context, cr *component.ContentResponse) error {
-	card := component.NewCard(component.Title(component.NewMarkdownText("## No Jenkins X Git Operator found")))
+	card := component.NewCard(component.Title(viewhelpers.NewMarkdownText("## No Jenkins X Git Operator found")))
 	layout := component.NewFlexLayout("jenkins x git operator")
 
 	text := noSecretDocs + settingUpSecretsDoc
@@ -41,7 +42,7 @@ func BuildNoBootSecretView(request service.Request, pluginContext pluginctx.Cont
 	section := component.FlexLayoutSection{
 		{
 			Width: component.WidthFull,
-			View:  component.NewMarkdownText(text),
+			View:  viewhelpers.NewMarkdownText(text),
 		},
 	}
 	layout.AddSections(section)

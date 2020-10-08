@@ -60,7 +60,7 @@ func BuildPipelineContainerView(request service.Request, pluginContext pluginctx
 	}
 	breadcrumbs = append(breadcrumbs, step)
 
-	header := component.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(breadcrumbs...))
+	header := viewhelpers.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(breadcrumbs...))
 
 	notesCard := component.NewCard(nil)
 
@@ -85,7 +85,7 @@ func BuildPipelineContainerView(request service.Request, pluginContext pluginctx
 
 	}
 	if !found {
-		notesCard.SetBody(component.NewMarkdownText(fmt.Sprintf("Pod %s does not have a container called %s", pod, step)))
+		notesCard.SetBody(viewhelpers.NewMarkdownText(fmt.Sprintf("Pod %s does not have a container called %s", pod, step)))
 	}
 
 	flexLayout := component.NewFlexLayout("")
@@ -102,9 +102,9 @@ func ToPipelinePodContainerView(header component.Component, vc containersViewCon
 
 	statusSummarySections := []component.SummarySection{
 		{Header: "Name", Content: component.NewText(c.Name)},
-		{Header: "Image", Content: component.NewMarkdownText(image)},
+		{Header: "Image", Content: viewhelpers.NewMarkdownText(image)},
 		{Header: "Working Dir", Content: component.NewText(c.WorkingDir)},
-		{Header: "Command", Content: component.NewMarkdownText(fmt.Sprintf("```%s```", commandLine))},
+		{Header: "Command", Content: viewhelpers.NewMarkdownText(fmt.Sprintf("```%s```", commandLine))},
 	}
 	statusSummary := component.NewSummary("Container", statusSummarySections...)
 
@@ -151,7 +151,7 @@ func ToEnvVarSection(e corev1.EnvVar) component.SummarySection {
 	}
 	return component.SummarySection{
 		Header:  name,
-		Content: component.NewMarkdownText(value),
+		Content: viewhelpers.NewMarkdownText(value),
 	}
 }
 
@@ -163,6 +163,6 @@ func ToVolumeMountSection(pod *corev1.Pod, c *corev1.Container, v *corev1.Volume
 	}
 	return component.SummarySection{
 		Header:  v.Name,
-		Content: component.NewMarkdownText(mountPath),
+		Content: viewhelpers.NewMarkdownText(mountPath),
 	}
 }

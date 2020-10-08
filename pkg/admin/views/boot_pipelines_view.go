@@ -37,7 +37,7 @@ func BuildBootPipelinesView(request service.Request, pluginContext pluginctx.Con
 		if gitURL != "" {
 			repo, err := giturl.ParseGitURL(gitURL)
 			if err != nil {
-				return component.NewMarkdownText(fmt.Sprintf("could not parse the dev Environment git source URL `%s` due to: %s", gitURL, err.Error())), nil
+				return viewhelpers.NewMarkdownText(fmt.Sprintf("could not parse the dev Environment git source URL `%s` due to: %s", gitURL, err.Error())), nil
 			}
 			if repo != nil {
 				owner = repo.Organisation
