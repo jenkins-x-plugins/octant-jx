@@ -1,7 +1,7 @@
 package views // import "github.com/jenkins-x/octant-jx/pkg/plugin/views"
 
 import (
-	"github.com/jenkins-x/jx-logging/pkg/log"
+	"github.com/jenkins-x/jx-logging/v3/pkg/log"
 
 	"github.com/jenkins-x/octant-jx/pkg/admin"
 	"github.com/jenkins-x/octant-jx/pkg/common/pluginctx"
@@ -55,7 +55,7 @@ func BuildOverview(request service.Request, pluginContext pluginctx.Context) (co
 	layout := component.NewFlexLayout("Overview")
 	section := component.FlexLayoutSection{}
 
-	header := component.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(admin.RootBreadcrumb, "Overview"))
+	header := viewhelpers.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(admin.RootBreadcrumb, "Overview"))
 	section = append(section, component.FlexLayoutItem{
 		Width: component.WidthFull,
 		View:  header,
@@ -99,7 +99,7 @@ func createCard(title, path string, view component.Component) component.Componen
 		},
 	}
 	link := plugin.PathPrefix + admin.PluginName + "/" + path
-	cardTitle := component.NewMarkdownText(viewhelpers.ToMarkdownLink(title, link))
+	cardTitle := viewhelpers.NewMarkdownText(viewhelpers.ToMarkdownLink(title, link))
 	card := component.NewCard([]component.TitleComponent{cardTitle})
 
 	layout := component.NewFlexLayout(title)

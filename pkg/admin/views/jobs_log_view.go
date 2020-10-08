@@ -3,7 +3,7 @@ package views // import "github.com/jenkins-x/octant-jx/pkg/plugin/views"
 import (
 	"fmt"
 
-	"github.com/jenkins-x/jx-logging/pkg/log"
+	"github.com/jenkins-x/jx-logging/v3/pkg/log"
 
 	"github.com/jenkins-x/octant-jx/pkg/admin"
 	"github.com/jenkins-x/octant-jx/pkg/common/links"
@@ -68,7 +68,7 @@ func BuildJobsViewLogsForPathAndSelector(request service.Request, pluginContext 
 
 	flexLayout := component.NewFlexLayout("")
 	flexLayout.AddSections(component.FlexLayoutSection{
-		{Width: component.WidthFull, View: component.NewMarkdownText(headerText)},
+		{Width: component.WidthFull, View: viewhelpers.NewMarkdownText(headerText)},
 		{Width: component.WidthFull, View: logsView},
 	})
 	return flexLayout, nil

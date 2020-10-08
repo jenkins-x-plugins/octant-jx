@@ -1,7 +1,7 @@
 package views
 
 import (
-	v1 "github.com/jenkins-x/jx-api/pkg/apis/jenkins.io/v1"
+	v1 "github.com/jenkins-x/jx-api/v3/pkg/apis/jenkins.io/v1"
 	"github.com/jenkins-x/octant-jx/pkg/common/viewhelpers"
 	"github.com/vmware-tanzu/octant/pkg/view/component"
 )
@@ -26,7 +26,7 @@ func ToEnvironmentName(r *v1.Environment) string {
 }
 
 func ToEnvironmentSource(r *v1.Environment) component.Component {
-	return component.NewMarkdownText(viewhelpers.ToGitLinkMarkdown(r.Spec.Source.URL))
+	return viewhelpers.NewMarkdownText(viewhelpers.ToGitLinkMarkdown(r.Spec.Source.URL))
 }
 
 func ToEnvironmentNamespace(r *v1.Environment) component.Component {

@@ -2,206 +2,136 @@ package pipelines
 
 import (
 	"context"
-	"strings"
 
-	v1 "github.com/jenkins-x/jx-api/pkg/apis/jenkins.io/v1"
-	"github.com/jenkins-x/jx-logging/pkg/log"
+	v1 "github.com/jenkins-x/jx-api/v3/pkg/apis/jenkins.io/v1"
+	"github.com/jenkins-x/jx-logging/v3/pkg/log"
+	jxpipeline "github.com/jenkins-x/jx-pipeline/pkg/pipelines"
 	"github.com/jenkins-x/octant-jx/pkg/common/viewhelpers"
+	"github.com/pkg/errors"
 	"github.com/tektoncd/pipeline/pkg/apis/pipeline/v1beta1"
 	"github.com/vmware-tanzu/octant/pkg/plugin/service"
 	"github.com/vmware-tanzu/octant/pkg/store"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-func GetPipelines(ctx context.Context, client service.Dashboard, ns string) ([]*v1.PipelineActivity, error) {
+var lookupByNameWhichDoesntExistBreaksOctant = true
+
+func GetPipelines(ctx context.Context, client service.Dashboard, ns string) ([]v1.PipelineActivity, error) {
 	dl, err := client.List(ctx, store.Key{
 		APIVersion: "jenkins.io/v1",
 		Kind:       "PipelineActivity",
 		Namespace:  ns,
 	})
+	if err != nil {
+		return nil, errors.Wrapf(err, "failed to ")
+	}
 
-	paList := []*v1.PipelineActivity{}
+	paList := []v1.PipelineActivity{}
 	if dl != nil {
 		for k, v := range dl.Items {
-			pa, err := viewhelpers.ToPipelineActivity(&dl.Items[k])
+			var pa *v1.PipelineActivity
+			pa, err = viewhelpers.ToPipelineActivity(&dl.Items[k])
 			if err != nil {
 				log.Logger().Infof("failed to convert to PipelineActivity for %s: %s", v.GetName(), err.Error())
 				continue
 			}
 			if pa != nil {
-				paList = append(paList, pa)
+				paList = append(paList, *pa)
 			}
 		}
 	}
 
-	if len(paList) == 0 {
-		dl, err = client.List(ctx, store.Key{
-			APIVersion: "tekton.dev/v1beta1",
-			Kind:       "PipelineRun",
-			Namespace:  ns,
-		})
-		if dl != nil {
-			for k, v := range dl.Items {
-				pr := &v1beta1.PipelineRun{}
-				err := viewhelpers.ToStructured(&dl.Items[k], pr)
-				if err != nil {
-					log.Logger().Infof("failed to convert to PipelineActivity for %s: %s", v.GetName(), err.Error())
-					continue
-				}
+	dl, err = client.List(ctx, store.Key{
+		APIVersion: "tekton.dev/v1beta1",
+		Kind:       "PipelineRun",
+		Namespace:  ns,
+	})
+	if dl != nil {
+		for k, v := range dl.Items {
+			pr := &v1beta1.PipelineRun{}
+			err = viewhelpers.ToStructured(&dl.Items[k], pr)
+			if err != nil {
+				log.Logger().Infof("failed to convert to PipelineActivity for %s: %s", v.GetName(), err.Error())
+				continue
+			}
+			pr.Name = jxpipeline.ToPipelineActivityName(pr, paList)
+			if pr.Name == "" {
+				continue
+			}
 
-				pa := ToPipelineActivity(pr)
-				if pa != nil {
-					paList = append(paList, pa)
+			var pa *v1.PipelineActivity
+			for i := range paList {
+				r := &paList[i]
+				if r.Name == pr.Name {
+					pa = &paList[i]
+					break
 				}
 			}
+			if pa == nil {
+				pa = &v1.PipelineActivity{}
+				paList = append(paList, *pa)
+			}
+			jxpipeline.ToPipelineActivity(pr, pa, false)
 		}
 	}
 	return paList, err
 }
 
 func GetPipeline(ctx context.Context, client service.Dashboard, ns, name string) (*v1.PipelineActivity, error) {
-	u, err := viewhelpers.GetResourceByName(ctx, client, "jenkins.io/v1", "PipelineActivity", name, ns)
-	if err != nil {
-		u2, err2 := viewhelpers.GetResourceByName(ctx, client, "tekton.dev/v1beta1", "PipelineRun", name, ns)
-		if err2 == nil {
-			pr := &v1beta1.PipelineRun{}
-			err2 = viewhelpers.ToStructured(u2, pr)
-			if err2 == nil {
-				pa := ToPipelineActivity(pr)
+	if lookupByNameWhichDoesntExistBreaksOctant {
+		paList, err := GetPipelines(ctx, client, ns)
+		if err != nil {
+			log.Logger().Infof("failed to list PipelineActivity in namespace %s: %s", ns, err.Error())
+		}
+		for i := range paList {
+			pa := &paList[i]
+			if pa.Name == name {
 				return pa, nil
 			}
 		}
 		return nil, nil
 	}
-	return viewhelpers.ToPipelineActivity(u)
-}
-
-func ToPipelineActivity(pr *v1beta1.PipelineRun) *v1.PipelineActivity {
-	annotations := pr.Annotations
-	labels := pr.Labels
-	pa := &v1.PipelineActivity{}
-	if pa.APIVersion == "" {
-		pa.APIVersion = "jenkins.io/v1"
+	u, err := viewhelpers.GetResourceByName(ctx, client, "jenkins.io/v1", "PipelineActivity", name, ns)
+	if err != nil {
+		paList, err2 := GetPipelines(ctx, client, ns)
+		if err2 == nil {
+			for i := range paList {
+				pa := &paList[i]
+				if pa.Name == name {
+					return pa, nil
+				}
+			}
+		}
+		return nil, nil
 	}
-	if pa.Kind == "" {
-		pa.Kind = "PipelineActivity"
-	}
-	pa.Name = pr.Name
-	pa.Namespace = pr.Namespace
-	pa.Annotations = annotations
-	pa.Labels = labels
-
-	ps := &pa.Spec
-	if labels != nil {
-		if ps.GitOwner == "" {
-			ps.GitOwner = labels["lighthouse.jenkins-x.io/refs.org"]
-		}
-		if ps.GitRepository == "" {
-			ps.GitRepository = labels["lighthouse.jenkins-x.io/refs.repo"]
-		}
-		if ps.GitBranch == "" {
-			ps.GitBranch = labels["lighthouse.jenkins-x.io/branch"]
-		}
-		if ps.Build == "" {
-			ps.Build = labels["lighthouse.jenkins-x.io/buildNum"]
-		}
-		if ps.Context == "" {
-			ps.Context = labels["lighthouse.jenkins-x.io/context"]
-		}
-		if ps.BaseSHA == "" {
-			ps.BaseSHA = labels["lighthouse.jenkins-x.io/baseSHA"]
-		}
-		if ps.LastCommitSHA == "" {
-			ps.LastCommitSHA = labels["lighthouse.jenkins-x.io/lastCommitSHA"]
-		}
-	}
-	if annotations != nil {
-		if ps.GitURL == "" {
-			ps.GitURL = annotations["lighthouse.jenkins-x.io/cloneURI"]
-		}
+	pa, err := viewhelpers.ToPipelineActivity(u)
+	if err != nil {
+		return pa, errors.Wrapf(err, "failed to load PipelineActivity")
 	}
 
-	podName := ""
-	running := false
-	failed := false
-	succeeded := true
-	if pr.Status.TaskRuns != nil {
-		for _, v := range pr.Status.TaskRuns {
-			if v.Status == nil {
+	dl, err := client.List(ctx, store.Key{
+		APIVersion: "tekton.dev/v1beta1",
+		Kind:       "PipelineRun",
+		Namespace:  ns,
+	})
+	if err != nil {
+		return nil, errors.Wrapf(err, "failed to load PipelineRuns")
+	}
+	paList := []v1.PipelineActivity{*pa}
+	if dl != nil {
+		for k, v := range dl.Items {
+			pr := &v1beta1.PipelineRun{}
+			err := viewhelpers.ToStructured(&dl.Items[k], pr)
+			if err != nil {
+				log.Logger().Infof("failed to convert to PipelineActivity for %s: %s", v.GetName(), err.Error())
 				continue
 			}
-			if podName == "" {
-				podName = v.Status.PodName
-			}
 
-			previousStepTerminated := false
-			for _, step := range v.Status.Steps {
-				name := step.Name
-				var started *metav1.Time
-				var completed *metav1.Time
-				status := v1.ActivityStatusTypePending
-
-				terminated := step.Terminated
-				if terminated != nil {
-					if terminated.ExitCode == 0 {
-						status = v1.ActivityStatusTypeSucceeded
-						succeeded = true
-					} else if !terminated.FinishedAt.IsZero() {
-						status = v1.ActivityStatusTypeFailed
-						failed = true
-					}
-					started = &terminated.StartedAt
-					completed = &terminated.FinishedAt
-					previousStepTerminated = true
-				} else if step.Running != nil {
-					if previousStepTerminated {
-						started = &step.Running.StartedAt
-						status = v1.ActivityStatusTypeRunning
-					}
-					previousStepTerminated = false
-					running = true
-				}
-
-				paStep := v1.PipelineActivityStep{
-					Kind: v1.ActivityStepKindTypeStage,
-					Stage: &v1.StageActivityStep{
-						CoreActivityStep: v1.CoreActivityStep{
-							Name:               Humanize(name),
-							Description:        "",
-							Status:             status,
-							StartedTimestamp:   started,
-							CompletedTimestamp: completed,
-						},
-					},
-				}
-				ps.Steps = append(ps.Steps, paStep)
+			pr.Name = jxpipeline.ToPipelineActivityName(pr, paList)
+			if pr.Name == name {
+				jxpipeline.ToPipelineActivity(pr, pa, false)
+				return pa, nil
 			}
 		}
 	}
-	if string(ps.Status) == "" {
-		if failed {
-			ps.Status = v1.ActivityStatusTypeFailed
-		} else if running {
-			ps.Status = v1.ActivityStatusTypeRunning
-		} else if succeeded {
-			ps.Status = v1.ActivityStatusTypeSucceeded
-		} else {
-			ps.Status = v1.ActivityStatusTypePending
-		}
-	}
-
-	if podName != "" {
-		pa.Labels["podName"] = podName
-	}
-	return pa
-}
-
-// Humanize splits into words and capitalises
-func Humanize(text string) string {
-	wordsText := strings.ReplaceAll(strings.ReplaceAll(text, "-", " "), "_", " ")
-	words := strings.Split(wordsText, " ")
-	for i := range words {
-		words[i] = strings.Title(words[i])
-	}
-	return strings.Join(words, " ")
+	return pa, nil
 }

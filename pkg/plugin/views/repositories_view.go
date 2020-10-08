@@ -1,9 +1,12 @@
 package views // import "github.com/jenkins-x/octant-jx/pkg/plugin/views"
 
 import (
-	"github.com/jenkins-x/jx-logging/pkg/log"
+	"html"
+	"strings"
 
-	v1 "github.com/jenkins-x/jx-api/pkg/apis/jenkins.io/v1"
+	"github.com/jenkins-x/jx-logging/v3/pkg/log"
+
+	v1 "github.com/jenkins-x/jx-api/v3/pkg/apis/jenkins.io/v1"
 	"github.com/jenkins-x/octant-jx/pkg/common/pluginctx"
 	"github.com/jenkins-x/octant-jx/pkg/common/viewhelpers"
 	"github.com/jenkins-x/octant-jx/pkg/plugin"
@@ -38,7 +41,7 @@ func BuildRepositoriesView(request service.Request, pluginContext pluginctx.Cont
 
 	log.Logger().Infof("got list of SourceRepository %d\n", len(dl.Items))
 
-	header := component.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(plugin.RootBreadcrumb, "Repositories"))
+	header := viewhelpers.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(plugin.RootBreadcrumb, "Repositories"))
 
 	config := &RepositoriesViewConfig{}
 
@@ -91,7 +94,26 @@ func toRepositoryTableRow(u unstructured.Unstructured, config *RepositoriesViewC
 }
 
 func ToRepositoryStatus(r *v1.SourceRepository) component.Component {
-	return component.NewText("")
+	status := ""
+	if r.Annotations != nil {
+		value := strings.ToLower(r.Annotations["webhook.jenkins-x.io"])
+		if value == "true" {
+			status = `<clr-icon shape="check-circle" class="is-solid is-success" title="Webhook registered successfully"></clr-icon>`
+		}
+		if value != "" {
+			if strings.HasPrefix(value, "creat") {
+				status = `<span class="spinner spinner-inline" title="Registering webhook..."></span>`
+			} else {
+				text := "Failed to register Webook"
+				message := r.Annotations["webhook.jenkins-x.io/error"]
+				if message != "" {
+					text += ": " + html.EscapeString(message)
+				}
+				status = `<clr-icon shape="warning-standard" class="is-solid is-danger" title="` + text + `"></clr-icon>`
+			}
+		}
+	}
+	return viewhelpers.NewMarkdownText(status)
 }
 
 func ToRepositoryName(r *v1.SourceRepository) component.Component {
@@ -108,5 +130,5 @@ func ToRepositoryName(r *v1.SourceRepository) component.Component {
 			}
 		}
 	}
-	return component.NewMarkdownText(viewhelpers.ToMarkdownLink(s.Repo, u))
+	return viewhelpers.NewMarkdownText(viewhelpers.ToMarkdownLink(s.Repo, u))
 }

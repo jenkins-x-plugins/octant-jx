@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/jenkins-x/jx-logging/pkg/log"
+	"github.com/jenkins-x/jx-logging/v3/pkg/log"
 
 	"github.com/jenkins-x/octant-jx/pkg/common/links"
 	"github.com/jenkins-x/octant-jx/pkg/common/pluginctx"
@@ -57,7 +57,7 @@ func BuildAppsView(request service.Request, pluginContext pluginctx.Context) (co
 
 	log.Logger().Debugf("got list of Deployment %d\n", len(dl.Items))
 
-	header := component.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(plugin.RootBreadcrumb, "Apps"))
+	header := viewhelpers.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(plugin.RootBreadcrumb, "Apps"))
 
 	table := component.NewTableWithRows(
 		"Apps", "There are no Apps!",
@@ -111,7 +111,7 @@ func toAppTableRow(r *appsv1.Deployment, icon string, ingresses []*v1beta1.Ingre
 		"Name":    ToDeploymentLink(r, name, icon),
 		"Version": ToDeploymentVersion(r, version),
 		"Pods":    ToDeploymentStatus(r),
-		"URL":     component.NewMarkdownText(viewhelpers.ToMarkdownLinkFromURL(FindIngressLinkByAppName(name, ingresses))),
+		"URL":     viewhelpers.NewMarkdownText(viewhelpers.ToMarkdownLinkFromURL(FindIngressLinkByAppName(name, ingresses))),
 	}, nil
 }
 
@@ -121,7 +121,7 @@ func ToDeploymentVersion(r *appsv1.Deployment, version string) component.Compone
 		if ann != nil {
 			home := ann[AnnotationHome]
 			if home != "" {
-				return component.NewMarkdownText(viewhelpers.ToMarkdownLink(version, home))
+				return viewhelpers.NewMarkdownText(viewhelpers.ToMarkdownLink(version, home))
 			}
 		}
 	}
@@ -134,7 +134,7 @@ func ToDeploymentLink(r *appsv1.Deployment, name, icon string) component.Compone
 	if icon != "" {
 		iconPrefix = fmt.Sprintf(`<img src="%s" width="24" height="24">&nbsp;`, icon)
 	}
-	return component.NewMarkdownText(fmt.Sprintf(`%s<a href="%s" title="Deployment %s">%s</a>`, iconPrefix, ref, name, name))
+	return viewhelpers.NewMarkdownText(fmt.Sprintf(`%s<a href="%s" title="Deployment %s">%s</a>`, iconPrefix, ref, name, name))
 }
 
 func ToDeploymentIcon(r *appsv1.Deployment) string {
@@ -160,7 +160,7 @@ func ToDeploymentStatus(r *appsv1.Deployment) component.Component {
 			clazz = "badge-warning"
 		}
 	}
-	return component.NewMarkdownText(fmt.Sprintf(`<span class="badge badge-info" title="Replicas">%d</span>/&nbsp;<span class="badge %s" title="Available Pods">%d</span>`, replicas, clazz, availableReplicas))
+	return viewhelpers.NewMarkdownText(fmt.Sprintf(`<span class="badge badge-info" title="Replicas">%d</span>/&nbsp;<span class="badge %s" title="Available Pods">%d</span>`, replicas, clazz, availableReplicas))
 }
 
 func FindIngressLinkByAppName(name string, ingresses []*v1beta1.Ingress) string {

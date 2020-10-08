@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/jenkins-x/octant-jx/pkg/common/pluginctx"
+	"github.com/jenkins-x/octant-jx/pkg/common/viewhelpers"
 	"github.com/jenkins-x/octant-jx/pkg/plugin"
 	"github.com/vmware-tanzu/octant/pkg/plugin/service"
 	"github.com/vmware-tanzu/octant/pkg/view/component"
@@ -22,5 +23,5 @@ func BuildOverview(request service.Request, pluginContext pluginctx.Context) (co
 `, link, nav.Title))
 	}
 
-	return component.NewMarkdownText(b.String()), nil
+	return viewhelpers.NewMarkdownText(b.String()), nil
 }

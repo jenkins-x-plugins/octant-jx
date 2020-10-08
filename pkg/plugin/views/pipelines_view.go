@@ -7,8 +7,8 @@ import (
 	"strings"
 	"time"
 
-	v1 "github.com/jenkins-x/jx-api/pkg/apis/jenkins.io/v1"
-	"github.com/jenkins-x/jx-logging/pkg/log"
+	v1 "github.com/jenkins-x/jx-api/v3/pkg/apis/jenkins.io/v1"
+	"github.com/jenkins-x/jx-logging/v3/pkg/log"
 	"github.com/jenkins-x/octant-jx/pkg/common/pipelines"
 	"github.com/jenkins-x/octant-jx/pkg/common/pluginctx"
 	"github.com/jenkins-x/octant-jx/pkg/common/viewhelpers"
@@ -22,7 +22,7 @@ type PipelinesViewConfig struct {
 	Columns          []string
 	Title            string
 	Header           string
-	Filter           func(*v1.PipelineActivity, []*v1.PipelineActivity) bool
+	Filter           func(*v1.PipelineActivity, []v1.PipelineActivity) bool
 	OwnerFilter      component.TableFilter
 	RepositoryFilter component.TableFilter
 	BranchFilter     component.TableFilter
@@ -38,7 +38,7 @@ func BuildPipelinesViewRecent(request service.Request, pluginContext pluginctx.C
 
 	config := &PipelinesViewConfig{Context: pluginContext}
 	config.Title = "Recent Pipelines"
-	config.Filter = func(pa *v1.PipelineActivity, all []*v1.PipelineActivity) bool {
+	config.Filter = func(pa *v1.PipelineActivity, all []v1.PipelineActivity) bool {
 		completed := pa.Spec.CompletedTimestamp
 		if completed != nil {
 			if completed.Time.Before(recentTime) {
@@ -75,10 +75,11 @@ func BuildPipelinesView(request service.Request, config *PipelinesViewConfig) (c
 
 	if config.Filter != nil {
 		allList := paList
-		paList = []*v1.PipelineActivity{}
-		for _, r := range allList {
+		paList = []v1.PipelineActivity{}
+		for i := range allList {
+			r := &allList[i]
 			if config.Filter(r, allList) {
-				paList = append(paList, r)
+				paList = append(paList, *r)
 			}
 		}
 	}
@@ -86,7 +87,8 @@ func BuildPipelinesView(request service.Request, config *PipelinesViewConfig) (c
 	// default statuses
 	config.StatusFilter.Values = []string{"Succeeded", "Running", "Failed"}
 
-	for _, pa := range paList {
+	for i := range paList {
+		pa := &paList[i]
 		tr, err := toPipelineTableRow(pa, config)
 		if err != nil {
 			log.Logger().Infof("failed to create Table Row: %s", err.Error())
@@ -111,7 +113,7 @@ func BuildPipelinesView(request service.Request, config *PipelinesViewConfig) (c
 		if headerText == "" {
 			headerText = viewhelpers.ToBreadcrumbMarkdown(plugin.RootBreadcrumb, title)
 		}
-		header := component.NewMarkdownText(headerText)
+		header := viewhelpers.NewMarkdownText(headerText)
 
 		flexLayout.AddSections(component.FlexLayoutSection{
 			{Width: component.WidthFull, View: header},

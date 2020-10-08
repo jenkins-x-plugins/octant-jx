@@ -3,10 +3,10 @@ package views // import "github.com/jenkins-x/octant-jx/pkg/plugin/views"
 import (
 	"fmt"
 
-	"github.com/jenkins-x/jx-logging/pkg/log"
+	"github.com/jenkins-x/jx-logging/v3/pkg/log"
 
-	v1 "github.com/jenkins-x/jx-api/pkg/apis/jenkins.io/v1"
-	"github.com/jenkins-x/jx-helpers/pkg/gitclient/giturl"
+	v1 "github.com/jenkins-x/jx-api/v3/pkg/apis/jenkins.io/v1"
+	"github.com/jenkins-x/jx-helpers/v3/pkg/gitclient/giturl"
 	"github.com/jenkins-x/octant-jx/pkg/admin"
 	"github.com/jenkins-x/octant-jx/pkg/common/pluginctx"
 	"github.com/jenkins-x/octant-jx/pkg/common/viewhelpers"
@@ -37,7 +37,7 @@ func BuildBootPipelinesView(request service.Request, pluginContext pluginctx.Con
 		if gitURL != "" {
 			repo, err := giturl.ParseGitURL(gitURL)
 			if err != nil {
-				return component.NewMarkdownText(fmt.Sprintf("could not parse the dev Environment git source URL `%s` due to: %s", gitURL, err.Error())), nil
+				return viewhelpers.NewMarkdownText(fmt.Sprintf("could not parse the dev Environment git source URL `%s` due to: %s", gitURL, err.Error())), nil
 			}
 			if repo != nil {
 				owner = repo.Organisation
@@ -58,7 +58,7 @@ func BuildBootPipelinesView(request service.Request, pluginContext pluginctx.Con
 		Title:   "Boot Pipelines",
 		Header:  header,
 		Columns: []string{"Branch", "Build", "Status", "Message"},
-		Filter: func(pa *v1.PipelineActivity, _ []*v1.PipelineActivity) bool {
+		Filter: func(pa *v1.PipelineActivity, _ []v1.PipelineActivity) bool {
 			return pa.Spec.GitOwner == owner && pa.Spec.GitRepository == repository
 		},
 	}

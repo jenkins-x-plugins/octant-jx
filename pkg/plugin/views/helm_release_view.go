@@ -21,7 +21,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/jenkins-x/jx-logging/pkg/log"
+	"github.com/jenkins-x/jx-logging/v3/pkg/log"
 
 	"github.com/jenkins-x/octant-jx/pkg/common/helm"
 	"github.com/jenkins-x/octant-jx/pkg/common/pluginctx"
@@ -70,7 +70,7 @@ func BuildHelmReleaseView(request service.Request, pluginContext pluginctx.Conte
 	}
 	r := helmReleases[0]
 
-	header := component.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(
+	header := viewhelpers.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(
 		plugin.RootBreadcrumb,
 		viewhelpers.ToMarkdownLink("Helm", plugin.GetHelmLink()),
 		releaseName))

@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	v1 "github.com/jenkins-x/jx-api/pkg/apis/jenkins.io/v1"
+	v1 "github.com/jenkins-x/jx-api/v3/pkg/apis/jenkins.io/v1"
 	"github.com/jenkins-x/octant-jx/pkg/common/viewhelpers"
 	"github.com/jenkins-x/octant-jx/pkg/plugin"
 	"github.com/vmware-tanzu/octant/pkg/view/component"
@@ -32,11 +32,11 @@ func ToPipelineName(pa *v1.PipelineActivity) component.Component {
 		name += " " + s.Context
 	}
 	md := fmt.Sprintf("[#%s](%s)", name, plugin.GetPipelineLink(pa.Name))
-	return component.NewMarkdownText(md)
+	return viewhelpers.NewMarkdownText(md)
 }
 
 func ToRepository(pa *v1.PipelineActivity) component.Component {
-	return component.NewMarkdownText(ToRepositoryMarkdown(pa))
+	return viewhelpers.NewMarkdownText(ToRepositoryMarkdown(pa))
 }
 
 func ToRepositoryMarkdown(pa *v1.PipelineActivity) string {
@@ -90,7 +90,7 @@ func ToPipelineLastStepStatus(pa *v1.PipelineActivity, addContext, addTimestamp 
 			lastStep += fmt.Sprintf(`&nbsp;&nbsp;<span class="badge" title="%s">%s</span>`, title, durationText)
 		}
 	}
-	return component.NewMarkdownText(lastStep)
+	return viewhelpers.NewMarkdownText(lastStep)
 }
 
 func pipelineDuration(pa *v1.PipelineActivity) string {

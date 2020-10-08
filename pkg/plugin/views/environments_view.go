@@ -1,9 +1,9 @@
 package views // import "github.com/jenkins-x/octant-jx/pkg/plugin/views"
 
 import (
-	"github.com/jenkins-x/jx-logging/pkg/log"
+	"github.com/jenkins-x/jx-logging/v3/pkg/log"
 
-	v1 "github.com/jenkins-x/jx-api/pkg/apis/jenkins.io/v1"
+	v1 "github.com/jenkins-x/jx-api/v3/pkg/apis/jenkins.io/v1"
 	"github.com/jenkins-x/octant-jx/pkg/common/pluginctx"
 	"github.com/jenkins-x/octant-jx/pkg/common/viewhelpers"
 	"github.com/jenkins-x/octant-jx/pkg/plugin"
@@ -30,7 +30,7 @@ func BuildEnvironmentsView(request service.Request, pluginContext pluginctx.Cont
 
 	log.Logger().Infof("got list of Environment %d\n", len(dl.Items))
 
-	header := component.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(plugin.RootBreadcrumb, "Environments"))
+	header := viewhelpers.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(plugin.RootBreadcrumb, "Environments"))
 
 	table := component.NewTableWithRows(
 		"Environments", "There are no Environments!",

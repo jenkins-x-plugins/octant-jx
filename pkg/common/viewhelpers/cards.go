@@ -13,7 +13,7 @@ func NewTextCard(title, bodyText string) *component.Card {
 // NewMarkdownCard helper function to create a card with a text body
 func NewMarkdownCard(title, bodyText string) *component.Card {
 	notesCard := component.NewCard(component.TitleFromString(title))
-	notesBody := component.NewMarkdownText(bodyText)
+	notesBody := NewMarkdownText(bodyText)
 	notesCard.SetBody(notesBody)
 	return notesCard
 }

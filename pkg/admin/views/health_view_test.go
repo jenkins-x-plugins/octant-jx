@@ -6,6 +6,7 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/jenkins-x/octant-jx/pkg/common/viewhelpers"
 	"github.com/stretchr/testify/require"
 	"sigs.k8s.io/yaml"
 
@@ -25,14 +26,14 @@ func Test_toHealthTableRow(t *testing.T) {
 			"Name":      component.NewText("dns-status-internal"),
 			"Namespace": component.NewText("kuberhealthy"),
 			"Errors":    component.NewText(""),
-			"Healthy":   component.NewMarkdownText(`<clr-icon shape="check-circle" class="is-solid is-success" title="True"></clr-icon> True`),
+			"Healthy":   viewhelpers.NewMarkdownText(`<clr-icon shape="check-circle" class="is-solid is-success" title="True"></clr-icon> True`),
 		}, wantErr: false},
 		{name: "kuberhealthy2.yaml", want: &component.TableRow{
 
 			"Name":      component.NewText("dns-status-internal"),
 			"Namespace": component.NewText("kuberhealthy"),
 			"Errors":    component.NewText("foo\nbar\n"),
-			"Healthy":   component.NewMarkdownText(`<clr-icon shape="check-circle" class="is-solid is-success" title="True"></clr-icon> True`),
+			"Healthy":   viewhelpers.NewMarkdownText(`<clr-icon shape="check-circle" class="is-solid is-success" title="True"></clr-icon> True`),
 		}, wantErr: false},
 	}
 	for _, tt := range tests {

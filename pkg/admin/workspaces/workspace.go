@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"path/filepath"
 
-	"github.com/jenkins-x/jx-helpers/pkg/yamls"
+	"github.com/jenkins-x/jx-helpers/v3/pkg/yamls"
 	"github.com/jenkins-x/octant-jx/pkg/common/files"
 )
 

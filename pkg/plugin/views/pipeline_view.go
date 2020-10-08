@@ -4,10 +4,10 @@ import (
 	"context"
 	"strings"
 
-	"github.com/jenkins-x/jx-logging/pkg/log"
+	"github.com/jenkins-x/jx-logging/v3/pkg/log"
 	"github.com/jenkins-x/octant-jx/pkg/common/pipelines"
 
-	v1 "github.com/jenkins-x/jx-api/pkg/apis/jenkins.io/v1"
+	v1 "github.com/jenkins-x/jx-api/v3/pkg/apis/jenkins.io/v1"
 	"github.com/jenkins-x/octant-jx/pkg/common/links"
 	"github.com/jenkins-x/octant-jx/pkg/common/pluginctx"
 	"github.com/jenkins-x/octant-jx/pkg/common/viewhelpers"
@@ -61,14 +61,14 @@ func BuildPipelineView(request service.Request, pluginContext pluginctx.Context)
 		}
 	}
 	breadcrumbs = append(breadcrumbs, viewhelpers.ToMarkdownLink("Logs", plugin.GetPipelineLogLink(pa.Name)))
-	header := component.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(breadcrumbs...))
+	header := viewhelpers.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(breadcrumbs...))
 
 	detailSummarySections := []component.SummarySection{
 		{Header: "Status", Content: ToPipelineLastStepStatus(pa, true, true)},
 		{Header: "Source", Content: ToRepository(pa)},
 	}
 	statusSummarySections := []component.SummarySection{
-		{Header: "Started", Content: component.NewMarkdownText(ToPipelineStartCompleteTimeMarkdown(pa))},
+		{Header: "Started", Content: viewhelpers.NewMarkdownText(ToPipelineStartCompleteTimeMarkdown(pa))},
 	}
 	if pa.Spec.CompletedTimestamp != nil {
 		statusSummarySections = append(statusSummarySections, component.SummarySection{Header: "Duration", Content: ToDuration(pa)})
