@@ -16,14 +16,15 @@ func BuildFailedReleasePipelinesView(request service.Request, pluginContext plug
 		Context: pluginContext,
 		Title:   "Failed Last Release Pipelines",
 		Header:  viewhelpers.ToBreadcrumbMarkdown(admin.RootBreadcrumb, "Failed Last Release Pipelines"),
-		Filter: func(pa *v1.PipelineActivity, all []*v1.PipelineActivity) bool {
+		Filter: func(pa *v1.PipelineActivity, all []v1.PipelineActivity) bool {
 			if pa.Spec.GitBranch == "master" {
 				switch pa.Spec.Status {
 				case v1.ActivityStatusTypeAborted, v1.ActivityStatusTypeError, v1.ActivityStatusTypeFailed:
 					// lets check if there is a newer pipeline that succeeded for this repo/branch
 					// note we don't compare context as sometimes its empty
 					s := &pa.Spec
-					for _, r := range all {
+					for i := range all {
+						r := &all[i]
 						sr := &r.Spec
 						if s.GitOwner == sr.GitOwner && s.GitRepository == sr.GitRepository &&
 							s.GitBranch == sr.GitBranch &&

@@ -58,7 +58,7 @@ func BuildBootPipelinesView(request service.Request, pluginContext pluginctx.Con
 		Title:   "Boot Pipelines",
 		Header:  header,
 		Columns: []string{"Branch", "Build", "Status", "Message"},
-		Filter: func(pa *v1.PipelineActivity, _ []*v1.PipelineActivity) bool {
+		Filter: func(pa *v1.PipelineActivity, _ []v1.PipelineActivity) bool {
 			return pa.Spec.GitOwner == owner && pa.Spec.GitRepository == repository
 		},
 	}
