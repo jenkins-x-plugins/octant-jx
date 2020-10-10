@@ -99,8 +99,7 @@ func ToRepositoryStatus(r *v1.SourceRepository) component.Component {
 		value := strings.ToLower(r.Annotations["webhook.jenkins-x.io"])
 		if value == "true" {
 			status = `<clr-icon shape="check-circle" class="is-solid is-success" title="Webhook registered successfully"></clr-icon>`
-		}
-		if value != "" {
+		} else if value != "" {
 			if strings.HasPrefix(value, "creat") {
 				status = `<span class="spinner spinner-inline" title="Registering webhook..."></span>`
 			} else {
