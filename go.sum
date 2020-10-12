@@ -760,6 +760,8 @@ github.com/jenkins-x/go-scm v1.5.177/go.mod h1:xk/KnuS3rVHKBEASsShBZGABm9cGrwntQ
 github.com/jenkins-x/go-scm v1.5.178/go.mod h1:xk/KnuS3rVHKBEASsShBZGABm9cGrwntQffiy3BfTCc=
 github.com/jenkins-x/go-scm v1.5.181 h1:tUHYOSIv4I9szBKC3z5yVatwCKrp7ahWnAPjEYIn0VI=
 github.com/jenkins-x/go-scm v1.5.181/go.mod h1:xk/KnuS3rVHKBEASsShBZGABm9cGrwntQffiy3BfTCc=
+github.com/jenkins-x/go-scm v1.5.183 h1:gJtOG6mHs19O2IM7vTjhk7fDQc/uu9MTyzSmTqnGxU8=
+github.com/jenkins-x/go-scm v1.5.183/go.mod h1:xk/KnuS3rVHKBEASsShBZGABm9cGrwntQffiy3BfTCc=
 github.com/jenkins-x/golang-jenkins v0.0.0-20180919102630-65b83ad42314/go.mod h1:C6j5HgwlHGjRU27W4XCs6jXksqYFo8OdBu+p44jqQeM=
 github.com/jenkins-x/jx-api/v3 v3.0.0/go.mod h1:T/Q15bSgPAq9+4k5gMZIuVVmj6rfCDqF4XYLJXkM3Q8=
 github.com/jenkins-x/jx-api/v3 v3.0.1 h1:kB3f6r/xUzwdMjeh/R+nE72bLHLaQHCB8Cxs96l5KCc=
@@ -777,7 +779,11 @@ github.com/jenkins-x/jx-logging/v3 v3.0.2 h1:9IEeySM86yECc520Spaq38xO8JIpb6QDl1j
 github.com/jenkins-x/jx-logging/v3 v3.0.2/go.mod h1:Vp2ER2SYgGhAgEEHlLwfi2ZB54tz6ya1qExq0A4CKMI=
 github.com/jenkins-x/jx-pipeline v0.0.44 h1:B3fUqBW6WJRZ7HTsbRI62JdxSyhX8XJLkxCrslzGOvk=
 github.com/jenkins-x/jx-pipeline v0.0.44/go.mod h1:9fnKaPLraSCDTsREzE20g/I1qCG1LFgwgcqCScWD8+g=
+github.com/jenkins-x/jx-pipeline v0.0.48 h1:srGsKZP34OVAeP89Kcx/A3rSDaaAFKV85Uvm+IcRNHg=
+github.com/jenkins-x/jx-pipeline v0.0.48/go.mod h1:9Rat5BxV5oGWdiUsWkEQlD55fdMZP8RvqpCC3StppBQ=
 github.com/jenkins-x/jx-secret v0.0.164/go.mod h1:LiAbgafyk+F1mqTxdaB+BdknRwAGoO9mGCbr/apKlAo=
+github.com/jenkins-x/jx-secret v0.0.170 h1:KdT+i1ZHhluv4G+x5KH3AGrctGWdvPsRY9jmOIExGB4=
+github.com/jenkins-x/jx-secret v0.0.170/go.mod h1:2SEyGLytO12I7MoCwmggerKExKQg4yY0MOHRbCTzqqc=
 github.com/jenkins-x/lighthouse v0.0.841/go.mod h1:Sqgo6UEVC7uo2oopyFi33IJhdRT1PPBwy+5xso0I8rw=
 github.com/jenkins-x/lighthouse v0.0.848 h1:6BNzzc9R1asNQ336kW0ajohYnFFtxyiqnpJTWpvIsdo=
 github.com/jenkins-x/lighthouse v0.0.848/go.mod h1:7bCp0s3OI9e2mHP330CvJuY7JWtx6V97CSo+aYnzgwk=
