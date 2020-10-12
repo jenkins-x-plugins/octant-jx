@@ -67,8 +67,8 @@ func GetPipelines(ctx context.Context, client service.Dashboard, ns string) ([]v
 				}
 			}
 			if pa == nil {
-				pa = &v1.PipelineActivity{}
-				paList = append(paList, *pa)
+				paList = append(paList, v1.PipelineActivity{})
+				pa = &paList[len(paList)-1]
 			}
 			jxpipeline.ToPipelineActivity(pr, pa, false)
 		}
