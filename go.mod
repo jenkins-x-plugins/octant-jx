@@ -7,9 +7,8 @@ require (
 	//github.com/Azure/go-autorest/autorest/adal v0.8.3 // indirect
 	github.com/ghodss/yaml v1.0.1-0.20190212211648-25d852aebe32 // indirect
 	github.com/hashicorp/go-plugin v1.0.1 // indirect
-	github.com/jenkins-x/go-scm v1.5.183 // indirect
 	github.com/jenkins-x/jx-api/v3 v3.0.1
-	github.com/jenkins-x/jx-helpers/v3 v3.0.6
+	github.com/jenkins-x/jx-helpers/v3 v3.0.11
 	github.com/jenkins-x/jx-logging/v3 v3.0.2
 	github.com/jenkins-x/jx-pipeline v0.0.48
 	github.com/jenkins-x/jx-secret v0.0.170 // indirect
