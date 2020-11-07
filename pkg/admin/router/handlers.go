@@ -94,12 +94,13 @@ func (h *Handlers) handleJobsPathEnrich(router *service.Router, path string, enr
 
 func (h *Handlers) addBootJobLogsHandlers(router *service.Router) {
 	path := admin.BootJobsPath
+
 	router.HandleFunc("/"+path+"/logs/*", func(request service.Request) (component.ContentResponse, error) {
 		config := views.JobsViewConfigs[path]
 
 		paths := strings.Split(strings.TrimSuffix(request.Path(), "/"), "/")
 		jobName := paths[len(paths)-1]
-		view, err := views.BuildJobsViewLogsForPathAndSelector(request, *h.Context, path, jobName, config, labels.Set{})
+		view, err := views.BuildJobsViewLogsForPathAndSelector(request, admin.BootPluginContext, path, jobName, config, labels.Set{})
 		if err != nil {
 			return component.EmptyContentResponse, err
 		}
@@ -140,7 +141,7 @@ func (h *Handlers) handleJobsPath(router *service.Router, path string) {
 
 func (h *Handlers) handleBootJobsView(request service.Request) (component.ContentResponse, error) {
 	response := component.NewContentResponse(nil)
-	pluginContext := *h.Context
+	pluginContext := admin.BootPluginContext
 	ctx := request.Context()
 	client := request.DashboardClient()
 	ns := pluginContext.Namespace

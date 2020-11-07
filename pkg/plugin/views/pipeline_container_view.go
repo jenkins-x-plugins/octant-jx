@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/jenkins-x/jx-logging/v3/pkg/log"
+	"github.com/tektoncd/pipeline/pkg/apis/pipeline/v1beta1"
 
 	"github.com/jenkins-x/octant-jx/pkg/common/links"
 	"github.com/jenkins-x/octant-jx/pkg/common/pluginctx"
@@ -71,16 +72,29 @@ func BuildPipelineContainerView(request service.Request, pluginContext pluginctx
 		PodName:      name,
 	}
 
+	// lets see if we can find a script in the pipelinerun
+	var pipelineRun *v1beta1.PipelineRun
+	if pod.Labels != nil {
+		prName := pod.Labels["tekton.dev/pipelineRun"]
+		if prName != "" {
+			u, err = viewhelpers.GetResourceByName(ctx, client, "tekton.dev/v1beta1", "PipelineRun", prName, ns)
+			if err == nil {
+				// lets see if we can find the step...
+				pr := &v1beta1.PipelineRun{}
+				err = viewhelpers.ToStructured(u, &pr)
+				if err == nil {
+					pipelineRun = pr
+				}
+			}
+		}
+	}
+
 	found := false
 	containers := pod.Spec.Containers
 	//Todo: Need to evaluate the logic
 	for k := range containers {
 		if containers[k].Name == step {
-			return ToPipelinePodContainerView(header, vc, pod, k, &containers[k]), nil
-			// ToDo: unreachable code ...
-			//nolint
-			found = true
-			break
+			return ToPipelinePodContainerView(header, vc, pod, k, &containers[k], pipelineRun), nil
 		}
 
 	}
@@ -96,15 +110,36 @@ func BuildPipelineContainerView(request service.Request, pluginContext pluginctx
 	return flexLayout, nil
 }
 
-func ToPipelinePodContainerView(header component.Component, vc containersViewContext, pod *corev1.Pod, index int, c *corev1.Container) component.Component {
+func ToPipelinePodContainerView(header component.Component, vc containersViewContext, pod *corev1.Pod, index int, c *corev1.Container, pr *v1beta1.PipelineRun) component.Component {
 	image := ToImage(c)
 	commandLine := ToCommandLine(index, c)
+
+	// lets check for a script in the PipelineRun
+	if pr != nil {
+		ps := pr.Spec.PipelineSpec
+		if ps != nil {
+			for i := range ps.Tasks {
+				pt := &ps.Tasks[i]
+				if pt.TaskSpec != nil {
+					for j := range pt.TaskSpec.Steps {
+						s := &pt.TaskSpec.Steps[j]
+						if s.Name == c.Name || "step-"+s.Name == c.Name {
+							if s.Script != "" {
+								commandLine = s.Script
+							}
+							break
+						}
+					}
+				}
+			}
+		}
+	}
 
 	statusSummarySections := []component.SummarySection{
 		{Header: "Name", Content: component.NewText(c.Name)},
 		{Header: "Image", Content: viewhelpers.NewMarkdownText(image)},
 		{Header: "Working Dir", Content: component.NewText(c.WorkingDir)},
-		{Header: "Command", Content: viewhelpers.NewMarkdownText(fmt.Sprintf("```%s```", commandLine))},
+		{Header: "Command", Content: viewhelpers.NewMarkdownText("```\n" + commandLine + "\n```")},
 	}
 	statusSummary := component.NewSummary("Container", statusSummarySections...)
 
