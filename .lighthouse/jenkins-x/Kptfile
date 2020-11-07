@@ -3,9 +3,18 @@ kind: Kptfile
 metadata:
     name: jenkins-x
 upstream:
+<<<<<<< HEAD
     type: git
     git:
         commit: eee2f21dd45e94e33dc9cafcbeb51d8078ae2ffb
         repo: https://github.com/jenkins-x/jx3-pipeline-catalog
         directory: /packs/go-plugin/.lighthouse/jenkins-x
         ref: master
+=======
+  type: git
+  git:
+    commit: 0edce44c8ab6305167c62f00d8540f13fd55471c
+    repo: https://github.com/jenkins-x/jx3-pipeline-catalog
+    directory: /packs/go-plugin/.lighthouse/jenkins-x
+    ref: master
+>>>>>>> update jenkins-x (https://github.com/jenkins-x/jx3-pipeline-catalog) from master (eee2f21dd45e94e33dc9cafcbeb51d8078ae2ffb) to master (0edce44c8ab6305167c62f00d8540f13fd55471c)
