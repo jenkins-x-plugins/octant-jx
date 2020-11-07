@@ -42,23 +42,6 @@ spec:
           script: |
             #!/bin/sh
             make test
-        - image: gcr.io/kaniko-project/executor:debug-1d1298564878f2a57d8f77b4269c66c6e2d9bb6b
-          name: build-container-build
-          resources: {}
-          script: |
-            #!/busybox/sh
-            source .jx/variables.sh
-            cp /tekton/creds-secrets/tekton-container-registry-auth/.dockerconfigjson /kaniko/.docker/config.json
-            /kaniko/executor $KANIKO_FLAGS --cache=true --cache-dir=/workspace --context=/workspace/source --dockerfile=/workspace/source/${DOCKERFILE_PATH:-Dockerfile} --destination=$DOCKER_REGISTRY/$DOCKER_REGISTRY_ORG/$REPO_NAME:$VERSION --cache-repo=$DOCKER_REGISTRY/$DOCKER_REGISTRY_ORG/cache
-        volumes:
-        - emptyDir: {}
-          name: workspace-volume
-        - downwardAPI:
-            items:
-            - fieldRef:
-                fieldPath: metadata.labels
-              path: labels
-          name: podinfo
   podTemplate: {}
   serviceAccountName: tekton-bot
   timeout: 240h0m0s
