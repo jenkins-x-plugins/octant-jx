@@ -32,6 +32,8 @@ release: build build-jxo
 dev:
 	scripts/dev.sh
 
+.PHONY: linux
+linux:
 
 fmt:
 	go fmt ./...
