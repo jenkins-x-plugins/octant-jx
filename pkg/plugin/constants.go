@@ -20,6 +20,7 @@ const (
 	PipelineContainerPath  = "pipeline/container"
 	PipelineTerminalPath   = "pipeline/terminal"
 	PipelinesRecentPath    = "pipelines-recent"
+	PreviewsPath           = "previews"
 	RepositoriesPath       = "repositories"
 
 	// RootBreadcrumb the root breadcrumb for the developer plugin
@@ -48,6 +49,10 @@ var (
 		{
 			Title: "Pipelines: Recent",
 			Path:  Name + "/" + PipelinesRecentPath,
+		},
+		{
+			Title: "Previews",
+			Path:  Name + "/" + PreviewsPath,
 		},
 		{
 			Title: "Repositories",

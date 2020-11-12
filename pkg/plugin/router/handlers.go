@@ -27,6 +27,7 @@ func (h *Handlers) InitRoutes(router *service.Router) {
 	h.handleView(router, plugin.PipelineContainersPath+"/*", views.BuildPipelineContainersView)
 	h.handleView(router, plugin.PipelineContainerPath+"/*", views.BuildPipelineContainerView)
 	h.handleView(router, plugin.PipelineTerminalPath+"/*", views.BuildPipelineTerminalView)
+	h.handleView(router, plugin.PreviewsPath, views.BuildPreviewsView)
 	h.handleView(router, plugin.RepositoriesPath, views.BuildRepositoriesView)
 }
 
