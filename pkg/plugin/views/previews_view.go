@@ -48,7 +48,7 @@ func BuildPreviewsView(request service.Request, pluginContext pluginctx.Context)
 
 	table := component.NewTableWithRows(
 		"Previews", "There are no Previews!",
-		component.NewTableCols("Owner", "Repository", "Pull Request", "Preview"),
+		component.NewTableCols("Owner", "Repository", "Pull Request", "Preview", "Author"),
 		[]component.TableRow{})
 
 	for _, pa := range dl.Items {
@@ -94,11 +94,25 @@ func toPreviewTableRow(u unstructured.Unstructured, config *PreviewsViewConfig) 
 		previewLink = fmt.Sprintf("<a href='%s' title='try the application' target='preview' class='badge badge-purple'>Preview</a>", appURL)
 	}
 
+	authorLink := ""
+	username := prs.User.Username
+	if username != "" {
+		name := prs.User.Name
+		if name == "" {
+			name = username
+		}
+		authorLink = fmt.Sprintf("<a href='%s' title='%s' target='author>%s</a>", prs.User.LinkURL, name, username)
+		if prs.User.ImageURL != "" {
+			authorLink = fmt.Sprintf("<img src='%s'> %s", prs.User.ImageURL, authorLink)
+		}
+	}
+
 	return &component.TableRow{
 		"Owner":        viewhelpers.NewMarkdownText(viewhelpers.ToMarkdownLink(prs.Owner, ownerLink)),
 		"Repository":   viewhelpers.NewMarkdownText(viewhelpers.ToMarkdownLink(prs.Repository, repoLink)),
 		"Pull Request": viewhelpers.NewMarkdownText(viewhelpers.ToMarkdownLink(prName, prLink) + " " + prs.Title),
 		"Preview":      viewhelpers.NewMarkdownText(previewLink),
+		"Author":       viewhelpers.NewMarkdownText(authorLink),
 	}, nil
 }
 
