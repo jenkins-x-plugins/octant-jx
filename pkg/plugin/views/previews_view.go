@@ -2,8 +2,6 @@ package views // import "github.com/jenkins-x/octant-jx/pkg/plugin/views"
 
 import (
 	"fmt"
-	"html"
-	"strings"
 
 	"github.com/jenkins-x/jx-logging/v3/pkg/log"
 
@@ -18,11 +16,12 @@ import (
 )
 
 type PreviewsViewConfig struct {
-	OwnerFilter component.TableFilter
+	OwnerFilter      component.TableFilter
+	RepositoryFilter component.TableFilter
 }
 
 func (f *PreviewsViewConfig) TableFilters() []*component.TableFilter {
-	return []*component.TableFilter{&f.OwnerFilter}
+	return []*component.TableFilter{&f.OwnerFilter, &f.RepositoryFilter}
 }
 
 func BuildPreviewsView(request service.Request, pluginContext pluginctx.Context) (component.Component, error) {
@@ -62,11 +61,12 @@ func BuildPreviewsView(request service.Request, pluginContext pluginctx.Context)
 		}
 	}
 
-	table.Sort("Name", false)
+	table.Sort("Sort", false)
 
 	viewhelpers.InitTableFilters(config.TableFilters())
 
 	table.AddFilter("Owner", config.OwnerFilter)
+	table.AddFilter("Repository", config.RepositoryFilter)
 
 	flexLayout := component.NewFlexLayout("")
 	flexLayout.AddSections(component.FlexLayoutSection{
@@ -77,7 +77,7 @@ func BuildPreviewsView(request service.Request, pluginContext pluginctx.Context)
 	return flexLayout, nil
 }
 
-func toPreviewTableRow(u unstructured.Unstructured, config *PreviewsViewConfig) (*component.TableRow, error) {
+func toPreviewTableRow(u unstructured.Unstructured, filters *PreviewsViewConfig) (*component.TableRow, error) {
 	r := &v1alpha1.Preview{}
 	err := viewhelpers.ToStructured(&u, r)
 	if err != nil {
@@ -85,13 +85,13 @@ func toPreviewTableRow(u unstructured.Unstructured, config *PreviewsViewConfig) 
 	}
 
 	prs := &r.Spec.PullRequest
-	ownerLink, repoLink, prLink := ToOwnerRepoLinks(r)
+	prLink := prs.URL
 
 	prName := fmt.Sprintf("#%d", prs.Number)
 	previewLink := ""
 	appURL := r.Spec.Resources.URL
 	if appURL != "" {
-		previewLink = fmt.Sprintf("<a href='%s' title='try the application' target='preview' class='badge badge-purple'>Preview</a>", appURL)
+		previewLink = fmt.Sprintf("<a href='%s' title='try the application' target='preview' class='badge badge-purple'>Try Me&nbsp;<clr-icon shape='link'></clr-icon></a>", appURL)
 	}
 
 	authorLink := ""
@@ -101,51 +101,25 @@ func toPreviewTableRow(u unstructured.Unstructured, config *PreviewsViewConfig) 
 		if name == "" {
 			name = username
 		}
-		authorLink = fmt.Sprintf("<a href='%s' title='%s' target='author>%s</a>", prs.User.LinkURL, name, username)
+		authorLink = fmt.Sprintf("<a href='%s' title='%s' target='author'>%s</a>", prs.User.LinkURL, name, username)
 		if prs.User.ImageURL != "" {
-			authorLink = fmt.Sprintf("<img src='%s'> %s", prs.User.ImageURL, authorLink)
+			authorLink = fmt.Sprintf("<img height='24' width='24' src='%s'> %s", prs.User.ImageURL, authorLink)
 		}
 	}
 
+	owner := prs.Owner
+	repository := prs.Repository
+	fullName := fmt.Sprintf("%s/%s/%010d", owner, repository, prs.Number)
+
+	viewhelpers.AddFilterValue(&filters.OwnerFilter, owner)
+	viewhelpers.AddFilterValue(&filters.RepositoryFilter, repository)
+
 	return &component.TableRow{
-		"Owner":        viewhelpers.NewMarkdownText(viewhelpers.ToMarkdownLink(prs.Owner, ownerLink)),
-		"Repository":   viewhelpers.NewMarkdownText(viewhelpers.ToMarkdownLink(prs.Repository, repoLink)),
+		"Sort":         component.NewText(fullName),
+		"Owner":        component.NewText(owner),
+		"Repository":   component.NewText(repository),
 		"Pull Request": viewhelpers.NewMarkdownText(viewhelpers.ToMarkdownLink(prName, prLink) + " " + prs.Title),
 		"Preview":      viewhelpers.NewMarkdownText(previewLink),
 		"Author":       viewhelpers.NewMarkdownText(authorLink),
 	}, nil
-}
-
-func ToPreviewStatus(r *v1alpha1.Preview) component.Component {
-	status := ""
-	if r.Annotations != nil {
-		value := strings.ToLower(r.Annotations["webhook.jenkins-x.io"])
-		if value == "true" {
-			status = `<clr-icon shape="check-circle" class="is-solid is-success" title="Webhook registered successfully"></clr-icon>`
-		} else if value != "" {
-			if strings.HasPrefix(value, "creat") {
-				status = `<span class="spinner spinner-inline" title="Registering webhook..."></span>`
-			} else {
-				text := "Failed to register Webook"
-				message := r.Annotations["webhook.jenkins-x.io/error"]
-				if message != "" {
-					text += ": " + html.EscapeString(message)
-				}
-				status = `<clr-icon shape="warning-standard" class="is-solid is-danger" title="` + text + `"></clr-icon>`
-			}
-		}
-	}
-	return viewhelpers.NewMarkdownText(status)
-}
-
-func ToOwnerRepoLinks(r *v1alpha1.Preview) (ownerLink string, repoLink string, prLink string) {
-	s := &r.Spec.PullRequest
-	owner := s.Owner
-	prLink = s.URL
-	idx := strings.Index(prLink, owner)
-	if idx > 0 {
-		ownerLink = prLink[0:idx] + owner + "/"
-		repoLink = ownerLink + "/" + s.Repository + "/"
-	}
-	return
 }
