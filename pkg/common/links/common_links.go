@@ -35,6 +35,14 @@ func GetPodTerminalLink(namespace, name string) string {
 	return GetPodLink(namespace, name) + "#terminal"
 }
 
+func GetSecretsLink(namespace string) string {
+	return plugin.PathPrefix + "/overview/namespace/" + namespace + "/config-and-storage/secrets"
+}
+
+func GetSecretLink(namespace, name string) string {
+	return GetSecretsLink(namespace) + "/" + name
+}
+
 // GetImageLink returns the HTML link for the given container image name
 func GetImageLink(image string) string {
 	if image == "" {
