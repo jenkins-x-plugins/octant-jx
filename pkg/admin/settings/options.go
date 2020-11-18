@@ -50,6 +50,10 @@ func GetOptions(h *router.Handlers) []service.PluginOption {
 							Path:  admin.PluginName + "/" + admin.GCPreviewJobsPath,
 						},
 						{
+							Title: "Secrets",
+							Path:  admin.PluginName + "/" + admin.SecretsPath,
+						},
+						{
 							Title: "Upgrade Jobs",
 							Path:  admin.PluginName + "/" + admin.UpgradeJobsPath,
 						},

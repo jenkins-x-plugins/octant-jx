@@ -13,6 +13,7 @@ const (
 	BootPipelinesPath   = "pipelines/boot"
 	FailedPipelinesPath = "pipelines/failed"
 	HealthPath          = "health"
+	SecretsPath         = "secrets"
 	BootJobsPath        = "jobs/boot"
 	GCPipelineJobsPath  = "jobs/gcpipeline"
 	GCPodJobsPath       = "jobs/gcpod"

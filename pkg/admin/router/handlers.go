@@ -49,6 +49,7 @@ func (h *Handlers) InitRoutes(router *service.Router) {
 	h.handleView(router, admin.BootPipelinesPath, views.BuildBootPipelinesView)
 	h.handleView(router, admin.FailedPipelinesPath, views.BuildFailedReleasePipelinesView)
 	h.handleView(router, admin.HealthPath, views.HealthView)
+	h.handleView(router, admin.SecretsPath, views.BuildSecretsView)
 
 	h.handleJobsPath(router, admin.GCPipelineJobsPath)
 	h.handleJobsPath(router, admin.GCPodJobsPath)
