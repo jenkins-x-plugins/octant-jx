@@ -975,6 +975,7 @@ github.com/jenkins-x/jx-secret v0.0.173 h1:7bHGTylHU8YyOrWFddi1NrcTe7Gq75PZZL/r0
 github.com/jenkins-x/jx-secret v0.0.173/go.mod h1:1p58leAkNkypZlG35UbcfV7zbFfCoYiRY7RoQpl5csA=
 github.com/jenkins-x/jx-secret v0.0.178 h1:QsnyO6Tr/GhR04Xs8Z0k8mqquAslKgSDSsgVFqWlZmE=
 github.com/jenkins-x/jx-secret v0.0.178/go.mod h1:rnYVkNJ9Xc+GDEuwTBHBM5vzyIyvrdX0qXlhbZ0JR1o=
+github.com/jenkins-x/jx-secret v0.0.179/go.mod h1:rnYVkNJ9Xc+GDEuwTBHBM5vzyIyvrdX0qXlhbZ0JR1o=
 github.com/jenkins-x/lighthouse v0.0.841/go.mod h1:Sqgo6UEVC7uo2oopyFi33IJhdRT1PPBwy+5xso0I8rw=
 github.com/jenkins-x/lighthouse v0.0.848 h1:6BNzzc9R1asNQ336kW0ajohYnFFtxyiqnpJTWpvIsdo=
 github.com/jenkins-x/lighthouse v0.0.848/go.mod h1:7bCp0s3OI9e2mHP330CvJuY7JWtx6V97CSo+aYnzgwk=

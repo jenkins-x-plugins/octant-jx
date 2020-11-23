@@ -13,7 +13,7 @@ require (
 	github.com/jenkins-x/jx-logging/v3 v3.0.2
 	github.com/jenkins-x/jx-pipeline v0.0.63
 	github.com/jenkins-x/jx-preview v0.0.118
-	github.com/jenkins-x/jx-secret v0.0.178
+	github.com/jenkins-x/jx-secret v0.0.179
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.6.1
 	github.com/tektoncd/pipeline v0.16.3
