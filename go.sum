@@ -939,12 +939,14 @@ github.com/jenkins-x/go-scm v1.5.183/go.mod h1:xk/KnuS3rVHKBEASsShBZGABm9cGrwntQ
 github.com/jenkins-x/go-scm v1.5.186/go.mod h1:pTp8HHrCEVGs24H/8Cy+X/CDXFlKv9VC6zmrXBYNkfE=
 github.com/jenkins-x/go-scm v1.5.190 h1:fJKQJmn+WsIcojwFQEorpb7JXFxVJeaYY8y+4lbyweU=
 github.com/jenkins-x/go-scm v1.5.190/go.mod h1:pTp8HHrCEVGs24H/8Cy+X/CDXFlKv9VC6zmrXBYNkfE=
+github.com/jenkins-x/go-scm v1.5.191/go.mod h1:pTp8HHrCEVGs24H/8Cy+X/CDXFlKv9VC6zmrXBYNkfE=
 github.com/jenkins-x/golang-jenkins v0.0.0-20180919102630-65b83ad42314/go.mod h1:C6j5HgwlHGjRU27W4XCs6jXksqYFo8OdBu+p44jqQeM=
 github.com/jenkins-x/jx-api/v3 v3.0.0/go.mod h1:T/Q15bSgPAq9+4k5gMZIuVVmj6rfCDqF4XYLJXkM3Q8=
 github.com/jenkins-x/jx-api/v3 v3.0.1 h1:kB3f6r/xUzwdMjeh/R+nE72bLHLaQHCB8Cxs96l5KCc=
 github.com/jenkins-x/jx-api/v3 v3.0.1/go.mod h1:T/Q15bSgPAq9+4k5gMZIuVVmj6rfCDqF4XYLJXkM3Q8=
 github.com/jenkins-x/jx-api/v3 v3.0.3 h1:jiRlPKn5hebsfHDi+Pq3IPKGPcTnvyfLXTQYuMFrn+A=
 github.com/jenkins-x/jx-api/v3 v3.0.3/go.mod h1:8akIl/53O1P/DfyXz6ZysWl/9AfdVlJpZK/xOajgXos=
+github.com/jenkins-x/jx-api/v4 v4.0.11/go.mod h1:3n+xwDoSuALVUSlIUj8nK105k7hqP5HoTh7cch/FScc=
 github.com/jenkins-x/jx-gitops v0.0.413/go.mod h1:EfokI4Y1qbPidAalMFrmNW0nR3otTQ1/2XjeQM7sXok=
 github.com/jenkins-x/jx-helpers/v3 v3.0.0/go.mod h1:gwTYDwvCi4qduS2qRSbn6P/isyObDDxmOeM5CTMfn+s=
 github.com/jenkins-x/jx-helpers/v3 v3.0.3/go.mod h1:gwTYDwvCi4qduS2qRSbn6P/isyObDDxmOeM5CTMfn+s=
@@ -954,6 +956,7 @@ github.com/jenkins-x/jx-helpers/v3 v3.0.6/go.mod h1:r3QYErQdwy+5ceg9/ipwPJLLsdwi
 github.com/jenkins-x/jx-helpers/v3 v3.0.9/go.mod h1:YulZCWgM+W49nkW7juaOwIEOyXkmwfaMdsC6/W5b+H8=
 github.com/jenkins-x/jx-helpers/v3 v3.0.15 h1:AQ0H2krcz6NbugyiqXzhNAZY5Os8PFdDhk+5FZYTU1g=
 github.com/jenkins-x/jx-helpers/v3 v3.0.15/go.mod h1:YulZCWgM+W49nkW7juaOwIEOyXkmwfaMdsC6/W5b+H8=
+github.com/jenkins-x/jx-helpers/v3 v3.0.29/go.mod h1:nmXx3EyNNco3C3BOumzKysDMgz3YQuGtG7PxS+1KPSI=
 github.com/jenkins-x/jx-kube-client/v3 v3.0.0/go.mod h1:0CYp1ACEgSmOxul1bx5qbZgQGEcyAeGdBOBa+u62zZY=
 github.com/jenkins-x/jx-kube-client/v3 v3.0.1 h1:zMnxoLRXJJ85PAd9OVPlgXT5T8xHgbmxSMhpYPTF5mw=
 github.com/jenkins-x/jx-kube-client/v3 v3.0.1/go.mod h1:0CYp1ACEgSmOxul1bx5qbZgQGEcyAeGdBOBa+u62zZY=
@@ -975,6 +978,7 @@ github.com/jenkins-x/jx-secret v0.0.173 h1:7bHGTylHU8YyOrWFddi1NrcTe7Gq75PZZL/r0
 github.com/jenkins-x/jx-secret v0.0.173/go.mod h1:1p58leAkNkypZlG35UbcfV7zbFfCoYiRY7RoQpl5csA=
 github.com/jenkins-x/jx-secret v0.0.178 h1:QsnyO6Tr/GhR04Xs8Z0k8mqquAslKgSDSsgVFqWlZmE=
 github.com/jenkins-x/jx-secret v0.0.178/go.mod h1:rnYVkNJ9Xc+GDEuwTBHBM5vzyIyvrdX0qXlhbZ0JR1o=
+github.com/jenkins-x/jx-secret v0.0.182/go.mod h1:rSukX6atg/j/Hu3SncxAc4p2YyWHd6zb4bdnaqw8Tig=
 github.com/jenkins-x/lighthouse v0.0.841/go.mod h1:Sqgo6UEVC7uo2oopyFi33IJhdRT1PPBwy+5xso0I8rw=
 github.com/jenkins-x/lighthouse v0.0.848 h1:6BNzzc9R1asNQ336kW0ajohYnFFtxyiqnpJTWpvIsdo=
 github.com/jenkins-x/lighthouse v0.0.848/go.mod h1:7bCp0s3OI9e2mHP330CvJuY7JWtx6V97CSo+aYnzgwk=
@@ -1088,6 +1092,7 @@ github.com/mattn/go-colorable v0.1.2/go.mod h1:U0ppj6V5qS13XJ6of8GYAs25YV2eR4EVc
 github.com/mattn/go-colorable v0.1.4/go.mod h1:U0ppj6V5qS13XJ6of8GYAs25YV2eR4EVcfRqFIhoBtE=
 github.com/mattn/go-colorable v0.1.6 h1:6Su7aK7lXmJ/U79bYtBjLNaha4Fs1Rg9plHpcH+vvnE=
 github.com/mattn/go-colorable v0.1.6/go.mod h1:u6P/XSegPjTcexA+o6vUJrdnUu04hMope9wVRipJSqc=
+github.com/mattn/go-colorable v0.1.7/go.mod h1:u6P/XSegPjTcexA+o6vUJrdnUu04hMope9wVRipJSqc=
 github.com/mattn/go-ieproxy v0.0.0-20190610004146-91bb50d98149/go.mod h1:31jz6HNzdxOmlERGGEc4v/dMssOfmp2p5bT/okiKFFc=
 github.com/mattn/go-ieproxy v0.0.0-20190702010315-6dee0af9227d/go.mod h1:31jz6HNzdxOmlERGGEc4v/dMssOfmp2p5bT/okiKFFc=
 github.com/mattn/go-ieproxy v0.0.1/go.mod h1:pYabZ6IHcRpFh7vIaLfK7rdcWgFEb3SFJ6/gNWuh88E=
@@ -1331,6 +1336,7 @@ github.com/qri-io/starlib v0.4.2-0.20200213133954-ff2e8cd5ef8d/go.mod h1:7DPO4do
 github.com/quasilyte/go-consistent v0.0.0-20190521200055-c6f3937de18c/go.mod h1:5STLWrekHfjyYwxBRVRXNOSewLJ3PWfDJd1VyTS21fI=
 github.com/quasilyte/go-ruleguard v0.1.2-0.20200318202121-b00d7a75d3d8/go.mod h1:CGFX09Ci3pq9QZdj86B+VGIdNj4VyCo2iPOGS9esB/k=
 github.com/r3labs/diff v0.0.0-20190801153147-a71de73c46ad/go.mod h1:ozniNEFS3j1qCwHKdvraMn1WJOsUxHd7lYfukEIS4cs=
+github.com/rawlingsj/jsonschema v0.0.0-20201130104235-44c4fb269f83/go.mod h1:8LFgdjjkhuo3+T0/kprWPWGqh2+v8QC4hLyjNK6j15s=
 github.com/rcrowley/go-metrics v0.0.0-20181016184325-3113b8401b8a/go.mod h1:bCqnVzQkZxMG4s8nGwiZ5l3QUCyqpo9Y+/ZMZ9VjZe4=
 github.com/rcrowley/go-metrics v0.0.0-20190706150252-9beb055b7962/go.mod h1:bCqnVzQkZxMG4s8nGwiZ5l3QUCyqpo9Y+/ZMZ9VjZe4=
 github.com/remyoudompheng/bigfft v0.0.0-20170806203942-52369c62f446/go.mod h1:uYEyJGbgTkfkS4+E/PavXkNJcbFIpEtjt2B0KDQ5+9M=
