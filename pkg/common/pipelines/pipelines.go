@@ -3,7 +3,7 @@ package pipelines
 import (
 	"context"
 
-	v1 "github.com/jenkins-x/jx-api/v3/pkg/apis/jenkins.io/v1"
+	v1 "github.com/jenkins-x/jx-api/v4/pkg/apis/jenkins.io/v1"
 	"github.com/jenkins-x/jx-logging/v3/pkg/log"
 	jxpipeline "github.com/jenkins-x/jx-pipeline/pkg/pipelines"
 	"github.com/jenkins-x/octant-jx/pkg/common/viewhelpers"
