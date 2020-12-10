@@ -1681,6 +1681,8 @@ github.com/vektah/gqlparser v1.1.2/go.mod h1:1ycwN7Ij5njmMkPPAOaRFY4rET2Enx7IkVv
 github.com/vektra/mockery v1.1.2/go.mod h1:VcfZjKaFOPO+MpN4ZvwPjs4c48lkq1o3Ym8yHZJu0jU=
 github.com/vmware-tanzu/octant v0.16.1 h1:fkofB9oZ4yTqOaKf0JEhdibnIGBEOJ4OYOZL4Kli74A=
 github.com/vmware-tanzu/octant v0.16.1/go.mod h1:FhWXp2v0bgOQEwuOMOE49DXUu+uwWt8lXh7aOHtrA8A=
+github.com/vmware-tanzu/octant v0.16.3 h1:i2C1v2neIY3RBcZgOevWJpeJyV5F66kahSn6H0Oq2aY=
+github.com/vmware-tanzu/octant v0.16.3/go.mod h1:FhWXp2v0bgOQEwuOMOE49DXUu+uwWt8lXh7aOHtrA8A=
 github.com/vmware/govmomi v0.20.3/go.mod h1:URlwyTFZX72RmxtxuaFL2Uj3fD1JTvZdx59bHWk6aFU=
 github.com/vrischmann/envconfig v1.2.0/go.mod h1:c5DuUlkzfsnspy1g7qiqryPCsW+NjsrLsYq4zhwsoHo=
 github.com/vrischmann/envconfig v1.3.0/go.mod h1:bbvxFYJdRSpXrhS63mBFtKJzkDiNkyArOLXtY6q0kuI=
