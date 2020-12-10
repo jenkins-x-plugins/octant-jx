@@ -68,3 +68,11 @@ clean: ## Clean the generated artifacts
 lint: ## Lint the code
 	./hack/gofmt.sh
 	./hack/linter.sh
+
+.PHONY: bindata
+fetch:
+	curl -L https://raw.githubusercontent.com/jenkins-x-plugins/jx-health/master/pkg/health/lookup/static_data/info.yaml > files/health.yaml
+
+.PHONY: bindata
+bindata:
+	go-bindata -o pkg/assets/assets.go -pkg assets files/*.yaml

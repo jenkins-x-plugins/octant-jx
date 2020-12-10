@@ -1,7 +1,7 @@
 package views
 
 import (
-	v1 "github.com/jenkins-x/jx-api/v3/pkg/apis/jenkins.io/v1"
+	v1 "github.com/jenkins-x/jx-api/v4/pkg/apis/jenkins.io/v1"
 	"github.com/jenkins-x/octant-jx/pkg/common/viewhelpers"
 	"github.com/vmware-tanzu/octant/pkg/view/component"
 )
