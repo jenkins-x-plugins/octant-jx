@@ -2,6 +2,7 @@ package views // import "github.com/jenkins-x/octant-jx/pkg/plugin/views"
 
 import (
 	"github.com/jenkins-x/jx-logging/v3/pkg/log"
+	"github.com/jenkins-x/octant-jx/pkg/admin/healthdata"
 
 	"github.com/jenkins-x/octant-jx/pkg/admin"
 	"github.com/pkg/errors"
@@ -137,6 +138,9 @@ func toHealthTableRow(u *unstructured.Unstructured) (*component.TableRow, error)
 	nameComponent := component.NewText(name)
 
 	docLink := ann["docs.jenkins-x.io"]
+	if docLink == "" {
+		docLink = healthdata.HealthInfo[name]
+	}
 	if docLink != "" {
 		nameComponent = viewhelpers.NewMarkdownText(viewhelpers.ToMarkdownExternalLink(name, "docs", docLink))
 	}

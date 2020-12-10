@@ -5,7 +5,7 @@ go 1.15
 require (
 	//github.com/Azure/go-autorest/autorest v0.10.0 // indirect
 	//github.com/Azure/go-autorest/autorest/adal v0.8.3 // indirect
-	github.com/ghodss/yaml v1.0.1-0.20190212211648-25d852aebe32 // indirect
+	github.com/ghodss/yaml v1.0.1-0.20190212211648-25d852aebe32
 	github.com/hashicorp/go-plugin v1.0.1 // indirect
 	github.com/hashicorp/vault v1.2.3 // indirect
 	github.com/jenkins-x/gen-crd-api-reference-docs v0.1.6 // indirect

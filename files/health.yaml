@@ -1,0 +1,24 @@
+daemonset:
+  https://github.com/Comcast/kuberhealthy/blob/230c4f1/cmd/daemonset-check/README.md
+deployment:
+  https://github.com/Comcast/kuberhealthy/blob/230c4f1/cmd/deployment-check/README.md
+dns-status-internal:
+  https://github.com/Comcast/kuberhealthy/blob/230c4f1/cmd/dns-resolution-check/README.md
+dns-status-external:
+  https://github.com/Comcast/kuberhealthy/blob/230c4f1/cmd/dns-resolution-check/README.md
+jx-bot-token:
+  https://github.com/jenkins-x-plugins/jx-kh-check/blob/master/cmd/jx-bot-token/README.md
+jx-core:
+  https://github.com/jenkins-x-plugins/jx-kh-check/blob/master/cmd/jx-core/README.md
+jx-install:
+  https://github.com/jenkins-x-plugins/jx-kh-check/blob/master/cmd/jx-install/README.md
+jx-secrets:
+  https://github.com/jenkins-x-plugins/jx-kh-check/blob/master/cmd/jx-secrets/README.md
+jx-webhooks:
+  https://github.com/jenkins-x-plugins/jx-kh-check/blob/master/cmd/jx-webhooks/README.md
+network-connection-check:
+  https://github.com/Comcast/kuberhealthy/blob/230c4f1/cmd/network-connection-check/README.md
+pod-restarts:
+  https://github.com/Comcast/kuberhealthy/blob/230c4f1/cmd/pod-restarts-check/README.md
+pod-status:
+  https://github.com/Comcast/kuberhealthy/blob/230c4f1/cmd/pod-status-check/README.md
