@@ -20,10 +20,22 @@ func HealthView(request service.Request, _ pluginctx.Context) (component.Compone
 	ctx := request.Context()
 	client := request.DashboardClient()
 
+	checks, err := client.List(ctx, store.Key{
+		APIVersion: "comcast.github.io/v1",
+		Kind:       "KuberhealthyCheck",
+	})
+
+	if err != nil {
+		log.Logger().Infof("failed: %s", err.Error())
+		return nil, err
+	}
+
 	h, err := client.List(ctx, store.Key{
 		APIVersion: "comcast.github.io/v1",
 		Kind:       "KuberhealthyState",
 	})
+
+	annotate(checks, h)
 
 	if err != nil {
 		log.Logger().Infof("failed: %s", err.Error())
@@ -61,8 +73,40 @@ func HealthView(request service.Request, _ pluginctx.Context) (component.Compone
 
 }
 
-func toHealthTableRow(u *unstructured.Unstructured) (*component.TableRow, error) {
+func annotate(checks *unstructured.UnstructuredList, states *unstructured.UnstructuredList) {
+	m := map[string]map[string]string{}
+	for _, u := range checks.Items {
+		name := u.GetName()
+		ann := u.GetAnnotations()
+		if ann != nil && name != "" {
+			m[name] = ann
+		}
+	}
+	for i := range states.Items {
+		u := &states.Items[i]
+		name := u.GetName()
+		ann := m[name]
+		if len(ann) == 0 {
+			continue
+		}
+		curr := u.GetAnnotations()
+		if curr == nil {
+			curr = map[string]string{}
+		}
+		for k, v := range ann {
+			if curr[k] == "" {
+				curr[k] = v
+			}
+		}
+		u.SetAnnotations(curr)
+	}
+}
 
+func toHealthTableRow(u *unstructured.Unstructured) (*component.TableRow, error) {
+	ann := u.GetAnnotations()
+	if ann == nil {
+		ann = map[string]string{}
+	}
 	name := u.GetName()
 	namespace, _, err := unstructured.NestedString(u.Object, "metadata", "namespace")
 	if err != nil {
@@ -90,8 +134,15 @@ func toHealthTableRow(u *unstructured.Unstructured) (*component.TableRow, error)
 		healthErrorMessage = healthErrorMessage + healthError + "\n"
 	}
 
+	nameComponent := component.NewText(name)
+
+	docLink := ann["docs.jenkins-x.io"]
+	if docLink != "" {
+		nameComponent = viewhelpers.NewMarkdownText(viewhelpers.ToMarkdownExternalLink(name, "docs", docLink))
+	}
+
 	return &component.TableRow{
-		"Name":      component.NewText(name),
+		"Name":      nameComponent,
 		"Namespace": component.NewText(namespace),
 		"Healthy":   viewhelpers.NewMarkdownText(statusComment),
 		"Errors":    component.NewText(healthErrorMessage),
