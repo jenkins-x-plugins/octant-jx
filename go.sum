@@ -1062,6 +1062,7 @@ github.com/jenkins-x/jx-pipeline v0.0.63 h1:27qC8nGji64d/BJ+eTv5/Xfu4vyOrISwoZUs
 github.com/jenkins-x/jx-pipeline v0.0.63/go.mod h1:ve2MR2NtBnmG34okvGJtG0wFSDSakOuYxh6tC2pYnII=
 github.com/jenkins-x/jx-pipeline v0.0.72 h1:A7G4jTSq3CxrYe47ig+hfZIP92F4eDlScR6WfuSZAfE=
 github.com/jenkins-x/jx-pipeline v0.0.72/go.mod h1:kh3uwSYtQ5i4d5BkEcoD/M9PbO0E0svWfdEae4PNnBk=
+github.com/jenkins-x/jx-pipeline v0.0.73/go.mod h1:kh3uwSYtQ5i4d5BkEcoD/M9PbO0E0svWfdEae4PNnBk=
 github.com/jenkins-x/jx-preview v0.0.118 h1:Ml9VcfmqplmA1caSqdJiNRJHVEoGPPXqTw20X0PBQF0=
 github.com/jenkins-x/jx-preview v0.0.118/go.mod h1:zd1BU4c6Ulw7e7AGVGZmUaJhsME9l8oqEg5/jFu2xF8=
 github.com/jenkins-x/jx-preview v0.0.135 h1:Pk4c8pUtzhZS3HCVFaquOHNOOp5Qb4Ta0L4Ri2Y7CCQ=

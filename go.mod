@@ -14,7 +14,7 @@ require (
 	github.com/jenkins-x/jx-gitops v0.0.476 // indirect
 	github.com/jenkins-x/jx-helpers/v3 v3.0.31
 	github.com/jenkins-x/jx-logging/v3 v3.0.2
-	github.com/jenkins-x/jx-pipeline v0.0.72
+	github.com/jenkins-x/jx-pipeline v0.0.73
 	github.com/jenkins-x/jx-preview v0.0.135
 	github.com/jenkins-x/jx-secret v0.0.188
 	github.com/jenkins-x/lighthouse v0.0.882 // indirect
