@@ -9,13 +9,11 @@ require (
 	github.com/hashicorp/go-plugin v1.0.1 // indirect
 	github.com/hashicorp/vault v1.2.3 // indirect
 	github.com/jenkins-x/gen-crd-api-reference-docs v0.1.6 // indirect
-	github.com/jenkins-x/go-scm v1.5.197 // indirect
 	github.com/jenkins-x/jx-api/v4 v4.0.14
-	github.com/jenkins-x/jx-gitops v0.0.476 // indirect
-	github.com/jenkins-x/jx-helpers/v3 v3.0.31
+	github.com/jenkins-x/jx-helpers/v3 v3.0.33
 	github.com/jenkins-x/jx-logging/v3 v3.0.2
 	github.com/jenkins-x/jx-pipeline v0.0.72
-	github.com/jenkins-x/jx-preview v0.0.135
+	github.com/jenkins-x/jx-preview v0.0.136
 	github.com/jenkins-x/jx-secret v0.0.188
 	github.com/jenkins-x/lighthouse v0.0.882 // indirect
 	github.com/pkg/errors v0.9.1
