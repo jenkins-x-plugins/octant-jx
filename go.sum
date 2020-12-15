@@ -1048,6 +1048,7 @@ github.com/jenkins-x/jx-helpers/v3 v3.0.15/go.mod h1:YulZCWgM+W49nkW7juaOwIEOyXk
 github.com/jenkins-x/jx-helpers/v3 v3.0.29/go.mod h1:nmXx3EyNNco3C3BOumzKysDMgz3YQuGtG7PxS+1KPSI=
 github.com/jenkins-x/jx-helpers/v3 v3.0.31 h1:K2wLgl52GEhgTOXop/PF+qdABO6CRJpZ+Dhav1ZetDM=
 github.com/jenkins-x/jx-helpers/v3 v3.0.31/go.mod h1:nmXx3EyNNco3C3BOumzKysDMgz3YQuGtG7PxS+1KPSI=
+github.com/jenkins-x/jx-helpers/v3 v3.0.35/go.mod h1:nmXx3EyNNco3C3BOumzKysDMgz3YQuGtG7PxS+1KPSI=
 github.com/jenkins-x/jx-kube-client/v3 v3.0.0/go.mod h1:0CYp1ACEgSmOxul1bx5qbZgQGEcyAeGdBOBa+u62zZY=
 github.com/jenkins-x/jx-kube-client/v3 v3.0.1 h1:zMnxoLRXJJ85PAd9OVPlgXT5T8xHgbmxSMhpYPTF5mw=
 github.com/jenkins-x/jx-kube-client/v3 v3.0.1/go.mod h1:0CYp1ACEgSmOxul1bx5qbZgQGEcyAeGdBOBa+u62zZY=
@@ -1075,6 +1076,7 @@ github.com/jenkins-x/jx-secret v0.0.178 h1:QsnyO6Tr/GhR04Xs8Z0k8mqquAslKgSDSsgVF
 github.com/jenkins-x/jx-secret v0.0.178/go.mod h1:rnYVkNJ9Xc+GDEuwTBHBM5vzyIyvrdX0qXlhbZ0JR1o=
 github.com/jenkins-x/jx-secret v0.0.188 h1:X8p2zRjC2AU6HJvM9mYAJnmItlwKT9dP6yqb5vfGH18=
 github.com/jenkins-x/jx-secret v0.0.188/go.mod h1:NhfMSopH+vfjdJn1hdHiEnr1GV/ckKcIEqajj8Jd/eI=
+github.com/jenkins-x/jx-secret v0.0.194/go.mod h1:ZtALJer6QiA+i2R65e8wW0nPEJ63awP063PKiZbUMB8=
 github.com/jenkins-x/lighthouse v0.0.841/go.mod h1:Sqgo6UEVC7uo2oopyFi33IJhdRT1PPBwy+5xso0I8rw=
 github.com/jenkins-x/lighthouse v0.0.848 h1:6BNzzc9R1asNQ336kW0ajohYnFFtxyiqnpJTWpvIsdo=
 github.com/jenkins-x/lighthouse v0.0.848/go.mod h1:7bCp0s3OI9e2mHP330CvJuY7JWtx6V97CSo+aYnzgwk=
