@@ -54,6 +54,7 @@ code.cloudfoundry.org/gofileutils v0.0.0-20170111115228-4d0c80011a0f/go.mod h1:s
 code.gitea.io/sdk/gitea v0.12.0/go.mod h1:z3uwDV/b9Ls47NGukYM9XhnHtqPh/J+t40lsUrR6JDY=
 code.gitea.io/sdk/gitea v0.12.1/go.mod h1:z3uwDV/b9Ls47NGukYM9XhnHtqPh/J+t40lsUrR6JDY=
 code.gitea.io/sdk/gitea v0.13.0/go.mod h1:z3uwDV/b9Ls47NGukYM9XhnHtqPh/J+t40lsUrR6JDY=
+code.gitea.io/sdk/gitea v0.13.1-0.20201217044651-7ddbf1a0151e/go.mod h1:89WiyOX1KEcvjP66sRHdu0RafojGo60bT9UqW17VbWs=
 contrib.go.opencensus.io/exporter/aws v0.0.0-20181029163544-2befc13012d0/go.mod h1:uu1P0UCM/6RbsMrgPa98ll8ZcHM858i/AD06a9aLRCA=
 contrib.go.opencensus.io/exporter/jaeger v0.2.1/go.mod h1:Y8IsLgdxqh1QxYxPC5IgXVmBaeLUeQFfBeBi9PbeZd0=
 contrib.go.opencensus.io/exporter/ocagent v0.4.12/go.mod h1:450APlNTSR6FrvC3CTRqYosuDstRB9un7SOx2k/9ckA=
@@ -638,6 +639,7 @@ github.com/go-yaml/yaml v2.1.0+incompatible/go.mod h1:w2MrLa16VYP0jy6N7M5kHaCkaL
 github.com/gobuffalo/envy v1.6.5/go.mod h1:N+GkhhZ/93bGZc6ZKhJLP6+m+tCNPKwgSpH9kaifseQ=
 github.com/gobuffalo/envy v1.7.0/go.mod h1:n7DRkBerg/aorDM8kbduw5dN3oXGswK5liaSCx4T5NI=
 github.com/gobuffalo/envy v1.7.1/go.mod h1:FurDp9+EDPE4aIUS3ZLyD+7/9fpx7YRt/ukY6jIHf0w=
+github.com/gobuffalo/here v0.6.0/go.mod h1:wAG085dHOYqUpf+Ap+WOdrPTp5IYcDAs/x7PLa8Y5fM=
 github.com/gobuffalo/logger v1.0.1/go.mod h1:2zbswyIUa45I+c+FLXuWl9zSWEiVuthsk8ze5s8JvPs=
 github.com/gobuffalo/packd v0.3.0/go.mod h1:zC7QkmNkYVGKPw4tHpBQ+ml7W/3tIebgeo1b36chA3Q=
 github.com/gobuffalo/packr/v2 v2.7.1/go.mod h1:qYEvAazPaVxy7Y7KR0W8qYEE+RymX74kETFqjFoFlOc=
@@ -1022,6 +1024,10 @@ github.com/jenkins-x/go-scm v1.5.194/go.mod h1:pTp8HHrCEVGs24H/8Cy+X/CDXFlKv9VC6
 github.com/jenkins-x/go-scm v1.5.196/go.mod h1:pTp8HHrCEVGs24H/8Cy+X/CDXFlKv9VC6zmrXBYNkfE=
 github.com/jenkins-x/go-scm v1.5.197 h1:AW1RrlPrQYhrJ46l7zHL3IPkqhFaLkACz+D2rZPSMsY=
 github.com/jenkins-x/go-scm v1.5.197/go.mod h1:pTp8HHrCEVGs24H/8Cy+X/CDXFlKv9VC6zmrXBYNkfE=
+github.com/jenkins-x/go-scm v1.5.199/go.mod h1:pTp8HHrCEVGs24H/8Cy+X/CDXFlKv9VC6zmrXBYNkfE=
+github.com/jenkins-x/go-scm v1.5.201/go.mod h1:pTp8HHrCEVGs24H/8Cy+X/CDXFlKv9VC6zmrXBYNkfE=
+github.com/jenkins-x/go-scm v1.5.202 h1:vQjXHvJugecL1vU2S9/hVKy/7VNyrrOopQWCnNtdlcI=
+github.com/jenkins-x/go-scm v1.5.202/go.mod h1:pTp8HHrCEVGs24H/8Cy+X/CDXFlKv9VC6zmrXBYNkfE=
 github.com/jenkins-x/golang-jenkins v0.0.0-20180919102630-65b83ad42314/go.mod h1:C6j5HgwlHGjRU27W4XCs6jXksqYFo8OdBu+p44jqQeM=
 github.com/jenkins-x/jx-api/v4 v3.0.0/go.mod h1:T/Q15bSgPAq9+4k5gMZIuVVmj6rfCDqF4XYLJXkM3Q8=
 github.com/jenkins-x/jx-api/v4 v3.0.1 h1:kB3f6r/xUzwdMjeh/R+nE72bLHLaQHCB8Cxs96l5KCc=
@@ -1037,6 +1043,9 @@ github.com/jenkins-x/jx-gitops v0.0.445/go.mod h1:vUW5XthuwRMzCiSt07+LvyGC87Or1H
 github.com/jenkins-x/jx-gitops v0.0.465/go.mod h1:u67MqFk47VeAWc0Nqvi0+bUlOsuRILd3qHFPn2WI4b0=
 github.com/jenkins-x/jx-gitops v0.0.476 h1:ANgEYg81HZAG0pYHYghf1tD4KJARngMSP9tqUdChqCY=
 github.com/jenkins-x/jx-gitops v0.0.476/go.mod h1:vnLFvH7qZv0qEst3ONQf2hw0TDwPh7gavG1j7WJdtks=
+github.com/jenkins-x/jx-gitops v0.0.496/go.mod h1:XcdSC4p45y5D8EV3RTbS5bXqGrWMMKMVrT44rOLzRvU=
+github.com/jenkins-x/jx-gitops v0.0.508 h1:+9RrkPT46Q7pQjK50kVEanpEP/Rlt/VMdNuxOHed8f0=
+github.com/jenkins-x/jx-gitops v0.0.508/go.mod h1:bRaDoaK5x2g78qFYpfdx8TCW/3tk0COo6bXW5kUSe54=
 github.com/jenkins-x/jx-helpers/v3 v3.0.0/go.mod h1:gwTYDwvCi4qduS2qRSbn6P/isyObDDxmOeM5CTMfn+s=
 github.com/jenkins-x/jx-helpers/v3 v3.0.3/go.mod h1:gwTYDwvCi4qduS2qRSbn6P/isyObDDxmOeM5CTMfn+s=
 github.com/jenkins-x/jx-helpers/v3 v3.0.5/go.mod h1:gwTYDwvCi4qduS2qRSbn6P/isyObDDxmOeM5CTMfn+s=
@@ -1048,6 +1057,11 @@ github.com/jenkins-x/jx-helpers/v3 v3.0.15/go.mod h1:YulZCWgM+W49nkW7juaOwIEOyXk
 github.com/jenkins-x/jx-helpers/v3 v3.0.29/go.mod h1:nmXx3EyNNco3C3BOumzKysDMgz3YQuGtG7PxS+1KPSI=
 github.com/jenkins-x/jx-helpers/v3 v3.0.31 h1:K2wLgl52GEhgTOXop/PF+qdABO6CRJpZ+Dhav1ZetDM=
 github.com/jenkins-x/jx-helpers/v3 v3.0.31/go.mod h1:nmXx3EyNNco3C3BOumzKysDMgz3YQuGtG7PxS+1KPSI=
+github.com/jenkins-x/jx-helpers/v3 v3.0.39/go.mod h1:nmXx3EyNNco3C3BOumzKysDMgz3YQuGtG7PxS+1KPSI=
+github.com/jenkins-x/jx-helpers/v3 v3.0.41/go.mod h1:nmXx3EyNNco3C3BOumzKysDMgz3YQuGtG7PxS+1KPSI=
+github.com/jenkins-x/jx-helpers/v3 v3.0.45/go.mod h1:sLCICGle5SWzgG2qLSscPom7LNZJzJhYXPL+Um9BMPI=
+github.com/jenkins-x/jx-helpers/v3 v3.0.47 h1:ueeMWXIEm6bjvulKHNebdJJmBSbpMJswo29gCcrC0fs=
+github.com/jenkins-x/jx-helpers/v3 v3.0.47/go.mod h1:sLCICGle5SWzgG2qLSscPom7LNZJzJhYXPL+Um9BMPI=
 github.com/jenkins-x/jx-kube-client/v3 v3.0.0/go.mod h1:0CYp1ACEgSmOxul1bx5qbZgQGEcyAeGdBOBa+u62zZY=
 github.com/jenkins-x/jx-kube-client/v3 v3.0.1 h1:zMnxoLRXJJ85PAd9OVPlgXT5T8xHgbmxSMhpYPTF5mw=
 github.com/jenkins-x/jx-kube-client/v3 v3.0.1/go.mod h1:0CYp1ACEgSmOxul1bx5qbZgQGEcyAeGdBOBa+u62zZY=
@@ -1062,10 +1076,14 @@ github.com/jenkins-x/jx-pipeline v0.0.63 h1:27qC8nGji64d/BJ+eTv5/Xfu4vyOrISwoZUs
 github.com/jenkins-x/jx-pipeline v0.0.63/go.mod h1:ve2MR2NtBnmG34okvGJtG0wFSDSakOuYxh6tC2pYnII=
 github.com/jenkins-x/jx-pipeline v0.0.72 h1:A7G4jTSq3CxrYe47ig+hfZIP92F4eDlScR6WfuSZAfE=
 github.com/jenkins-x/jx-pipeline v0.0.72/go.mod h1:kh3uwSYtQ5i4d5BkEcoD/M9PbO0E0svWfdEae4PNnBk=
+github.com/jenkins-x/jx-pipeline v0.0.75 h1:bnzGJalvw4s3JrnPeSdlReE/yhVqybnrbTpOC6a4qws=
+github.com/jenkins-x/jx-pipeline v0.0.75/go.mod h1:JzJb6WwHVoUFObY2kz6rwhsjjatjs4ekz3E3iQMe2ao=
 github.com/jenkins-x/jx-preview v0.0.118 h1:Ml9VcfmqplmA1caSqdJiNRJHVEoGPPXqTw20X0PBQF0=
 github.com/jenkins-x/jx-preview v0.0.118/go.mod h1:zd1BU4c6Ulw7e7AGVGZmUaJhsME9l8oqEg5/jFu2xF8=
 github.com/jenkins-x/jx-preview v0.0.135 h1:Pk4c8pUtzhZS3HCVFaquOHNOOp5Qb4Ta0L4Ri2Y7CCQ=
 github.com/jenkins-x/jx-preview v0.0.135/go.mod h1:5cH1eoX/V2zeTSRYP9O50fNiw1asL9yWJbZEl2CJA/g=
+github.com/jenkins-x/jx-preview v0.0.138 h1:34N2fVjfy3tOmypArQKRskC8HwRDSqVfZE+OCy7seD0=
+github.com/jenkins-x/jx-preview v0.0.138/go.mod h1:OjbVfFnsh8wbdTZ+ll2T7WSS6kQD3WE9oyaHTDce8aM=
 github.com/jenkins-x/jx-secret v0.0.164/go.mod h1:LiAbgafyk+F1mqTxdaB+BdknRwAGoO9mGCbr/apKlAo=
 github.com/jenkins-x/jx-secret v0.0.170 h1:KdT+i1ZHhluv4G+x5KH3AGrctGWdvPsRY9jmOIExGB4=
 github.com/jenkins-x/jx-secret v0.0.170/go.mod h1:2SEyGLytO12I7MoCwmggerKExKQg4yY0MOHRbCTzqqc=
@@ -1075,6 +1093,8 @@ github.com/jenkins-x/jx-secret v0.0.178 h1:QsnyO6Tr/GhR04Xs8Z0k8mqquAslKgSDSsgVF
 github.com/jenkins-x/jx-secret v0.0.178/go.mod h1:rnYVkNJ9Xc+GDEuwTBHBM5vzyIyvrdX0qXlhbZ0JR1o=
 github.com/jenkins-x/jx-secret v0.0.188 h1:X8p2zRjC2AU6HJvM9mYAJnmItlwKT9dP6yqb5vfGH18=
 github.com/jenkins-x/jx-secret v0.0.188/go.mod h1:NhfMSopH+vfjdJn1hdHiEnr1GV/ckKcIEqajj8Jd/eI=
+github.com/jenkins-x/jx-secret v0.0.198 h1:qg5raFYSpYHQDNhiHam9MnEuisGFUttL6UToElloQGo=
+github.com/jenkins-x/jx-secret v0.0.198/go.mod h1:xWwGaueFRLZIREvdr0WuOi2p2wBjfkLh+oSN/984V8Q=
 github.com/jenkins-x/lighthouse v0.0.841/go.mod h1:Sqgo6UEVC7uo2oopyFi33IJhdRT1PPBwy+5xso0I8rw=
 github.com/jenkins-x/lighthouse v0.0.848 h1:6BNzzc9R1asNQ336kW0ajohYnFFtxyiqnpJTWpvIsdo=
 github.com/jenkins-x/lighthouse v0.0.848/go.mod h1:7bCp0s3OI9e2mHP330CvJuY7JWtx6V97CSo+aYnzgwk=
@@ -1085,6 +1105,10 @@ github.com/jenkins-x/lighthouse v0.0.878/go.mod h1:VFtk1v2AlwCcmo3s67uUGP+vHqgwg
 github.com/jenkins-x/lighthouse v0.0.881/go.mod h1:q4ZmVi9W54zLufIJDJPmYEWhZ87Gj2Aw03KMVFCNf/s=
 github.com/jenkins-x/lighthouse v0.0.882 h1:xzncSwCHPSgbwFmfuGMooahtbnmlWDua+8tC9L15WvA=
 github.com/jenkins-x/lighthouse v0.0.882/go.mod h1:+ZHF3gOdLvwkv4zH/6w+T9xDWJEuACabhWKtD+4BHYc=
+github.com/jenkins-x/lighthouse v0.0.885/go.mod h1:+ZHF3gOdLvwkv4zH/6w+T9xDWJEuACabhWKtD+4BHYc=
+github.com/jenkins-x/lighthouse v0.0.900/go.mod h1:0KheleNU+9r1MFqnizgwkLI3Q5hyOlX/um4EP+qhiLI=
+github.com/jenkins-x/lighthouse v0.0.903 h1:mJ9wcw9uXMpTRurHRHM/2ZzWthT6+vi/BI0LDhyUaOM=
+github.com/jenkins-x/lighthouse v0.0.903/go.mod h1:F+Ihc+Sj2fJOKkhS4T0+S7aaPveECVerCYjZUkxsrAc=
 github.com/jenkins-x/logrus-stackdriver-formatter v0.2.3 h1:NuRWKUPCEX1wKlXA8ZYSG28qGKd41R7BK11YDQkPwqo=
 github.com/jenkins-x/logrus-stackdriver-formatter v0.2.3/go.mod h1:litPp7VZWDRCl8LvXuqGngy+65kkg/+T23TgFnDmfTk=
 github.com/jenkins-x/pipeline v0.0.0-20201002150609-ca0741e5d19a h1:BmT+3ZVyqLrU5iySmp9FED315Mp9sq/yyYSyL2VGZwU=
@@ -1191,6 +1215,7 @@ github.com/mailru/easyjson v0.7.0/go.mod h1:KAzv3t3aY1NaHWoQz1+4F1ccyAH66Jk7yos7
 github.com/mailru/easyjson v0.7.1-0.20191009090205-6c0755d89d1e/go.mod h1:KAzv3t3aY1NaHWoQz1+4F1ccyAH66Jk7yos7ldAVICs=
 github.com/maratori/testpackage v1.0.1/go.mod h1:ddKdw+XG0Phzhx8BFDTKgpWP4i7MpApTE5fXSKAqwDU=
 github.com/markbates/inflect v1.0.4/go.mod h1:1fR9+pO2KHEO9ZRtto13gDwwZaAKstQzferVeWqbgNs=
+github.com/markbates/pkger v0.17.1/go.mod h1:0JoVlrol20BSywW79rN3kdFFsE5xYM+rSCQDXbLhiuI=
 github.com/marstr/guid v1.1.0/go.mod h1:74gB1z2wpxxInTG6yaqA7KrtM0NZ+RbrcqDvYHefzho=
 github.com/martini-contrib/render v0.0.0-20150707142108-ec18f8345a11/go.mod h1:Ah2dBMoxZEqk118as2T4u4fjfXarE0pPnMJaArZQZsI=
 github.com/matoous/godox v0.0.0-20190911065817-5d6d842e92eb/go.mod h1:1BELzlh859Sh1c6+90blK8lbYy0kwQf1bYlBhBysy1s=
@@ -1267,6 +1292,7 @@ github.com/modern-go/reflect2 v0.0.0-20180701023420-4b7aa43c6742/go.mod h1:bx2lN
 github.com/modern-go/reflect2 v1.0.1 h1:9f412s+6RmYXLWZSEzVVgPGK7C2PphHj5RJrvfx9AWI=
 github.com/modern-go/reflect2 v1.0.1/go.mod h1:bx2lNnkwVCuqBIxFjflWJWanXIb3RllmbCylyMrvgv0=
 github.com/mohae/deepcopy v0.0.0-20170929034955-c48cc78d4826/go.mod h1:TaXosZuwdSHYgviHp1DAtfrULt5eUgsSMsZf+YrPgl8=
+github.com/monochromegane/go-gitignore v0.0.0-20200626010858-205db1a8cc00/go.mod h1:Pm3mSP3c5uWn86xMLZ5Sa7JB9GsEZySvHYXCTK4E9q4=
 github.com/morikuni/aec v1.0.0/go.mod h1:BbKIizmSmc5MMPqRYbxO4ZU0S0+P200+tUnFx7PXmsc=
 github.com/mozilla-services/yaml v0.0.0-20180922153656-28ffe5d0cafb/go.mod h1:Is/Ucts/yU/mWyGR8yELRoO46mejouKsJfQLAIfTR18=
 github.com/mozilla-services/yaml v0.0.0-20191106225358-5c216288813c/go.mod h1:Is/Ucts/yU/mWyGR8yELRoO46mejouKsJfQLAIfTR18=
@@ -1470,6 +1496,7 @@ github.com/rickar/props v0.0.0-20170718221555-0b06aeb2f037 h1:HFsTO5S+nnw/Xs9lRY
 github.com/rickar/props v0.0.0-20170718221555-0b06aeb2f037/go.mod h1:F1p8BNM4IXv2UcptwSp8HJOapKurodd/PYu1D6Gtn9Y=
 github.com/roboll/helmfile v0.125.7/go.mod h1:g/eQLzIf1vD3J2I21RGTUntGLtFKQ16ENNHoXzAwB8g=
 github.com/roboll/helmfile v0.135.0/go.mod h1:okExTL3xysdqNoma69CPCaiSAIsDySi2YRu2Mmkv7Fo=
+github.com/roboll/helmfile v0.135.1-0.20201213020320-54eb73b4239a/go.mod h1:FN/KWtPfyp2tVBylTrBcEu1255rZzBcUVb2lci2I6S8=
 github.com/rogpeppe/fastuuid v0.0.0-20150106093220-6724a57986af/go.mod h1:XWv6SoW27p1b0cqNHllgS5HIMJraePCO15w5zCzIWYg=
 github.com/rogpeppe/fastuuid v1.1.0/go.mod h1:jVj6XXZzXRy/MSR5jhDC/2q6DgLz+nrA6LYCDYWNEvQ=
 github.com/rogpeppe/fastuuid v1.2.0/go.mod h1:jVj6XXZzXRy/MSR5jhDC/2q6DgLz+nrA6LYCDYWNEvQ=
@@ -2561,6 +2588,7 @@ sigs.k8s.io/kustomize/api v0.4.1/go.mod h1:NqxqT+wbYHrD0P19Uu4dXiMsVwI1IwQs+MJHl
 sigs.k8s.io/kustomize/kyaml v0.1.11/go.mod h1:72/rLkSi+L/pHM1oCjwrf3ClU+tH5kZQvvdLSqIHwWU=
 sigs.k8s.io/kustomize/kyaml v0.6.0/go.mod h1:bEzbO5pN9OvlEeCLvFHo8Pu7SA26Herc2m60UeWZBdI=
 sigs.k8s.io/kustomize/kyaml v0.6.1/go.mod h1:bEzbO5pN9OvlEeCLvFHo8Pu7SA26Herc2m60UeWZBdI=
+sigs.k8s.io/kustomize/kyaml v0.10.5/go.mod h1:P6Oy/ah/GZMKzJMIJA2a3/bc8YrBkuL5kJji13PSIzY=
 sigs.k8s.io/structured-merge-diff v0.0.0-20190525122527-15d366b2352e/go.mod h1:wWxsB5ozmmv/SG7nM11ayaAW51xMvak/t1r0CSlcokI=
 sigs.k8s.io/structured-merge-diff v1.0.1-0.20191108220359-b1b620dd3f06 h1:zD2IemQ4LmOcAumeiyDWXKUI2SO0NYDe3H6QGvPOVgU=
 sigs.k8s.io/structured-merge-diff v1.0.1-0.20191108220359-b1b620dd3f06/go.mod h1:/ULNhyfzRopfcjskuui0cTITekDduZ7ycKN3oUT9R18=

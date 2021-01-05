@@ -13,6 +13,7 @@ const (
 	AppsPath               = "apps"
 	EnvironmentsPath       = "environments"
 	HelmPath               = "helm"
+	JenkinsPath            = "jenkins"
 	LogsPath               = "logs"
 	OverviewPath           = "overview"
 	PipelinesPath          = "pipelines"
@@ -41,6 +42,10 @@ var (
 		{
 			Title: "Helm",
 			Path:  Name + "/" + HelmPath,
+		},
+		{
+			Title: "Jenkins",
+			Path:  Name + "/" + JenkinsPath,
 		},
 		{
 			Title: "Pipelines",
