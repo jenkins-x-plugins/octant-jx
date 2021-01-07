@@ -1038,6 +1038,7 @@ github.com/jenkins-x/jx-api/v4 v4.0.11/go.mod h1:3n+xwDoSuALVUSlIUj8nK105k7hqP5H
 github.com/jenkins-x/jx-api/v4 v4.0.12/go.mod h1:3n+xwDoSuALVUSlIUj8nK105k7hqP5HoTh7cch/FScc=
 github.com/jenkins-x/jx-api/v4 v4.0.14 h1:bNVvZJH/BOHRjMFQP/QC64pSWfqIy3SSdVUlEgBcDxU=
 github.com/jenkins-x/jx-api/v4 v4.0.14/go.mod h1:3n+xwDoSuALVUSlIUj8nK105k7hqP5HoTh7cch/FScc=
+github.com/jenkins-x/jx-api/v4 v4.0.16/go.mod h1:e98SpJGhOodGShusrGhMqSzRsyZbVsPjWGpEQ2hC0Mk=
 github.com/jenkins-x/jx-gitops v0.0.413/go.mod h1:EfokI4Y1qbPidAalMFrmNW0nR3otTQ1/2XjeQM7sXok=
 github.com/jenkins-x/jx-gitops v0.0.445/go.mod h1:vUW5XthuwRMzCiSt07+LvyGC87Or1H0/igkWHKkuFUg=
 github.com/jenkins-x/jx-gitops v0.0.465/go.mod h1:u67MqFk47VeAWc0Nqvi0+bUlOsuRILd3qHFPn2WI4b0=
@@ -1062,6 +1063,7 @@ github.com/jenkins-x/jx-helpers/v3 v3.0.41/go.mod h1:nmXx3EyNNco3C3BOumzKysDMgz3
 github.com/jenkins-x/jx-helpers/v3 v3.0.45/go.mod h1:sLCICGle5SWzgG2qLSscPom7LNZJzJhYXPL+Um9BMPI=
 github.com/jenkins-x/jx-helpers/v3 v3.0.47 h1:ueeMWXIEm6bjvulKHNebdJJmBSbpMJswo29gCcrC0fs=
 github.com/jenkins-x/jx-helpers/v3 v3.0.47/go.mod h1:sLCICGle5SWzgG2qLSscPom7LNZJzJhYXPL+Um9BMPI=
+github.com/jenkins-x/jx-helpers/v3 v3.0.48/go.mod h1:BDyjFXYs3QecOwD3YjkblbeJ8OK1ht8lfp5XYcbCAkU=
 github.com/jenkins-x/jx-kube-client/v3 v3.0.0/go.mod h1:0CYp1ACEgSmOxul1bx5qbZgQGEcyAeGdBOBa+u62zZY=
 github.com/jenkins-x/jx-kube-client/v3 v3.0.1 h1:zMnxoLRXJJ85PAd9OVPlgXT5T8xHgbmxSMhpYPTF5mw=
 github.com/jenkins-x/jx-kube-client/v3 v3.0.1/go.mod h1:0CYp1ACEgSmOxul1bx5qbZgQGEcyAeGdBOBa+u62zZY=
@@ -1095,6 +1097,7 @@ github.com/jenkins-x/jx-secret v0.0.188 h1:X8p2zRjC2AU6HJvM9mYAJnmItlwKT9dP6yqb5
 github.com/jenkins-x/jx-secret v0.0.188/go.mod h1:NhfMSopH+vfjdJn1hdHiEnr1GV/ckKcIEqajj8Jd/eI=
 github.com/jenkins-x/jx-secret v0.0.198 h1:qg5raFYSpYHQDNhiHam9MnEuisGFUttL6UToElloQGo=
 github.com/jenkins-x/jx-secret v0.0.198/go.mod h1:xWwGaueFRLZIREvdr0WuOi2p2wBjfkLh+oSN/984V8Q=
+github.com/jenkins-x/jx-secret v0.0.200/go.mod h1:xFau1lECisMJdxTxmsv7mRDcewnfWoNIIqfriO/yyvI=
 github.com/jenkins-x/lighthouse v0.0.841/go.mod h1:Sqgo6UEVC7uo2oopyFi33IJhdRT1PPBwy+5xso0I8rw=
 github.com/jenkins-x/lighthouse v0.0.848 h1:6BNzzc9R1asNQ336kW0ajohYnFFtxyiqnpJTWpvIsdo=
 github.com/jenkins-x/lighthouse v0.0.848/go.mod h1:7bCp0s3OI9e2mHP330CvJuY7JWtx6V97CSo+aYnzgwk=
