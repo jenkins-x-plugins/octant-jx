@@ -1084,6 +1084,7 @@ github.com/jenkins-x/jx-preview v0.0.135 h1:Pk4c8pUtzhZS3HCVFaquOHNOOp5Qb4Ta0L4R
 github.com/jenkins-x/jx-preview v0.0.135/go.mod h1:5cH1eoX/V2zeTSRYP9O50fNiw1asL9yWJbZEl2CJA/g=
 github.com/jenkins-x/jx-preview v0.0.138 h1:34N2fVjfy3tOmypArQKRskC8HwRDSqVfZE+OCy7seD0=
 github.com/jenkins-x/jx-preview v0.0.138/go.mod h1:OjbVfFnsh8wbdTZ+ll2T7WSS6kQD3WE9oyaHTDce8aM=
+github.com/jenkins-x/jx-preview v0.0.139/go.mod h1:OjbVfFnsh8wbdTZ+ll2T7WSS6kQD3WE9oyaHTDce8aM=
 github.com/jenkins-x/jx-secret v0.0.164/go.mod h1:LiAbgafyk+F1mqTxdaB+BdknRwAGoO9mGCbr/apKlAo=
 github.com/jenkins-x/jx-secret v0.0.170 h1:KdT+i1ZHhluv4G+x5KH3AGrctGWdvPsRY9jmOIExGB4=
 github.com/jenkins-x/jx-secret v0.0.170/go.mod h1:2SEyGLytO12I7MoCwmggerKExKQg4yY0MOHRbCTzqqc=
