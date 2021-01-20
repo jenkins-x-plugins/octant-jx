@@ -6,7 +6,6 @@ import (
 	v1 "github.com/jenkins-x/jx-api/v4/pkg/apis/jenkins.io/v1"
 	"github.com/jenkins-x/octant-jx/pkg/common/pluginctx"
 	"github.com/jenkins-x/octant-jx/pkg/common/viewhelpers"
-	"github.com/jenkins-x/octant-jx/pkg/plugin"
 	"github.com/vmware-tanzu/octant/pkg/plugin/service"
 	"github.com/vmware-tanzu/octant/pkg/store"
 	"github.com/vmware-tanzu/octant/pkg/view/component"
@@ -30,10 +29,8 @@ func BuildEnvironmentsView(request service.Request, pluginContext pluginctx.Cont
 
 	log.Logger().Infof("got list of Environment %d\n", len(dl.Items))
 
-	header := viewhelpers.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(plugin.RootBreadcrumb, "Environments"))
-
 	table := component.NewTableWithRows(
-		"Environments", "There are no Environments!",
+		viewhelpers.TableTitle("Environments"), "There are no Environments!",
 		component.NewTableCols("Name", "Namespace", "Promote", "Source"),
 		[]component.TableRow{})
 
@@ -51,7 +48,6 @@ func BuildEnvironmentsView(request service.Request, pluginContext pluginctx.Cont
 	table.Sort("Name", false)
 	flexLayout := component.NewFlexLayout("")
 	flexLayout.AddSections(component.FlexLayoutSection{
-		{Width: component.WidthFull, View: header},
 		{Width: component.WidthFull, View: table},
 	})
 

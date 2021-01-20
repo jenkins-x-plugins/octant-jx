@@ -9,7 +9,6 @@ import (
 	"github.com/jenkins-x/octant-jx/pkg/common/links"
 	"github.com/jenkins-x/octant-jx/pkg/common/pluginctx"
 	"github.com/jenkins-x/octant-jx/pkg/common/viewhelpers"
-	"github.com/jenkins-x/octant-jx/pkg/plugin"
 	"github.com/vmware-tanzu/octant/pkg/plugin/service"
 	"github.com/vmware-tanzu/octant/pkg/store"
 	"github.com/vmware-tanzu/octant/pkg/view/component"
@@ -57,10 +56,8 @@ func BuildAppsView(request service.Request, pluginContext pluginctx.Context) (co
 
 	log.Logger().Debugf("got list of Deployment %d\n", len(dl.Items))
 
-	header := viewhelpers.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(plugin.RootBreadcrumb, "Apps"))
-
 	table := component.NewTableWithRows(
-		"Apps", "There are no Apps!",
+		viewhelpers.TableTitle("Apps"), "There are no Apps!",
 		component.NewTableCols("Name", "Version", "Pods", "URL"),
 		[]component.TableRow{})
 
@@ -97,7 +94,6 @@ func BuildAppsView(request service.Request, pluginContext pluginctx.Context) (co
 	table.Sort("Name", false)
 	flexLayout := component.NewFlexLayout("")
 	flexLayout.AddSections(component.FlexLayoutSection{
-		{Width: component.WidthFull, View: header},
 		{Width: component.WidthFull, View: table},
 	})
 

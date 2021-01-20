@@ -9,7 +9,6 @@ import (
 	v1 "github.com/jenkins-x/jx-api/v4/pkg/apis/jenkins.io/v1"
 	"github.com/jenkins-x/octant-jx/pkg/common/pluginctx"
 	"github.com/jenkins-x/octant-jx/pkg/common/viewhelpers"
-	"github.com/jenkins-x/octant-jx/pkg/plugin"
 	"github.com/vmware-tanzu/octant/pkg/plugin/service"
 	"github.com/vmware-tanzu/octant/pkg/store"
 	"github.com/vmware-tanzu/octant/pkg/view/component"
@@ -41,12 +40,10 @@ func BuildRepositoriesView(request service.Request, pluginContext pluginctx.Cont
 
 	log.Logger().Infof("got list of SourceRepository %d\n", len(dl.Items))
 
-	header := viewhelpers.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(plugin.RootBreadcrumb, "Repositories"))
-
 	config := &RepositoriesViewConfig{}
 
 	table := component.NewTableWithRows(
-		"Repositories", "There are no Repositories!",
+		viewhelpers.TableTitle("Repositories"), "There are no Repositories!",
 		component.NewTableCols("Owner", "Name", "Status"),
 		[]component.TableRow{})
 
@@ -69,7 +66,6 @@ func BuildRepositoriesView(request service.Request, pluginContext pluginctx.Cont
 
 	flexLayout := component.NewFlexLayout("")
 	flexLayout.AddSections(component.FlexLayoutSection{
-		{Width: component.WidthFull, View: header},
 		{Width: component.WidthFull, View: table},
 	})
 

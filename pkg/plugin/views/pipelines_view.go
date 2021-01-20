@@ -17,6 +17,10 @@ import (
 	"github.com/vmware-tanzu/octant/pkg/view/component"
 )
 
+const (
+	enablePipelineHeader = false
+)
+
 type PipelinesViewConfig struct {
 	Context          pluginctx.Context
 	Columns          []string
@@ -69,7 +73,7 @@ func BuildPipelinesView(request service.Request, config *PipelinesViewConfig) (c
 		colNames = []string{"Owner", "Repository", "Branch", "Build", "Status", "Message"}
 	}
 	table := component.NewTableWithRows(
-		title, "There are no "+title,
+		viewhelpers.TableTitle(title), "There are no "+title,
 		component.NewTableCols(colNames...),
 		[]component.TableRow{})
 
@@ -108,7 +112,7 @@ func BuildPipelinesView(request service.Request, config *PipelinesViewConfig) (c
 	table.AddFilter("Status", config.StatusFilter)
 
 	flexLayout := component.NewFlexLayout("")
-	if !config.Context.Composite {
+	if !config.Context.Composite && enablePipelineHeader {
 		headerText := config.Header
 		if headerText == "" {
 			headerText = viewhelpers.ToBreadcrumbMarkdown(plugin.RootBreadcrumb, title)

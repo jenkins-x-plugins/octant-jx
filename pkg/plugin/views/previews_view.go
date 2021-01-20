@@ -8,7 +8,6 @@ import (
 	"github.com/jenkins-x/jx-preview/pkg/apis/preview/v1alpha1"
 	"github.com/jenkins-x/octant-jx/pkg/common/pluginctx"
 	"github.com/jenkins-x/octant-jx/pkg/common/viewhelpers"
-	"github.com/jenkins-x/octant-jx/pkg/plugin"
 	"github.com/vmware-tanzu/octant/pkg/plugin/service"
 	"github.com/vmware-tanzu/octant/pkg/store"
 	"github.com/vmware-tanzu/octant/pkg/view/component"
@@ -41,12 +40,10 @@ func BuildPreviewsView(request service.Request, pluginContext pluginctx.Context)
 
 	log.Logger().Infof("got list of Preview %d\n", len(dl.Items))
 
-	header := viewhelpers.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(plugin.RootBreadcrumb, "Previews"))
-
 	config := &PreviewsViewConfig{}
 
 	table := component.NewTableWithRows(
-		"Previews", "There are no Previews!",
+		viewhelpers.TableTitle("Previews"), "There are no Previews!",
 		component.NewTableCols("Owner", "Repository", "Pull Request", "Preview", "Author"),
 		[]component.TableRow{})
 
@@ -70,7 +67,6 @@ func BuildPreviewsView(request service.Request, pluginContext pluginctx.Context)
 
 	flexLayout := component.NewFlexLayout("")
 	flexLayout.AddSections(component.FlexLayoutSection{
-		{Width: component.WidthFull, View: header},
 		{Width: component.WidthFull, View: table},
 	})
 
