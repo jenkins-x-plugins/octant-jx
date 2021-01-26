@@ -4,7 +4,7 @@ This repository contains plugins for [Octant](https://octant.dev/) for working w
 
 ## Why Octant
 
-[Octant](https://github.com/vmware-tanzu/octant) is the strategic UI for working with Jenkin X because its:
+[Octant](https://github.com/vmware-tanzu/octant) is the strategic UI for working with Jenkins X because its:
 
 * open source and very easy to extend with plugins
 * lets you visualise and work with all kubernetes and custom resources across multiple clusters
