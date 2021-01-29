@@ -23,9 +23,9 @@ require (
 	github.com/vmware-tanzu/octant v0.16.3
 	go.mozilla.org/sops v0.0.0-20190912205235-14a22d7a7060 // indirect
 	golang.org/x/build v0.0.0-20190111050920-041ab4dc3f9d // indirect
-	helm.sh/helm/v3 v3.3.4
-	k8s.io/api v0.19.4
-	k8s.io/apimachinery v0.19.4
+	helm.sh/helm/v3 v3.5.1
+	k8s.io/api v0.20.1
+	k8s.io/apimachinery v0.20.1
 	k8s.io/client-go v11.0.1-0.20190805182717-6502b5e7b1b5+incompatible
 	sigs.k8s.io/yaml v1.2.0
 )
