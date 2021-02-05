@@ -1038,6 +1038,7 @@ github.com/jenkins-x/jx-api/v4 v4.0.11/go.mod h1:3n+xwDoSuALVUSlIUj8nK105k7hqP5H
 github.com/jenkins-x/jx-api/v4 v4.0.12/go.mod h1:3n+xwDoSuALVUSlIUj8nK105k7hqP5HoTh7cch/FScc=
 github.com/jenkins-x/jx-api/v4 v4.0.14 h1:bNVvZJH/BOHRjMFQP/QC64pSWfqIy3SSdVUlEgBcDxU=
 github.com/jenkins-x/jx-api/v4 v4.0.14/go.mod h1:3n+xwDoSuALVUSlIUj8nK105k7hqP5HoTh7cch/FScc=
+github.com/jenkins-x/jx-api/v4 v4.0.24/go.mod h1:IC88X+24Nmexuj7lRNRgzfrchzlo0qysfwkICpqDmMQ=
 github.com/jenkins-x/jx-gitops v0.0.413/go.mod h1:EfokI4Y1qbPidAalMFrmNW0nR3otTQ1/2XjeQM7sXok=
 github.com/jenkins-x/jx-gitops v0.0.445/go.mod h1:vUW5XthuwRMzCiSt07+LvyGC87Or1H0/igkWHKkuFUg=
 github.com/jenkins-x/jx-gitops v0.0.465/go.mod h1:u67MqFk47VeAWc0Nqvi0+bUlOsuRILd3qHFPn2WI4b0=
@@ -1068,6 +1069,7 @@ github.com/jenkins-x/jx-kube-client/v3 v3.0.1/go.mod h1:0CYp1ACEgSmOxul1bx5qbZgQ
 github.com/jenkins-x/jx-logging/v3 v3.0.0/go.mod h1:bOYlj+Cdd9v7/vDXjkwlUylxGs5sfQJvYnuYbCL0IrY=
 github.com/jenkins-x/jx-logging/v3 v3.0.2 h1:9IEeySM86yECc520Spaq38xO8JIpb6QDl1jFBEQHAwg=
 github.com/jenkins-x/jx-logging/v3 v3.0.2/go.mod h1:Vp2ER2SYgGhAgEEHlLwfi2ZB54tz6ya1qExq0A4CKMI=
+github.com/jenkins-x/jx-logging/v3 v3.0.3/go.mod h1:Vp2ER2SYgGhAgEEHlLwfi2ZB54tz6ya1qExq0A4CKMI=
 github.com/jenkins-x/jx-pipeline v0.0.44 h1:B3fUqBW6WJRZ7HTsbRI62JdxSyhX8XJLkxCrslzGOvk=
 github.com/jenkins-x/jx-pipeline v0.0.44/go.mod h1:9fnKaPLraSCDTsREzE20g/I1qCG1LFgwgcqCScWD8+g=
 github.com/jenkins-x/jx-pipeline v0.0.48 h1:srGsKZP34OVAeP89Kcx/A3rSDaaAFKV85Uvm+IcRNHg=
@@ -1938,6 +1940,7 @@ golang.org/x/net v0.0.0-20200904194848-62affa334b73 h1:MXfv8rhZWmFeqX3GNZRsd6vOL
 golang.org/x/net v0.0.0-20200904194848-62affa334b73/go.mod h1:/O7V0waA8r7cgGh81Ro3o1hOxt32SMVPicZroKQ2sZA=
 golang.org/x/net v0.0.0-20201010224723-4f7140c49acb/go.mod h1:sp8m0HH+o8qH0wwXwYZr8TS3Oi6o0r6Gce1SSxlDquU=
 golang.org/x/net v0.0.0-20201021035429-f5854403a974/go.mod h1:sp8m0HH+o8qH0wwXwYZr8TS3Oi6o0r6Gce1SSxlDquU=
+golang.org/x/net v0.0.0-20201110031124-69a78807bb2b/go.mod h1:sp8m0HH+o8qH0wwXwYZr8TS3Oi6o0r6Gce1SSxlDquU=
 golang.org/x/net v0.0.0-20201201195509-5d6afe98e0b7 h1:3uJsdck53FDIpWwLeAXlia9p4C8j0BO2xZrqzKpL0D8=
 golang.org/x/net v0.0.0-20201201195509-5d6afe98e0b7/go.mod h1:sp8m0HH+o8qH0wwXwYZr8TS3Oi6o0r6Gce1SSxlDquU=
 golang.org/x/oauth2 v0.0.0-20180821212333-d2e6202438be/go.mod h1:N/0e6XlmueqKjAGxoOufVs8QHGRruUQn6yWY3a++T0U=
@@ -2164,6 +2167,7 @@ golang.org/x/tools v0.0.0-20200422022333-3d57cf2e726e/go.mod h1:EkVYQZoAsY45+roY
 golang.org/x/tools v0.0.0-20200426102838-f3a5411a4c3b/go.mod h1:EkVYQZoAsY45+roYkvgYkIh4xh/qjgUK9TdY2XT94GE=
 golang.org/x/tools v0.0.0-20200501065659-ab2804fb9c9d/go.mod h1:EkVYQZoAsY45+roYkvgYkIh4xh/qjgUK9TdY2XT94GE=
 golang.org/x/tools v0.0.0-20200502202811-ed308ab3e770/go.mod h1:EkVYQZoAsY45+roYkvgYkIh4xh/qjgUK9TdY2XT94GE=
+golang.org/x/tools v0.0.0-20200505023115-26f46d2f7ef8/go.mod h1:EkVYQZoAsY45+roYkvgYkIh4xh/qjgUK9TdY2XT94GE=
 golang.org/x/tools v0.0.0-20200512131952-2bc93b1c0c88/go.mod h1:EkVYQZoAsY45+roYkvgYkIh4xh/qjgUK9TdY2XT94GE=
 golang.org/x/tools v0.0.0-20200515010526-7d3b6ebf133d/go.mod h1:EkVYQZoAsY45+roYkvgYkIh4xh/qjgUK9TdY2XT94GE=
 golang.org/x/tools v0.0.0-20200527183253-8e7acdbce89d/go.mod h1:EkVYQZoAsY45+roYkvgYkIh4xh/qjgUK9TdY2XT94GE=
@@ -2480,6 +2484,7 @@ k8s.io/code-generator v0.18.6/go.mod h1:TgNEVx9hCyPGpdtCWA34olQYLkh3ok9ar7XfSsr8
 k8s.io/code-generator v0.18.8/go.mod h1:TgNEVx9hCyPGpdtCWA34olQYLkh3ok9ar7XfSsr8b6c=
 k8s.io/code-generator v0.19.0-alpha.3/go.mod h1:921XK/cUtrTpn/F0nAhNaFjo8I7Kue1BIEtdxsYFt9I=
 k8s.io/code-generator v0.19.2/go.mod h1:moqLn7w0t9cMs4+5CQyxnfA/HV8MF6aAVENF+WZZhgk=
+k8s.io/code-generator v0.20.2/go.mod h1:UsqdF+VX4PU2g46NC2JRs4gc+IfrctnwHb76RNbWHJg=
 k8s.io/component-base v0.17.0/go.mod h1:rKuRAokNMY2nn2A6LP/MiwpoaMRHpfRnrPaUJJj1Yoc=
 k8s.io/component-base v0.17.2/go.mod h1:zMPW3g5aH7cHJpKYQ/ZsGMcgbsA/VyhEugF3QT1awLs=
 k8s.io/component-base v0.17.4/go.mod h1:5BRqHMbbQPm2kKu35v3G+CpVq4K0RJKC7TRioF0I9lE=
@@ -2497,6 +2502,7 @@ k8s.io/gengo v0.0.0-20200205140755-e0e292d8aa12/go.mod h1:ezvh/TsK7cY6rbqRK0oQQ8
 k8s.io/gengo v0.0.0-20200413195148-3a45101e95ac/go.mod h1:ezvh/TsK7cY6rbqRK0oQQ8IAqLxYwwyPxAX1Pzy0ii0=
 k8s.io/gengo v0.0.0-20200428234225-8167cfdcfc14 h1:t4L10Qfx/p7ASH3gXCdIUtPbbIuegCoUJf3TMSFekjw=
 k8s.io/gengo v0.0.0-20200428234225-8167cfdcfc14/go.mod h1:ezvh/TsK7cY6rbqRK0oQQ8IAqLxYwwyPxAX1Pzy0ii0=
+k8s.io/gengo v0.0.0-20201113003025-83324d819ded/go.mod h1:FiNAH4ZV3gBg2Kwh89tzAEV2be7d5xI0vBa/VySYy3E=
 k8s.io/helm v2.16.10+incompatible/go.mod h1:LZzlS4LQBHfciFOurYBFkCMTaZ0D1l+p0teMg7TSULI=
 k8s.io/klog v0.0.0-20181102134211-b9b56d5dfc92/go.mod h1:Gq+BEi5rUBO/HRz0bTSXDUcqjScdoY3a9IHpCEIOOfk=
 k8s.io/klog v0.2.0/go.mod h1:Gq+BEi5rUBO/HRz0bTSXDUcqjScdoY3a9IHpCEIOOfk=
@@ -2519,6 +2525,7 @@ k8s.io/kube-openapi v0.0.0-20200410145947-bcb3869e6f29/go.mod h1:F+5wygcW0wmRTnM
 k8s.io/kube-openapi v0.0.0-20200805222855-6aeccd4b50c6/go.mod h1:UuqjUnNftUyPE5H64/qeyjQoUZhGpeFDVdxjTeEVN2o=
 k8s.io/kube-openapi v0.0.0-20200923155610-8b5066479488 h1:mNpvQf4lkIHNOXCoM+Veu/UXwA56Yx1J7hY1Tvcs/oM=
 k8s.io/kube-openapi v0.0.0-20200923155610-8b5066479488/go.mod h1:UuqjUnNftUyPE5H64/qeyjQoUZhGpeFDVdxjTeEVN2o=
+k8s.io/kube-openapi v0.0.0-20201113171705-d219536bb9fd/go.mod h1:WOJ3KddDSol4tAGcJo0Tvi+dK12EcqSLqcWsryKMpfM=
 k8s.io/kubectl v0.17.2/go.mod h1:y4rfLV0n6aPmvbRCqZQjvOp3ezxsFgpqL+zF5jH/lxk=
 k8s.io/kubectl v0.18.8/go.mod h1:PlEgIAjOMua4hDFTEkVf+W5M0asHUKfE4y7VDZkpLHM=
 k8s.io/kubernetes v1.13.0/go.mod h1:ocZa8+6APFNC2tX1DZASIbocyYT5jHzqFVsY5aoB7Jk=
