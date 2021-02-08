@@ -1068,6 +1068,7 @@ github.com/jenkins-x/jx-kube-client/v3 v3.0.1/go.mod h1:0CYp1ACEgSmOxul1bx5qbZgQ
 github.com/jenkins-x/jx-logging/v3 v3.0.0/go.mod h1:bOYlj+Cdd9v7/vDXjkwlUylxGs5sfQJvYnuYbCL0IrY=
 github.com/jenkins-x/jx-logging/v3 v3.0.2 h1:9IEeySM86yECc520Spaq38xO8JIpb6QDl1jFBEQHAwg=
 github.com/jenkins-x/jx-logging/v3 v3.0.2/go.mod h1:Vp2ER2SYgGhAgEEHlLwfi2ZB54tz6ya1qExq0A4CKMI=
+github.com/jenkins-x/jx-logging/v3 v3.0.3/go.mod h1:Vp2ER2SYgGhAgEEHlLwfi2ZB54tz6ya1qExq0A4CKMI=
 github.com/jenkins-x/jx-pipeline v0.0.44 h1:B3fUqBW6WJRZ7HTsbRI62JdxSyhX8XJLkxCrslzGOvk=
 github.com/jenkins-x/jx-pipeline v0.0.44/go.mod h1:9fnKaPLraSCDTsREzE20g/I1qCG1LFgwgcqCScWD8+g=
 github.com/jenkins-x/jx-pipeline v0.0.48 h1:srGsKZP34OVAeP89Kcx/A3rSDaaAFKV85Uvm+IcRNHg=
