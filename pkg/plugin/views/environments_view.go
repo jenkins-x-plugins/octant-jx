@@ -45,7 +45,7 @@ func BuildEnvironmentsView(request service.Request, pluginContext pluginctx.Cont
 		}
 	}
 
-	table.Sort("Name", false)
+	table.Sort("Name")
 	flexLayout := component.NewFlexLayout("")
 	flexLayout.AddSections(component.FlexLayoutSection{
 		{Width: component.WidthFull, View: table},

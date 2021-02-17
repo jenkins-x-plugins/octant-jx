@@ -78,7 +78,7 @@ func BuildHelmReleasesView(request service.Request, pluginContext pluginctx.Cont
 		table.Add(tr)
 	}
 
-	table.Sort("Sort", false)
+	table.Sort("Sort")
 
 	flexLayout := component.NewFlexLayout("")
 	flexLayout.AddSections(component.FlexLayoutSection{

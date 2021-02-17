@@ -116,7 +116,7 @@ func BuildJobsViewForPath(request service.Request, pluginContext pluginctx.Conte
 		}
 	}
 
-	table.Sort("Age", true)
+	table.Sort("Age")
 	flexLayout := component.NewFlexLayout("")
 
 	if !pluginContext.Composite {

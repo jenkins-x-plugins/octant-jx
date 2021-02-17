@@ -58,7 +58,7 @@ func BuildPreviewsView(request service.Request, pluginContext pluginctx.Context)
 		}
 	}
 
-	table.Sort("Sort", false)
+	table.Sort("Sort")
 
 	viewhelpers.InitTableFilters(config.TableFilters())
 

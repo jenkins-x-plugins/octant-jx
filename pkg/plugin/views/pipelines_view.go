@@ -102,7 +102,7 @@ func BuildPipelinesView(request service.Request, config *PipelinesViewConfig) (c
 			table.Add(*tr)
 		}
 	}
-	table.Sort("Sort", false)
+	table.Sort("Sort")
 
 	viewhelpers.InitTableFilters(config.TableFilters())
 

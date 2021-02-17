@@ -58,7 +58,7 @@ func BuildRepositoriesView(request service.Request, pluginContext pluginctx.Cont
 		}
 	}
 
-	table.Sort("Name", false)
+	table.Sort("Name")
 
 	viewhelpers.InitTableFilters(config.TableFilters())
 

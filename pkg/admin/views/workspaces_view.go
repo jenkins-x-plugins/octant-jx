@@ -51,7 +51,7 @@ func BuildWorkspacesView(request service.Request, ws []workspaces.WorkspaceOctan
 		}
 	}
 
-	table.Sort("Sort", false)
+	table.Sort("Sort")
 
 	viewhelpers.InitTableFilters(config.TableFilters())
 

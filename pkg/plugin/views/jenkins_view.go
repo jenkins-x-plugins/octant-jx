@@ -71,7 +71,7 @@ func BuildJenkinsView(request service.Request, pluginContext pluginctx.Context) 
 		}
 	}
 
-	table.Sort("Name", false)
+	table.Sort("Name")
 
 	flexLayout := component.NewFlexLayout("")
 	flexLayout.AddSections(component.FlexLayoutSection{
