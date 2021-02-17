@@ -53,13 +53,8 @@ spec:
             jx step changelog --verbose --header-file=hack/changelog-header.md --version=$VERSION --rev=$PULL_BASE_SHA --output-markdown=changelog.md --update-release=false
         - name: upload-binaries
           resources: {}
-        - image: gcr.io/jenkinsxio/builder-go:2.1.142-761
-          name: promote-release
+        - name: promote-release
           resources: {}
-          script: |
-            #!/bin/bash
-            source .jx/variables.sh
-            ./promote.sh
   serviceAccountName: tekton-bot
   timeout: 240h0m0s
 status: {}
