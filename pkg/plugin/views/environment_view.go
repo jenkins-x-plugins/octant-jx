@@ -35,19 +35,16 @@ func BuildEnvironmentView(request service.Request, pluginContext pluginctx.Conte
 		return nil, err
 	}
 
-	header := viewhelpers.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(plugin.RootBreadcrumb, viewhelpers.ToMarkdownLink("Environments", plugin.GetEnviromentsLink()), ToEnvironmentName(r)))
-
-	summary := component.NewSummary("Summary",
+	summary := component.NewSummary("Environment",
 		component.SummarySection{Header: "Name", Content: ToEnvironmentNameComponent(r)},
 		component.SummarySection{Header: "Source", Content: ToEnvironmentSource(r)},
 		component.SummarySection{Header: "Namespace", Content: ToEnvironmentNamespace(r)},
 		component.SummarySection{Header: "Promote", Content: ToEnvironmentPromote(r)},
 	)
 
-	flexLayout := component.NewFlexLayout("")
+	flexLayout := component.NewFlexLayout("Environment")
 	flexLayout.AddSections(component.FlexLayoutSection{
-		{Width: component.WidthFull, View: header},
-		{Width: component.WidthHalf, View: summary},
+		{Width: component.WidthFull, View: summary},
 	})
 	return flexLayout, nil
 }

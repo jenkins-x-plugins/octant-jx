@@ -76,7 +76,7 @@ func BuildSecretsView(request service.Request, pluginContext pluginctx.Context) 
 		}
 	}
 
-	table.Sort("Sort", false)
+	table.Sort("Sort")
 
 	flexLayout := component.NewFlexLayout("")
 	flexLayout.AddSections(component.FlexLayoutSection{

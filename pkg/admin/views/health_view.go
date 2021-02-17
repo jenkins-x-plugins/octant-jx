@@ -63,7 +63,7 @@ func HealthView(request service.Request, _ pluginctx.Context) (component.Compone
 		}
 	}
 
-	table.Sort("Name", false)
+	table.Sort("Name")
 	flexLayout := component.NewFlexLayout("Health")
 	flexLayout.AddSections(component.FlexLayoutSection{
 		{Width: component.WidthFull, View: header},

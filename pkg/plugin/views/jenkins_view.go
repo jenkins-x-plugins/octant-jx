@@ -9,7 +9,6 @@ import (
 
 	"github.com/jenkins-x/octant-jx/pkg/common/pluginctx"
 	"github.com/jenkins-x/octant-jx/pkg/common/viewhelpers"
-	"github.com/jenkins-x/octant-jx/pkg/plugin"
 	"github.com/vmware-tanzu/octant/pkg/plugin/service"
 	"github.com/vmware-tanzu/octant/pkg/store"
 	"github.com/vmware-tanzu/octant/pkg/view/component"
@@ -56,10 +55,8 @@ func BuildJenkinsView(request service.Request, pluginContext pluginctx.Context) 
 
 	log.Logger().Infof("got list of SourceRepository %d\n", len(dl.Items))
 
-	header := viewhelpers.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(plugin.RootBreadcrumb, "Repositories"))
-
 	table := component.NewTableWithRows(
-		"Jenkins", "There are no Jenkins Servers!",
+		viewhelpers.TableTitle("Jenkins"), "There are no Jenkins Servers!",
 		component.NewTableCols("Name"),
 		[]component.TableRow{})
 
@@ -74,11 +71,10 @@ func BuildJenkinsView(request service.Request, pluginContext pluginctx.Context) 
 		}
 	}
 
-	table.Sort("Name", false)
+	table.Sort("Name")
 
 	flexLayout := component.NewFlexLayout("")
 	flexLayout.AddSections(component.FlexLayoutSection{
-		{Width: component.WidthFull, View: header},
 		{Width: component.WidthFull, View: table},
 	})
 
