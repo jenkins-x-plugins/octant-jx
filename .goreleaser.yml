@@ -6,7 +6,7 @@ before:
     - go mod download
 
 builds:
-  - id: octant-jx-linux
+  - id: octant-jx
     # Path to main.go file or main package.
     # Default is `.`.
     main: ./cmd/octant-jx/main.go
@@ -19,12 +19,14 @@ builds:
     # Custom ldflags templates.
     # Default is `-s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.Date}} -X main.builtBy=goreleaser`.
     ldflags:
-      - -X "main.version={{.Env.VERSION}}" -X "{{.Env.ROOTPACKAGE}}/pkg/version.Version={{.Env.VERSION}}" -X "{{.Env.ROOTPACKAGE}}/pkg/version.Revision={{.Env.REV}}" -X "{{.Env.ROOTPACKAGE}}/pkg/version.Branch={{.Env.BRANCH}}" -X "{{.Env.ROOTPACKAGE}}/pkg/version.BuildDate={{.Env.BUILDDATE}}" -X "{{.Env.ROOTPACKAGE}}/pkg/version.GoVersion={{.Env.GOVERSION}}"
+      - -X "{{.Env.ROOTPACKAGE}}/pkg/cmd/version.Version={{.Env.VERSION}}" -X "{{.Env.ROOTPACKAGE}}/pkg/cmd/version.Revision={{.Env.REV}}" -X "{{.Env.ROOTPACKAGE}}/pkg/cmd/version.Branch={{.Env.BRANCH}}" -X "{{.Env.ROOTPACKAGE}}/pkg/cmd/version.BuildDate={{.Env.BUILDDATE}}" -X "{{.Env.ROOTPACKAGE}}/pkg/cmd/version.GoVersion={{.Env.GOVERSION}}"
 
     # GOOS list to build for.
     # For more info refer to: https://golang.org/doc/install/source#environment
     # Defaults are darwin and linux.
     goos:
+      - windows
+      - darwin
       - linux
 
     # GOARCH to build for.
@@ -32,62 +34,10 @@ builds:
     # Defaults are 386 and amd64.
     goarch:
       - amd64
+      - arm
+      - arm64
 
-  - id: octant-jx-amd64
-    # Path to main.go file or main package.
-    # Default is `.`.
-    main: ./cmd/octant-jx/main.go
-
-    # Binary name.
-    # Can be a path (e.g. `bin/app`) to wrap the binary in a directory.
-    # Default is the name of the project directory.
-    binary: octant-jx
-
-    # Custom ldflags templates.
-    # Default is `-s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.Date}} -X main.builtBy=goreleaser`.
-    ldflags:
-     - -X "main.version={{.Env.VERSION}}" -X "{{.Env.ROOTPACKAGE}}/pkg/version.Version={{.Env.VERSION}}" -X "{{.Env.ROOTPACKAGE}}/pkg/version.Revision={{.Env.REV}}" -X "{{.Env.ROOTPACKAGE}}/pkg/version.Branch={{.Env.BRANCH}}" -X "{{.Env.ROOTPACKAGE}}/pkg/version.BuildDate={{.Env.BUILDDATE}}" -X "{{.Env.ROOTPACKAGE}}/pkg/version.GoVersion={{.Env.GOVERSION}}"
-
-    # GOOS list to build for.
-    # For more info refer to: https://golang.org/doc/install/source#environment
-    # Defaults are darwin and linux.
-    goos:
-      - darwin
-
-    # GOARCH to build for.
-    # For more info refer to: https://golang.org/doc/install/source#environment
-    # Defaults are 386 and amd64.
-    goarch:
-      - amd64
-
-  - id: octant-jx-windows-amd64
-    # Path to main.go file or main package.
-    # Default is `.`.
-    main: ./cmd/octant-jx/main.go
-
-    # Binary name.
-    # Can be a path (e.g. `bin/app`) to wrap the binary in a directory.
-    # Default is the name of the project directory.
-    binary: octant-jx
-
-    # Custom ldflags templates.
-    # Default is `-s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.Date}} -X main.builtBy=goreleaser`.
-    ldflags:
-     - -X "main.version={{.Env.VERSION}}" -X "{{.Env.ROOTPACKAGE}}/pkg/version.Version={{.Env.VERSION}}" -X "{{.Env.ROOTPACKAGE}}/pkg/version.Revision={{.Env.REV}}" -X "{{.Env.ROOTPACKAGE}}/pkg/version.Branch={{.Env.BRANCH}}" -X "{{.Env.ROOTPACKAGE}}/pkg/version.BuildDate={{.Env.BUILDDATE}}" -X "{{.Env.ROOTPACKAGE}}/pkg/version.GoVersion={{.Env.GOVERSION}}"
-
-    # GOOS list to build for.
-    # For more info refer to: https://golang.org/doc/install/source#environment
-    # Defaults are darwin and linux.
-    goos:
-      - windows
-
-    # GOARCH to build for.
-    # For more info refer to: https://golang.org/doc/install/source#environment
-    # Defaults are 386 and amd64.
-    goarch:
-      - amd64
-      -
-  - id: octant-jxo-linux
+  - id: octant-jxo
     # Path to main.go file or main package.
     # Default is `.`.
     main: ./cmd/octant-jxo/main.go
@@ -100,12 +50,14 @@ builds:
     # Custom ldflags templates.
     # Default is `-s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.Date}} -X main.builtBy=goreleaser`.
     ldflags:
-      - -X "main.version={{.Env.VERSION}}" -X "{{.Env.ROOTPACKAGE}}/pkg/version.Version={{.Env.VERSION}}" -X "{{.Env.ROOTPACKAGE}}/pkg/version.Revision={{.Env.REV}}" -X "{{.Env.ROOTPACKAGE}}/pkg/version.Branch={{.Env.BRANCH}}" -X "{{.Env.ROOTPACKAGE}}/pkg/version.BuildDate={{.Env.BUILDDATE}}" -X "{{.Env.ROOTPACKAGE}}/pkg/version.GoVersion={{.Env.GOVERSION}}"
+      - -X "{{.Env.ROOTPACKAGE}}/pkg/cmd/version.Version={{.Env.VERSION}}" -X "{{.Env.ROOTPACKAGE}}/pkg/cmd/version.Revision={{.Env.REV}}" -X "{{.Env.ROOTPACKAGE}}/pkg/cmd/version.Branch={{.Env.BRANCH}}" -X "{{.Env.ROOTPACKAGE}}/pkg/cmd/version.BuildDate={{.Env.BUILDDATE}}" -X "{{.Env.ROOTPACKAGE}}/pkg/cmd/version.GoVersion={{.Env.GOVERSION}}"
 
     # GOOS list to build for.
     # For more info refer to: https://golang.org/doc/install/source#environment
     # Defaults are darwin and linux.
     goos:
+      - windows
+      - darwin
       - linux
 
     # GOARCH to build for.
@@ -113,71 +65,19 @@ builds:
     # Defaults are 386 and amd64.
     goarch:
       - amd64
-
-  - id: octant-jxo-amd64
-    # Path to main.go file or main package.
-    # Default is `.`.
-    main: ./cmd/octant-jxo/main.go
-
-    # Binary name.
-    # Can be a path (e.g. `bin/app`) to wrap the binary in a directory.
-    # Default is the name of the project directory.
-    binary: octant-jxo
-
-    # Custom ldflags templates.
-    # Default is `-s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.Date}} -X main.builtBy=goreleaser`.
-    ldflags:
-     - -X "main.version={{.Env.VERSION}}" -X "{{.Env.ROOTPACKAGE}}/pkg/version.Version={{.Env.VERSION}}" -X "{{.Env.ROOTPACKAGE}}/pkg/version.Revision={{.Env.REV}}" -X "{{.Env.ROOTPACKAGE}}/pkg/version.Branch={{.Env.BRANCH}}" -X "{{.Env.ROOTPACKAGE}}/pkg/version.BuildDate={{.Env.BUILDDATE}}" -X "{{.Env.ROOTPACKAGE}}/pkg/version.GoVersion={{.Env.GOVERSION}}"
-
-    # GOOS list to build for.
-    # For more info refer to: https://golang.org/doc/install/source#environment
-    # Defaults are darwin and linux.
-    goos:
-      - darwin
-
-    # GOARCH to build for.
-    # For more info refer to: https://golang.org/doc/install/source#environment
-    # Defaults are 386 and amd64.
-    goarch:
-      - amd64
-
-  - id: octant-jxo-windows-amd64
-    # Path to main.go file or main package.
-    # Default is `.`.
-    main: ./cmd/octant-jxo/main.go
-
-    # Binary name.
-    # Can be a path (e.g. `bin/app`) to wrap the binary in a directory.
-    # Default is the name of the project directory.
-    binary: octant-jxo
-
-    # Custom ldflags templates.
-    # Default is `-s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.Date}} -X main.builtBy=goreleaser`.
-    ldflags:
-     - -X "main.version={{.Env.VERSION}}" -X "{{.Env.ROOTPACKAGE}}/pkg/version.Version={{.Env.VERSION}}" -X "{{.Env.ROOTPACKAGE}}/pkg/version.Revision={{.Env.REV}}" -X "{{.Env.ROOTPACKAGE}}/pkg/version.Branch={{.Env.BRANCH}}" -X "{{.Env.ROOTPACKAGE}}/pkg/version.BuildDate={{.Env.BUILDDATE}}" -X "{{.Env.ROOTPACKAGE}}/pkg/version.GoVersion={{.Env.GOVERSION}}"
-
-    # GOOS list to build for.
-    # For more info refer to: https://golang.org/doc/install/source#environment
-    # Defaults are darwin and linux.
-    goos:
-      - windows
-
-    # GOARCH to build for.
-    # For more info refer to: https://golang.org/doc/install/source#environment
-    # Defaults are 386 and amd64.
-    goarch:
-      - amd64
+      - arm
+      - arm64
 
 archives:
-  - name_template: "{{ .ProjectName }}-{{ .Os }}-{{ .Arch }}"
+  - name_template: "octant-jx-{{ .Os }}-{{ .Arch }}"
     format_overrides:
       - goos: windows
         format: zip
 
 checksum:
   # You can change the name of the checksums file.
-  # Default is `"{{ .ProjectName }}_{{ .Version }}_checksums.txt`.
-  name_template: "{{ .ProjectName }}-checksums.txt"
+  # Default is `octant-jx_{{ .Version }}_checksums.txt`.
+  name_template: "octant-jx-checksums.txt"
 
   # Algorithm to be used.
   # Accepted options are sha256, sha512, sha1, crc32, md5, sha224 and sha384.
