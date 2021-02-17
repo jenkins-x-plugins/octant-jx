@@ -1,0 +1,14 @@
+apiVersion: jenkins.io/v1
+kind: Release
+metadata:
+  creationTimestamp: "2021-02-17T11:56:40Z"
+  deletionTimestamp: null
+  name: '{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}'
+spec:
+  gitCloneUrl: https://github.com/jenkins-x/octant-jx.git
+  gitHttpUrl: https://github.com/jenkins-x/octant-jx
+  gitOwner: jenkins-x
+  gitRepository: octant-jx
+  name: '{{ .Chart.Name }}'
+  version: 0.0.43
+status: {}
