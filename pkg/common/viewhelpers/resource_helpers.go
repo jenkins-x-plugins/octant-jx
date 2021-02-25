@@ -78,6 +78,14 @@ func ToDurationMarkdown(time time.Time, titlePrefix string) string {
 	return fmt.Sprintf(`<span title="%s%s">%s</span>`, titlePrefix, time.String(), ToDurationString(time))
 }
 
+// ToTooltipText returns the text with a tooltop
+func ToTooltipText(text, tooltip string) string {
+	if tooltip == "" {
+		return text
+	}
+	return fmt.Sprintf(`<span title="%s">%s</span>`, tooltip, text)
+}
+
 // ListPodsBySelector loads the pods for the given selector
 func ListPodsBySelector(ctx context.Context, client service.Dashboard, namespace string, selector labels.Set) ([]*corev1.Pod, error) {
 	ul, err := ListResourcesBySelector(ctx, client, "v1", "Pod", namespace, selector)

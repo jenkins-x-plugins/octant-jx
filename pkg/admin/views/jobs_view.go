@@ -2,6 +2,7 @@ package views // import "github.com/jenkins-x/octant-jx/pkg/plugin/views"
 
 import (
 	"fmt"
+	"html"
 	"strings"
 
 	"github.com/jenkins-x/jx-logging/v3/pkg/log"
@@ -25,11 +26,13 @@ type JobViewConfig struct {
 	ActionResourceName string
 	Title              string
 	Selector           labels.Set
+	BootJob            bool
 }
 
 var (
 	JobsViewConfigs = map[string]*JobViewConfig{
 		admin.BootJobsPath: {
+			BootJob:            true,
 			ActionName:         actions.TriggerBootJob,
 			ActionResourceName: "jx-boot",
 			Title:              "Boot Jobs",
@@ -98,15 +101,19 @@ func BuildJobsViewForPath(request service.Request, pluginContext pluginctx.Conte
 			}
 		}
 	}
+	cols := []string{"Name", "Pods", "Age", ""}
+	if config.BootJob {
+		cols = []string{"Name", "Author", "Commit", "Pods", "Age", ""}
+	}
 
-	tableTitle := title
+	tableTitle := viewhelpers.TableTitle(title)
 	table := component.NewTableWithRows(
 		tableTitle, "There are no "+title,
-		component.NewTableCols("Name", "Pods", "Age", ""),
+		component.NewTableCols(cols...),
 		[]component.TableRow{})
 
 	for _, r := range jobs {
-		tr, err := toJobTableRow(r, path)
+		tr, err := toJobTableRow(config, r, path)
 		if err != nil {
 			log.Logger().Infof("failed to create Table Row: %s", err.Error())
 			continue
@@ -120,8 +127,6 @@ func BuildJobsViewForPath(request service.Request, pluginContext pluginctx.Conte
 	flexLayout := component.NewFlexLayout("")
 
 	if !pluginContext.Composite {
-		header := viewhelpers.NewMarkdownText(viewhelpers.ToBreadcrumbMarkdown(admin.RootBreadcrumb, title))
-
 		buttonGroup := config.ButtonGroup
 		if buttonGroup == nil {
 			cronJobList, err := viewhelpers.ListResourcesBySelector(ctx, client, "batch/v1", "CronJob", ns, selector)
@@ -133,13 +138,10 @@ func BuildJobsViewForPath(request service.Request, pluginContext pluginctx.Conte
 			}
 		}
 		if buttonGroup != nil {
+			header := viewhelpers.NewMarkdownText("")
 			flexLayout.AddSections(component.FlexLayoutSection{
 				{Width: component.WidthHalf, View: header},
 				{Width: component.WidthHalf, View: buttonGroup},
-			})
-		} else {
-			flexLayout.AddSections(component.FlexLayoutSection{
-				{Width: component.WidthFull, View: header},
 			})
 		}
 	}
@@ -149,13 +151,64 @@ func BuildJobsViewForPath(request service.Request, pluginContext pluginctx.Conte
 	return flexLayout, nil
 }
 
-func toJobTableRow(r *batchv1.Job, path string) (*component.TableRow, error) {
+func toJobTableRow(config *JobViewConfig, r *batchv1.Job, path string) (*component.TableRow, error) {
+	viewLogsButton := viewhelpers.NewMarkdownText(fmt.Sprintf(`<a href='%s' class="btn btn-info-outline btn-sm">Logs</a>`, admin.JobsLogsViewLink(path, r.Name)))
+	age := component.NewTimestamp(r.CreationTimestamp.Time)
+	pods := ToJobPods(r)
+
+	if !config.BootJob {
+		return &component.TableRow{
+			"Name": ToJobName(r),
+			"Pods": pods,
+			"Age":  age,
+			"":     viewLogsButton,
+		}, nil
+
+	}
 	return &component.TableRow{
-		"Name": ToJobName(r),
-		"Pods": ToJobPods(r),
-		"Age":  component.NewTimestamp(r.CreationTimestamp.Time),
-		"":     viewhelpers.NewMarkdownText(fmt.Sprintf(`<a href='%s' class="btn btn-info-outline btn-sm">Logs</a>`, admin.JobsLogsViewLink(path, r.Name))),
+		"Name":   ToBootJobName(r),
+		"Commit": ToBootJobCommit(r),
+		"Author": ToBootJobCommitAuthor(r),
+		"Pods":   pods,
+		"Age":    age,
+		"":       viewLogsButton,
 	}, nil
+}
+
+func ToBootJobCommitAuthor(r *batchv1.Job) component.Component {
+	author := ""
+	email := ""
+	if r.Annotations != nil {
+		author = r.Annotations["git-operator.jenkins.io/commit-author"]
+		email = r.Annotations["git-operator.jenkins.io/commit-author-email"]
+	}
+	if author == "" {
+		return viewhelpers.NewMarkdownText("")
+	}
+	tooltip := ""
+	if email != "" {
+		tooltip = "email: " + email
+	}
+	return viewhelpers.NewMarkdownText(viewhelpers.ToTooltipText(author, tooltip))
+}
+
+func ToBootJobCommit(r *batchv1.Job) component.Component {
+	sha := ""
+	commitURL := ""
+	if r.Labels != nil {
+		sha = r.Labels["git-operator.jenkins.io/commit-sha"]
+	}
+	if sha == "" {
+		return viewhelpers.NewMarkdownText("")
+	}
+	if r.Annotations != nil {
+		commitURL = r.Annotations["git-operator.jenkins.io/commit-url"]
+	}
+	// trim the sha
+	if len(sha) > 7 {
+		sha = sha[0:7]
+	}
+	return viewhelpers.NewMarkdownText(viewhelpers.ToMarkdownLink(sha, commitURL))
 }
 
 func createJobButtons(pluginContext pluginctx.Context, config *JobViewConfig, list *unstructured.UnstructuredList, title string, selector labels.Set) *component.ButtonGroup {
@@ -198,6 +251,31 @@ func JobConfirmation(title string) component.ButtonOption {
 	return component.WithButtonConfirmation(confirmationTitle, confirmationBody)
 }
 
+func ToBootJobName(r *batchv1.Job) component.Component {
+	name := ""
+	commitMessage := ""
+	if r.Annotations != nil {
+		commitMessage = r.Annotations["git-operator.jenkins.io/commit-message"]
+		if commitMessage != "" {
+			lines := strings.Split(commitMessage, "\n")
+			commitMessage = lines[0]
+
+			// lets HTML encode
+			name = html.EscapeString(commitMessage)
+		}
+	}
+	if name == "" {
+		name = r.Name
+	}
+	ref := links.GetJobLink(r.Namespace, name)
+	iconPrefix := ToJobIcon(r)
+	if iconPrefix != "" {
+		iconPrefix += "&nbsp;&nbsp;"
+	}
+	tooltip := fmt.Sprintf("Job %s for commit: %s", r.Name, html.EscapeString(commitMessage))
+	return viewhelpers.NewMarkdownText(fmt.Sprintf(`%s<a href="%s" title="%s">%s</a>`, iconPrefix, ref, tooltip, name))
+}
+
 func ToJobName(r *batchv1.Job) component.Component {
 	name := r.Name
 	ref := links.GetJobLink(r.Namespace, name)
@@ -205,7 +283,7 @@ func ToJobName(r *batchv1.Job) component.Component {
 	if iconPrefix != "" {
 		iconPrefix += "&nbsp;&nbsp;"
 	}
-	return viewhelpers.NewMarkdownText(fmt.Sprintf(`%s<a href="%s" title="Deployment %s">%s</a>`, iconPrefix, ref, name, name))
+	return viewhelpers.NewMarkdownText(fmt.Sprintf(`%s<a href="%s" title="Job %s">%s</a>`, iconPrefix, ref, name, name))
 }
 
 func ToJobPods(r *batchv1.Job) component.Component {
