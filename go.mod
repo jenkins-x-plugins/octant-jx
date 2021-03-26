@@ -20,7 +20,7 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.7.0
 	github.com/tektoncd/pipeline v0.20.0
-	github.com/vmware-tanzu/octant v0.17.0
+	github.com/vmware-tanzu/octant v0.18.0
 	go.mozilla.org/sops v0.0.0-20190912205235-14a22d7a7060 // indirect
 	golang.org/x/build v0.0.0-20190111050920-041ab4dc3f9d // indirect
 	helm.sh/helm/v3 v3.5.0
